@@ -37,4 +37,3 @@ module.exports = {
   //custom_name: {
   //}
 };
-

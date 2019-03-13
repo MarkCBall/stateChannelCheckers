@@ -1,17 +1,21 @@
 {
-  "0xe591130b45ba5bd14f3c6305742db600164f0105cb270fe05d9894aea9db7858": {
+  "0xf3e51aaf9c53427a882624e26b118ef9d33018bd2851ccc1a503685a40b3db66": {
     "contracts": {
+      "0xb84d125645e94e6329e6494db63830d1c68a719c328036dce55337f79a512e27": {
+        "name": "SimpleStorage",
+        "address": "0xF438D9b6dc5a3c125D21F19c7223bE1e43bE47c2"
+      },
       "0x3043b04ad856d169c8f0b0509c0bc63192dc7edd92d6933c58708298a0e381be": {
         "name": "ENSRegistry",
-        "address": "0x6F2ec6E00Ce7CEC0dAA3BF5a6b2f45B069E3D3a7"
+        "address": "0x4b143e26Fe301cD4A83e09d9c64C2f38C1560943"
       },
-      "0xf138a4d51f4a429e60898985813f061d5f86b5aba5a54fc099f15c6400c40e06": {
+      "0x122f049d3725b273152f12af4631d9631e157e028ca59f7d26d7d37cac9bf188": {
         "name": "Resolver",
-        "address": "0x35853AB16c2DEb6Fbb6c3E8B59253729B87235e7"
+        "address": "0xAf6Ed6d6920a0CfB1CbbF53604c7221522a7302b"
       },
-      "0x5207ed8ce8ca7b2f546b3ae5775b6d41abd4fa1ce23674e676158c07814d418e": {
+      "0x311b37c09c1f5e1f8ea9b715885095b07c2babfcf6eb737385ffc900dd04662b": {
         "name": "FIFSRegistrar",
-        "address": "0x726BA4F5C2071E3E1aDE959452aa35E21DBc5097"
+        "address": "0xb6a9852ca5af364A066d639bff7539f2cAd93A50"
       }
     }
   }

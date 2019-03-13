@@ -49,7 +49,7 @@ module.exports = {
     // in the `account > password` setting below.
     // NOTE: once `mineWhenNeeded` is enabled, you must run an `embark reset` on your dApp before running
     // `embark blockchain` or `embark run` for the first time.
-    mineWhenNeeded: true, 
+    mineWhenNeeded: true,
     // -- genesisBlock --
     // This option is only valid when mineWhenNeeded is true (which is only valid if isDev is false).
     // When enabled, geth uses POW to mine transactions as it would normally, instead of using POA as it does in --dev mode.
@@ -61,9 +61,11 @@ module.exports = {
     proxy: true,
     account: {
       // "address": "", // When specified, uses that address instead of the default one for the network
-      password: "config/privatenet/password" // Password to unlock the account. If `mineWhenNeeded` is enabled (and isDev is not), this password is used to create a development account controlled by the node.
+      password: "config/privatenet/password" // Password to unlock the account
     },
     targetGasLimit: 8000000,
+    wsHost: "localhost",
+    wsPort: 8546,
     simulatorMnemonic: "example exile argue silk regular smile grass bomb merge arm assist farm",
     simulatorBlocktime: 0
   },
@@ -88,7 +90,7 @@ module.exports = {
     account: {
       password: "config/livenet/password"
     }
-  }
+  },
 
   // you can name an environment with specific settings and then specify with
   // "embark run custom_name" or "embark blockchain custom_name"
