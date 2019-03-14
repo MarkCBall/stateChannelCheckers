@@ -13,12 +13,17 @@ contract ArbitrateCheckers {
         bool addr1MovedLast;
     }
 
+
+
     //refactor this and test it
     function getOriginAddress(bytes32 signedMessage, uint8 v, bytes32 r, bytes32 s) public pure returns(address) {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, signedMessage));
         return ecrecover(prefixedHash, v, r, s);
     }
+
+
+//NONCE IS NEEDED - game could go faster than blocks... huh? both needed? how? Ahhhh!
 
     function PostMove(uint gameID, uint blockNum, uint latestState,uint currentMove,uint8 v, bytes32 r, bytes32 s) public {
         address addr1 =;
@@ -38,9 +43,8 @@ contract ArbitrateCheckers {
         latestState[gameID].blockNum = block.number;
         latestState[gameID].boardState = latestState;
         latestState[gameID].latestMove = currentMove;
-        latestState[gameID].addr1MovedLast = (addr1 == calcAddr)
+        latestState[gameID].addr1MovedLast = (addr1 == calcAddr);
 
-        set gameState
     }
     
     
