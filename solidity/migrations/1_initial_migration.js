@@ -1,5 +1,5 @@
-const Migrations = artifacts.require("StateChannel");
+const Migrations = artifacts.require("Migrations");
 
 module.exports = function(deployer) {
-  deployer.deploy(StateChannel);
+  deployer.deploy(Migrations);
 };
