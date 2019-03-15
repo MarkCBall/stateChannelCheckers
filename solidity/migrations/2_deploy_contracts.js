@@ -1,8 +1,8 @@
-const ConvertLib = artifacts.require("ConvertLib");
-const MetaCoin = artifacts.require("MetaCoin");
+const SigLib = artifacts.require("SigLib");
+const StateChannel = artifacts.require("StateChannel");
 
 module.exports = function(deployer) {
-  deployer.deploy(ConvertLib);
-  deployer.link(ConvertLib, MetaCoin);
-  deployer.deploy(MetaCoin);
+  deployer.deploy(SigLib);
+  deployer.link(SigLib, StateChannel);
+  deployer.deploy(StateChannel);
 };
