@@ -7,14 +7,14 @@
 ```
 x is black o is red
 BLACK        BLACK         BLACK
-x | x | x | x | x | x | x | x  r7 (row 7)
-x | x | x | x | x | x | x | x  r6
---|-- |-- |-- |-- |-- |-- |--  r5
---|-- |-- |-- |-- |-- |-- |--  r4
---|-- |-- |-- |-- |-- |-- |--  r3
+x | x | x | x | x | x | x | x  r0 (row 0)
+x | x | x | x | x | x | x | x  r1
 --|-- |-- |-- |-- |-- |-- |--  r2
-o | o | o | o | o | o | o | o  r1
-o | o | o | o | o | o | o | o  r0 (row 0)
+--|-- |-- |-- |-- |-- |-- |--  r3
+--|-- |-- |-- |-- |-- |-- |--  r4
+--|-- |-- |-- |-- |-- |-- |--  r5
+o | o | o | o | o | o | o | o  r6
+o | o | o | o | o | o | o | o  r7 (row 7)
 RED          RED           RED
 c0 c1  c2  c3  c4  c5  c6  c7 
 (column 0)             (colum 7)
