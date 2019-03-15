@@ -19,7 +19,22 @@ contract('CheckersArbitration', (accounts) => {
     // it('should create a channel if passed valid data and signature', async () => { 
     // })
 
+    // group(MAIN CONTRACT)
+    // group(function validateChannelSig) --> must be made public
+    //     it('should return true when the signature corresponds to the data')
+    //     it('should return true when the signature corresponds to the different data')
+    //     it('should return false when the signature does not correspond to the data')
 
+    // group(init channel)
+    //     it('should create a channel if passed valid data and signature')
+    //     it('should create a channel if passed different valid data and signature')
+    //     it('should withdraw funds from both addresses)
+
+    //     it('shouldn't create a channel if the gameID already exists)
+    //     it('shouldn't create a channel if funds could not be withdrawn
+    //     it('shouldn't take funds if the channel was not created)
+
+    group(')
 
 
 });
