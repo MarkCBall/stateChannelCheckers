@@ -1,20 +1,14 @@
 const StateChannel = artifacts.require("StateChannel");
 
 var ethers = require('ethers');
-const truffleAssert = require('truffle-assertions');
-
-
-
 
 contract('StateChannel', (accounts) => {
 
-    //Mnemonic: helmet damp file human glad audit athlete away sail pause nut cute
     let privKey1 = "64d3560a2d76391da1c1a44a9595102f0d7281f4ac5dbcefd3c1fe8f58f53be1"
-    //let privKey2 = "bfef728167067022fa400e851fc01e68dbab36a8e56104bf83bfca4df9abfcc3"
-
-    let addr1 = "0x20b2e1f1dc798951435234cb8a892f7483bd790e"; //address
-    let addr2 = accounts[1];//"0x258f6a428a2025330233312b1a8e0aa5d4a2f283";
-    let disputeContractAddr = accounts[7] ;//fix this later!
+    let addr1 = "0x20b2e1f1dc798951435234cb8a892f7483bd790e";
+    let addr2 = accounts[1];
+    let disputeContractAddr = "0x1111111111111111111111111111111111111111" ;//fix this later!
+    
 
     getSig = async (addr1,addr2,disputeContractAddr,gameID) => {
         let hashedEncodedChannelData = ethers.utils.solidityKeccak256(
@@ -53,7 +47,7 @@ contract('StateChannel', (accounts) => {
 
         assert.deepEqual(game.addr1.toLowerCase(),addr1.toLowerCase(), "addr1 was not set correctly")
         assert.equal(game.addr2.toLowerCase(),addr2.toLowerCase(), "addr2 was not set correctly")
-        assert.equal(game.disputeContractAddr.toLowerCase(),accounts[7].toLowerCase(), "disputeContractAddr was not set correctly")
+        assert.equal(game.disputeContractAddr.toLowerCase(),disputeContractAddr.toLowerCase(), "disputeContractAddr was not set correctly")
     })
 
 

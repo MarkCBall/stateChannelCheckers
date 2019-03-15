@@ -1,52 +1,63 @@
 pragma solidity ^0.5.0;
 
-// contract ArbitrateCheckers {
 
-//     mapping (uint => gameState) public latestState;
+import "./SigLib.sol";
+//import "./StateChannel.sol";
 
-//     address mainContractAddress = "0xsssss"
+contract CheckersArbitration {
 
-//     struct gameState {
-//         uint blockNum;
-//         uint boardState;
-//         uint latestMove;
-//         bool addr1MovedLast;
-//     }
+    mapping (uint => gameState) public latestState;
 
+    //address mainContractAddress = "0xsssss";
 
-
-//     //refactor this and test it
-//     function getOriginAddress(bytes32 signedMessage, uint8 v, bytes32 r, bytes32 s) public pure returns(address) {
-//         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-//         bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, signedMessage));
-//         return ecrecover(prefixedHash, v, r, s);
-//     }
+    struct gameState {
+        uint blockNum;
+        uint boardState;
+        bool addr1MovedLast;
+    }
 
 
+
+  
 // //NONCE IS NEEDED - game could go faster than blocks... huh? both needed? how? Ahhhh!
 
-//     function PostMove(uint gameID, uint blockNum, uint latestState,uint currentMove,uint8 v, bytes32 r, bytes32 s) public {
-//         address addr1 =;
-//         address addr2 =;
+    function PostMove(uint gameID, uint blockNum, uint previousBoard,uint proposedBoard,uint8 v, bytes32 r, bytes32 s) public {
+        address addr1 =address(0x20b2e1f1dc798951435234Cb8a892F7483bd790e);
+        address addr2 =address(0xf17f52151EbEF6C7334FAD080c5704D77216b732);
+        //get these like StateChannel.games(gameID).addr1
         
-//         require (blockNum > latestState[gameID].blockNum)
+        require (blockNum > latestState[gameID].blockNum);
         
-//         require(validateMove(xxxxxx))
+        //require(validateMove(xxxxxx))
                 
 
-//         //check if the signature is valid and the msg.sender is the other address
-//         bytes32 DataHash = keccak256(abi.encodePacked(gameID, blockNum, latestState, currentMove));
-//         address calcAddr = getOriginAddress(DataHash, v1,r1,s1);
-//         require(addr1 == calcAddr || addr1 == msg.sender);
-//         require(addr2 == calcAddr || addr2 == msg.sender);
+        //check if the signature is valid and the msg.sender is the other address
+        bytes32 DataHash = keccak256(abi.encodePacked(gameID, blockNum, previousBoard, proposedBoard));
+        address calcAddr = SigLib.getOriginAddress(DataHash, v,r,s);
+        require(addr1 == calcAddr || addr1 == msg.sender);
+        require(addr2 == calcAddr || addr2 == msg.sender);
 
-//         latestState[gameID].blockNum = block.number;
-//         latestState[gameID].boardState = latestState;
-//         latestState[gameID].latestMove = currentMove;
-//         latestState[gameID].addr1MovedLast = (addr1 == calcAddr);
+        latestState[gameID].blockNum = block.number;
+        latestState[gameID].boardState = proposedBoard;
+        latestState[gameID].addr1MovedLast = (addr1 == calcAddr);
+    }
+    function isForward(uint previousBoard,uint proposedBoard) public pure returns(uint){
+        return previousBoard+proposedBoard;
+    }
 
+//     function validateMove(uint previousBoard,uint proposedBoard) public {
+
+//         // function validateMove
+// //     return (isForward || isAttack || isDouble ||
+// //     (isQueen && (isBack || isBackAttack)))
+// //     //if simple move
+// //     //if firstDoublemove
+// //     //if attack
+// //     //if queenBack
+// //     //if queenAttackBackwards
+// //         //return true
+// //     //return false
 //     }
-    
     
 // function CounterMove(uint _move)
 //     //calculateState
@@ -71,16 +82,7 @@ pragma solidity ^0.5.0;
 //     //set state
 //         //make queen as appropriate
 
-// function validateMove
-//     return (isForward || isAttack || isDouble ||
-//     (isQueen && (isBack || isBackAttack)))
-//     //if simple move
-//     //if firstDoublemove
-//     //if attack
-//     //if queenBack
-//     //if queenAttackBackwards
-//         //return true
-//     //return false
+
 
 // //msg.sender + sig means we have two party signatures
 // function validateSig //modifier???
@@ -96,3 +98,4 @@ pragma solidity ^0.5.0;
 
 // function addressFromSig
 //     //returns address
+}
