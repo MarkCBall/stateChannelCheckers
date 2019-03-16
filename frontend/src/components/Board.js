@@ -13,25 +13,28 @@ import './Board.css';
 class Board extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            piecesBN: new BigNumber("0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"), //64 digits long
-        }
 
+
+
+        this.state = {
+            piecesBN: new BigNumber("0x80828486898b8d8f00929496000000000000000098abadafb0b2b4b6b9bbbdbf"), //64 digits long
+            activeSquare: {}
+        }
 
 
     }
 
-    piecesBNtopiecesArr = () => {
+    matrixifyBoard = () => {
         
         //setup an empty board
-        let boardArr = []
+        let boardMatrix = []
         for (let row =0;row<8;row++){
-            boardArr.push([])
+            boardMatrix.push([])
             for (let col=0;col<8;col++){
-                boardArr[row][col] = {row:row, col:col, active:0}
+                boardMatrix[row][col] = {row:row, col:col, active:0}
             }
         }
-        //parse the bignumber into game data
+        //parse the bignumber into pieces data
         let str = this.state.piecesBN.toHexString()
         for (let i=1;i<33;i++){
             let pieceHex = str.substr(i*2,2)
@@ -41,7 +44,7 @@ class Board extends Component {
 
             //fill pieces into the board
             if (pieceBinary.charAt(0) === "1"){
-                boardArr[row][col] = {
+                boardMatrix[row][col] = {
                     id: i-1,
                     red: (i<17),
                     active: (pieceBinary.charAt(0) === "1"),
@@ -51,29 +54,65 @@ class Board extends Component {
                 }
             }
         }
-        console.log(boardArr[0])
-        return (boardArr)
+        //console.log(boardMatrix[0])
+        return (boardMatrix)
     }
 
-    renderPiece = (ele) => {
-        console.log(ele)
-        if (ele.active)
-            if (ele.red){
-                if (ele.queen){
-                    return <>R</>
-                }
-                else{
-                    return <div className="red"></div>
-                }
-            }else{
-                if (ele.queen){
-                    return <>B</>
-                }
-                else{
-                    return <div className="black"></div>
+    renderPiece = (piece) => {
+        //console.log(piece)
+        let temp = () =>{
+            if (piece.active)
+                if (piece.red){
+                    if (piece.queen){
+                        return <div className="red queen" onClick={()=>this.handlePieceClick(this.matrixifyBoard(),piece)}></div>
+                    }
+                    else{
+                        return <div className="red" onClick={()=>this.handlePieceClick(this.matrixifyBoard(),piece)}></div>
+                    }
+                }else{
+                    if (piece.queen){
+                        return <div className="black queen" onClick={()=>this.handlePieceClick(this.matrixifyBoard(),piece)}></div>
+                    }
+                    else{
+                        return <div className="black" onClick={()=>this.handlePieceClick(this.matrixifyBoard(),piece)}></div>
+                    }
                 }
             }
-      
+        if (piece.row === this.state.activeSquare.row && piece.col === this.state.activeSquare.col)
+            return <div className="selected">{temp()}</div>
+        else 
+            return temp()
+    }
+
+
+    northValid = (boardMatrix,piece) =>{
+        return (!boardMatrix[piece.row-1][piece.col].active && (!piece.red || piece.queen))
+    }
+
+    handlePieceClick = (boardMatrix, piece) =>{
+        let allowableMoves = [];
+        if (this.northValid(boardMatrix,piece)){
+            allowableMoves.push({row:piece.row-1, col:piece.col})
+        }
+        // let pieceRow = piece.row;
+        // let pieceCol = piece.col;
+        //let red = piece.red;
+
+        //if forwardValid
+
+        //if doubleValid
+
+        //if attackLeftValid
+
+        //if attackRightValid
+
+        // console.log(piece)
+        // console.log(piecesBN)
+        this.setState({
+            ...this.state,
+            activeSquare:{row:piece.row, col:piece.col}
+        })
+
     }
 
 
@@ -83,7 +122,7 @@ class Board extends Component {
                 
                 <div className="container center">
             
-                    {this.piecesBNtopiecesArr().map((row,rowIndex) =>
+                    {this.matrixifyBoard().map((row,rowIndex) =>
                         <div key={rowIndex} className="row">
                             {row.map((piece,colIndex) =>
                                 <div key={colIndex} className={"color"+((rowIndex+colIndex)%2)}>

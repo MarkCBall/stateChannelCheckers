@@ -19,4 +19,14 @@
     height:40px;
     background: black;
     border-radius: 50%;
+
+}
+.queen{
+    border-style: double;
+    border-width: 10px;
+}
+.selected{
+  
+    
+    box-shadow: inset -4px 0 0 yellow, inset 0 -4px 0 yellow, inset 4px 0 0 yellow, inset 0 4px 0 yellow;
 }
