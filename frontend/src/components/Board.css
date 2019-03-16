@@ -1,0 +1,22 @@
+.grey-square {
+    width:20px;
+    height:20px;
+    background: grey;
+  }
+.brown-square{
+    width:20px;
+    height:20px;
+    background: brown;
+  }
+.red{
+    width:20px;
+    height:20px;
+    background: red;
+    border-radius: 50%;
+}
+.black{
+    width:20px;
+    height:20px;
+    background: black;
+    border-radius: 50%;
+}

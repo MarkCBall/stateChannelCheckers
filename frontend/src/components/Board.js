@@ -7,14 +7,14 @@ import { BigNumber } from "ethers/utils";
 // import InteractBlockchain from "../redux/actions/InteractBlockchain";
 // import {isValidAddress} from "ethereumjs-util";
 
-
+import './Board.css';
 //mport { Button } from 'react-bootstrap';
 
 class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            piecesBN: new BigNumber("0x808182838485868788898a8b8c8d8e8fb0b1b2b3b4b5b6b7b8b9babbbcbdbebf"), //64 digits long
+            piecesBN: new BigNumber("0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"), //64 digits long
          // piecesBN: new BigNumber("0x808182838485868788898a8b8c8e8f0000000000000000000000000000000000"), //64 digits long
             // piecesArr: {1,2,3}
         }
@@ -93,7 +93,7 @@ class Board extends Component {
     //     this.props.updateChButtons(this.props.address);
     // }
 
-    renderPiece = (ele) => {
+    renderPiece = (ele,color) => {
         if (ele.active)
             if (ele.red){
                 if (ele.queen){
@@ -110,7 +110,9 @@ class Board extends Component {
                     return <>b</>
                 }
             }
-        return <>{"-"}</>
+        if (color)
+            return <>{"-"}</>
+        return <>{"."}</>
     }
 
 
@@ -126,13 +128,23 @@ class Board extends Component {
                    
                         {row.map((piece,colIndex) =>
                             <span key={colIndex}>
-                                {this.renderPiece(piece)}
+                                {this.renderPiece(piece,(rowIndex+colIndex)%2)}
                             </span>
                         )}
                     </div>
                 )}
      
+                <div className="container-full">
+                    <div className="row">
+                        <div className="brown-square red"></div>
+                        <div className="grey-square"><div className="black"></div></div>
 
+                    </div>
+                
+                </div>
+
+                
+xxxxx
                 
 
                 
