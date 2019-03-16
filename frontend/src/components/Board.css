@@ -26,7 +26,11 @@
     border-width: 10px;
 }
 .selected{
-  
-    
     box-shadow: inset -4px 0 0 yellow, inset 0 -4px 0 yellow, inset 4px 0 0 yellow, inset 0 4px 0 yellow;
+}
+.valid{
+    width:45px;
+    height:45px;
+    background: green;
+    border-radius: 50%;
 }
