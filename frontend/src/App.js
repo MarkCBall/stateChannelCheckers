@@ -5,7 +5,7 @@ import store from "./redux/index";
 import React, { Component } from "react";
 
 
-import Login from "./components/Login";
+//import Login from "./components/Login";
 import Board from "./components/Board";
 // import SelectCh from "./components/SelectCh";
 // import SelectChDisplay from "./components/SelectChDisplay";
@@ -25,8 +25,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <div className="App">
-                    <Login />
-                    SHOW SOMETHINGs
+                    {/* <Login /> */}
                     <Board />
                 </div>
             </Provider>
