@@ -93,15 +93,20 @@ class Board extends Component {
 
         if (this.state.validMovesMatrix[piece.row][piece.col])
             //console.log(piece.row, piece.col)
-            return <div className="valid">{temp()}</div>
+            return <div className="valid" onClick={()=>this.handleMove(this.state.boardMatrix,piece)}>{temp()}</div>
         if (piece.row === this.state.activeSquare.row && piece.col === this.state.activeSquare.col)
-            return <div className="selected">{temp()}</div>
+            return <div className="selected" >{temp()}</div>
         else 
             return temp()
     }
 
+    handleMove = () => {
+        console.log("make move")
+    }
+
+    //currently you can kill your own piece??????
     northWestValid = (boardMatrix,piece) =>{
-        return ((piece.row > 0) && (piece.col>0) && !boardMatrix[piece.row-1][piece.col-1].active && (!piece.red || piece.queen))
+        return ((piece.row > 0) && (piece.col>0) && boardMatrix[piece.row-1][piece.col-1].active && (!piece.red || piece.queen))
     }
     northValid = (boardMatrix,piece) =>{
         return ((piece.row > 0) && !boardMatrix[piece.row-1][piece.col].active && (!piece.red || piece.queen))
@@ -109,8 +114,18 @@ class Board extends Component {
     northEastValid = (boardMatrix,piece) =>{
         return ((piece.row > 0) && (piece.col<7) && boardMatrix[piece.row-1][piece.col+1].active && (!piece.red || piece.queen))
     }
+    southEastValid = (boardMatrix,piece) =>{
+        return ((piece.row < 7) && (piece.col<7) && boardMatrix[piece.row+1][piece.col+1].active && (piece.red || piece.queen))
+    }
+    southValid = (boardMatrix,piece) =>{
+        return ((piece.row < 7) && !boardMatrix[piece.row+1][piece.col].active && (piece.red || piece.queen))
+    }
+    southWestValid = (boardMatrix,piece) =>{
+        return ((piece.row < 7) && (piece.col>0) && boardMatrix[piece.row+1][piece.col-1].active && (piece.red || piece.queen))
+    }
 
     handlePieceClick = (boardMatrix, piece) =>{
+        // console.log(piece)
         let validMovesMatrix = []
         for (let row =0;row<8;row++){
             validMovesMatrix.push([])
@@ -127,18 +142,16 @@ class Board extends Component {
         if (this.northEastValid(boardMatrix,piece)){
             validMovesMatrix[piece.row-1][piece.col+1] = true;
         }
+        if (this.southEastValid(boardMatrix,piece)){
+            validMovesMatrix[piece.row+1][piece.col+1] = true;
+        }
+        if (this.southValid(boardMatrix,piece)){
+            validMovesMatrix[piece.row+1][piece.col] = true;
+        }
+        if (this.southWestValid(boardMatrix,piece)){
+            validMovesMatrix[piece.row+1][piece.col-1] = true;
+        }
 
-
-        //if forwardValid
-
-        //if doubleValid
-
-        //if attackLeftValid
-
-        //if attackRightValid
-
-        // console.log(piece)
-        // console.log(piecesBN)
         this.setState({
             ...this.state,
             activeSquare:{row:piece.row, col:piece.col},
