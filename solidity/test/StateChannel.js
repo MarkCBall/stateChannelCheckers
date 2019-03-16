@@ -60,6 +60,7 @@ contract('StateChannel', (accounts) => {
       
         const StateChannelInstance = await StateChannel.deployed();
 
+        //USE OPEN-ZEPPELING-TEST-HELPERS -- check the github for how its made
         //how can I do this better?
         try {
                 await StateChannelInstance.InitChannel(addr1, sig.v, sig.r, sig.s, disputeContractAddr, gameID, {from:addr2}) 
