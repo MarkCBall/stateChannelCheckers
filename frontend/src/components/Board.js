@@ -93,15 +93,30 @@ class Board extends Component {
 
         if (this.state.validMovesMatrix[piece.row][piece.col])
             //console.log(piece.row, piece.col)
-            return <div className="valid" onClick={()=>this.handleMove(this.state.boardMatrix,piece)}>{temp()}</div>
+            return <div className="valid" onClick={()=>this.handleMove(this.state.boardMatrix,piece,this.state.activeSquare)}>{temp()}</div>
         if (piece.row === this.state.activeSquare.row && piece.col === this.state.activeSquare.col)
             return <div className="selected" >{temp()}</div>
         else 
             return temp()
     }
 
-    handleMove = () => {
-        console.log("make move")
+   
+    handleMove = (board,validSpot,activeSquare) => {
+        let boardMatrix = board;
+        console.log(boardMatrix)
+        boardMatrix[validSpot.row][validSpot.col] = {
+            ...boardMatrix[activeSquare.row][activeSquare.col],
+            row:validSpot.row,
+            col:validSpot.col
+        }
+        boardMatrix[activeSquare.row][activeSquare.col] = {active:0, row:activeSquare.row, col:activeSquare.col}
+        console.log(boardMatrix)
+        this.setState({
+            ...this.state,
+            boardMatrix:boardMatrix,
+            validMovesMatrix: this.createEmptyValidMovesMatrix(),
+            activeSquare: {}
+        })
     }
 
     //currently you can kill your own piece??????
