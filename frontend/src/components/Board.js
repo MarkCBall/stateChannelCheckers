@@ -93,26 +93,24 @@ class Board extends Component {
     //     this.props.updateChButtons(this.props.address);
     // }
 
-    renderPiece = (ele,color) => {
+    renderPiece = (ele) => {
         if (ele.active)
             if (ele.red){
                 if (ele.queen){
                     return <>R</>
                 }
                 else{
-                    return <>r</>
+                    return <div className="red"></div>
                 }
             }else{
                 if (ele.queen){
                     return <>B</>
                 }
                 else{
-                    return <>b</>
+                    return <div className="black"></div>
                 }
             }
-        if (color)
-            return <>{"-"}</>
-        return <>{"."}</>
+      
     }
 
 
@@ -120,34 +118,25 @@ class Board extends Component {
         return (
             <div>
                 
-                <button onClick={this.piecesBNtopiecesArr}>consolelogboard</button>
-                <br/>
+                {/* <button onClick={this.piecesBNtopiecesArr}>consolelogboard</button>
+                <br/> */}
+
+
+                <div className="container center">
             
-                {this.piecesBNtopiecesArr().map((row,rowIndex) =>
-                    <div key={rowIndex}>
-                   
-                        {row.map((piece,colIndex) =>
-                            <span key={colIndex}>
-                                {this.renderPiece(piece,(rowIndex+colIndex)%2)}
-                            </span>
-                        )}
-                    </div>
-                )}
+                    {this.piecesBNtopiecesArr().map((row,rowIndex) =>
+                        <div key={rowIndex} className="row">
+                    
+                            {row.map((piece,colIndex) =>
+                                <div className={"color"+((rowIndex+colIndex)%2)} key={colIndex}>
+                                    {this.renderPiece(piece)}
+                                </div>
+                            )}
+                        </div>
+                    )}
      
-                <div className="container-full">
-                    <div className="row">
-                        <div className="brown-square red"></div>
-                        <div className="grey-square"><div className="black"></div></div>
-
-                    </div>
-                
-                </div>
-
-                
-xxxxx
-                
-
-                
+                </div> 
+                          
             </div>
         )
     }
