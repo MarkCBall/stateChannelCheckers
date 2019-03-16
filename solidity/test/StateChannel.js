@@ -8,7 +8,14 @@ contract('StateChannel', (accounts) => {
     let addr1 = "0x20b2e1f1dc798951435234cb8a892f7483bd790e";
     let addr2 = accounts[1];
     let disputeContractAddr = "0x1111111111111111111111111111111111111111" ;//fix this later!
+    // beforeEach(async function(){
+    //     this.contract = await contractname.new({from:owner})
+    // })
     
+    describe("get owner", function () {
+        it("hi")
+        it("bye")
+    })
 
     getSig = async (addr1,addr2,disputeContractAddr,gameID) => {
         let hashedEncodedChannelData = ethers.utils.solidityKeccak256(

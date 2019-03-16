@@ -34,7 +34,7 @@ contract('CheckersArbitration', (accounts) => {
     //     it('shouldn't create a channel if funds could not be withdrawn
     //     it('shouldn't take funds if the channel was not created)
 
-    group(')
+    // group(')
 
 
 });
