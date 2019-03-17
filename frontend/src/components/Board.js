@@ -71,7 +71,7 @@ class Board extends Component {
     }
 
     renderPiece = (piece) => {
-        //console.log(piece)
+        //console.log(piece) make into component
         let temp = () =>{
             if (piece.active)
                 if (piece.red){
@@ -114,11 +114,12 @@ class Board extends Component {
             let killedCol = (validSpot.col + activeSquare.col)/2
             boardMatrix[killedRow][killedCol] = {active:0, row:killedRow, col:killedCol}
         }
-
+        //copy the old piece into the new location
         boardMatrix[validSpot.row][validSpot.col] = {
             ...boardMatrix[activeSquare.row][activeSquare.col],
             ...dataToUpdate
         }
+        //delete the old piece from the old location
         boardMatrix[activeSquare.row][activeSquare.col] = {active:0, row:activeSquare.row, col:activeSquare.col}
         this.setState({
             ...this.state,
@@ -129,7 +130,6 @@ class Board extends Component {
         //do some calls to backend here
     }
 
-    //currently you can kill your own piece??????
     NWValid = (boardMatrix,piece) =>{
         return ((piece.row > 0) && (piece.col>0) && !boardMatrix[piece.row-1][piece.col-1].active && (!piece.red || piece.queen))
     }
@@ -142,8 +142,6 @@ class Board extends Component {
     SWValid = (boardMatrix,piece) =>{
         return ((piece.row < 7) && (piece.col>0) && !boardMatrix[piece.row+1][piece.col-1].active && (piece.red || piece.queen))
     }
-
-
     NWValidAttack = (boardMatrix,piece) =>{
         return ((piece.row > 1) && (piece.col > 1) && boardMatrix[piece.row-1][piece.col-1].active && (!piece.red || piece.queen)
         &&  !boardMatrix[piece.row-2][piece.col-2].active && (boardMatrix[piece.row-1][piece.col-1].red !== piece.red) )
@@ -163,43 +161,27 @@ class Board extends Component {
 
     handlePieceClick = (boardMatrix, piece) =>{
         let validMovesMatrix = this.createEmptyValidMovesMatrix()
-
-
-        if (this.NWValid(boardMatrix,piece)){
+        if (this.NWValid(boardMatrix,piece))
             validMovesMatrix[piece.row-1][piece.col-1] = true;
-        }
-        if (this.NEValid(boardMatrix,piece)){
+        if (this.NEValid(boardMatrix,piece))
             validMovesMatrix[piece.row-1][piece.col+1] = true;
-        }
-        if (this.SEValid(boardMatrix,piece)){
+        if (this.SEValid(boardMatrix,piece))
             validMovesMatrix[piece.row+1][piece.col+1] = true;
-        }
-        if (this.SWValid(boardMatrix,piece)){
+        if (this.SWValid(boardMatrix,piece))
             validMovesMatrix[piece.row+1][piece.col-1] = true;
-        }
-
-        if (this.NWValidAttack(boardMatrix,piece)){
+        if (this.NWValidAttack(boardMatrix,piece))
             validMovesMatrix[piece.row-2][piece.col-2] = true;
-        }
-        if (this.NEValidAttack(boardMatrix,piece)){
+        if (this.NEValidAttack(boardMatrix,piece))
             validMovesMatrix[piece.row-2][piece.col+2] = true;
-        }
-        if (this.SEValidAttack(boardMatrix,piece)){
+        if (this.SEValidAttack(boardMatrix,piece))
             validMovesMatrix[piece.row+2][piece.col+2] = true;
-        }
-        if (this.SWValidAttack(boardMatrix,piece)){
+        if (this.SWValidAttack(boardMatrix,piece))
             validMovesMatrix[piece.row+2][piece.col-2] = true;
-        }
-
-
-
-
         this.setState({
             ...this.state,
             activeSquare:{row:piece.row, col:piece.col},
             validMovesMatrix:validMovesMatrix
         })
-
     }
 
 
