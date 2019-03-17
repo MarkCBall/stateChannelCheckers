@@ -7,6 +7,8 @@ import { BigNumber } from "ethers/utils";
 // import InteractBlockchain from "../redux/actions/InteractBlockchain";
 // import {isValidAddress} from "ethereumjs-util";
 
+import BoardTranslations from "../Library/BoardTranslations"
+
 import './Board.css';
 //mport { Button } from 'react-bootstrap';
 
@@ -15,17 +17,25 @@ class Board extends Component {
         super(props);
         this.state = {
             boardMatrix: [],
-            validMovesMatrix: this.createEmptyValidMovesMatrix(),
+            validMovesMatrix: [],
             activeSquare: {},
-            BNState: ""
+            //BNState: ""
 
         }
 }
 
+
+
+// BoardTranslations.MatrixtoBN()
+
+    calcMatrixState = (BN) =>{
+
+    }
     
 
 
     componentDidMount(){
+
                                     // "80828486898b8d8f9092949f0000000000000000a0abadafb0b2b4b6b9bbbdbf"
         let piecesBN = new BigNumber("0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"); //64 digits long,
         //setup an empty board
@@ -94,7 +104,7 @@ class Board extends Component {
                 }
             }
 
-        if (this.state.validMovesMatrix[piece.row][piece.col])
+        if ((this.state.validMovesMatrix[piece.row]!==undefined) && this.state.validMovesMatrix[piece.row][piece.col])
             //console.log(piece.row, piece.col)
             return <div className="valid" onClick={()=>this.handleMove(this.state.boardMatrix,piece,this.state.activeSquare)}>{temp()}</div>
         if (piece.row === this.state.activeSquare.row && piece.col === this.state.activeSquare.col)
@@ -132,38 +142,8 @@ class Board extends Component {
         })
         //this.calcBNState(this.state.boardMatrix)
     }
-    calcBNState = (board) =>{
-        //console.log(board)
-        let pieces = []
-        board.forEach((boardRow)=>{
-            boardRow.forEach((piece)=>{
-                if (piece.id !== undefined)
-                    pieces[piece.id]=piece
-            })
-        })
-        //console.log(pieces)
-        let piecesHex = "0x"
-        for(let i=0;i<32;i++){
-            let pieceBinary = ""
-            if (typeof pieces[i] !== 'undefined'){
-                pieceBinary +=  (pieces[i].active) ? "1" : "0"
-                pieceBinary +=  (pieces[i].queen) ? "1" : "0"
-                pieceBinary +=  pieces[i].row.toString(2).padStart(3,"0")
-                pieceBinary +=  pieces[i].col.toString(2).padStart(3,"0")  
-            }
-            else
-                pieceBinary = "00000000"
-            piecesHex += parseInt(pieceBinary,2).toString(16).padStart(2,"0")   
-        }
-        //bugging out because two setStates called together as this is called from another function with a setstate
-        return piecesHex//new BigNumber(piecesHex)
 
-        // this.setState({
-        //     ...this.state,
-        //     BNState: "sss"//new BigNumber(piecesHex)
-        // })
-        
-    }
+    
 
     NWValid = (boardMatrix,piece) =>{
         return ((piece.row > 0) && (piece.col>0) && !boardMatrix[piece.row-1][piece.col-1].active && (!piece.red || piece.queen))
@@ -236,8 +216,8 @@ class Board extends Component {
                         </div>
                     )}
 
-                    <p>boardState:{this.calcBNState(this.state.boardMatrix)}</p>
-                    
+                    <p>boardState:{BoardTranslations.BNtoMatrix(this.state.boardMatrix)}</p>
+
      
                 </div> 
                           
