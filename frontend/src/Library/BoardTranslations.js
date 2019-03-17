@@ -1,7 +1,4 @@
-
 export default {
-
-
     BNtoMatrix:(board) =>{
         //convert board matrix into pieces array
         let pieces = []
@@ -59,12 +56,4 @@ export default {
         }
         return boardMatrix
     }
-
-
 }
-
-
-
-// BNtoMatrix,MatrixtoBN
-
-

@@ -8,6 +8,7 @@ import { BigNumber } from "ethers/utils";
 // import {isValidAddress} from "ethereumjs-util";
 
 import BoardTranslations from "../Library/BoardTranslations"
+import ValidMoves from "../Library/ValidMoves"
 
 import './Board.css';
 //mport { Button } from 'react-bootstrap';
@@ -24,6 +25,10 @@ class Board extends Component {
         }
     }
 
+
+
+
+
     componentDidMount(){
 
                                     // "80828486898b8d8f9092949f0000000000000000a0abadafb0b2b4b6b9bbbdbf"
@@ -33,18 +38,8 @@ class Board extends Component {
             ...this.state,
             boardMatrix: BoardTranslations.MatrixtoBN(piecesBN)
         })
-
     }
-    createEmptyValidMovesMatrix = () =>{
-        let validMovesMatrix = []
-        for (let row =0;row<8;row++){
-            validMovesMatrix.push([])
-            for (let col=0;col<8;col++){
-                validMovesMatrix[row][col] = false;
-            }
-        }
-        return validMovesMatrix
-    }
+    
 
     renderPiece = (piece) => {
         //console.log(piece) make into component
@@ -100,7 +95,7 @@ class Board extends Component {
         this.setState({
             ...this.state,
             boardMatrix:boardMatrix,
-            validMovesMatrix: this.createEmptyValidMovesMatrix(),
+            validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
             activeSquare: {}
         })
         //this.calcBNState(this.state.boardMatrix)
@@ -108,57 +103,18 @@ class Board extends Component {
 
     
 
-    NWValid = (boardMatrix,piece) =>{
-        return ((piece.row > 0) && (piece.col>0) && !boardMatrix[piece.row-1][piece.col-1].active && (!piece.red || piece.queen))
-    }
-    NEValid = (boardMatrix,piece) =>{
-        return ((piece.row > 0) && (piece.col<7) && !boardMatrix[piece.row-1][piece.col+1].active && (!piece.red || piece.queen))
-    }
-    SEValid = (boardMatrix,piece) =>{
-        return ((piece.row < 7) && (piece.col<7) && !boardMatrix[piece.row+1][piece.col+1].active && (piece.red || piece.queen))
-    }
-    SWValid = (boardMatrix,piece) =>{
-        return ((piece.row < 7) && (piece.col>0) && !boardMatrix[piece.row+1][piece.col-1].active && (piece.red || piece.queen))
-    }
-    NWValidAttack = (boardMatrix,piece) =>{
-        return ((piece.row > 1) && (piece.col > 1) && boardMatrix[piece.row-1][piece.col-1].active && (!piece.red || piece.queen)
-        &&  !boardMatrix[piece.row-2][piece.col-2].active && (boardMatrix[piece.row-1][piece.col-1].red !== piece.red) )
-    }
-    NEValidAttack = (boardMatrix,piece) =>{
-        return ((piece.row > 1) && (piece.col < 6) && boardMatrix[piece.row-1][piece.col+1].active && (!piece.red || piece.queen)
-        &&  !boardMatrix[piece.row-2][piece.col+2].active && (boardMatrix[piece.row-1][piece.col+1].red !== piece.red) )
-    }
-    SEValidAttack = (boardMatrix,piece) =>{
-        return ((piece.row < 6) && (piece.col < 6) && boardMatrix[piece.row+1][piece.col+1].active && (piece.red || piece.queen)
-        &&  !boardMatrix[piece.row+2][piece.col+2].active && (boardMatrix[piece.row+1][piece.col+1].red !== piece.red) )
-    }
-    SWValidAttack = (boardMatrix,piece) =>{
-        return ((piece.row < 6) && (piece.col > 1) && boardMatrix[piece.row+1][piece.col-1].active && (piece.red || piece.queen)
-        &&  !boardMatrix[piece.row+2][piece.col-2].active && (boardMatrix[piece.row+1][piece.col-1].red !== piece.red) )
-    }
 
+    
+
+    
     handlePieceClick = (boardMatrix, piece) =>{
-        let validMovesMatrix = this.createEmptyValidMovesMatrix()
-        if (this.NWValid(boardMatrix,piece))
-            validMovesMatrix[piece.row-1][piece.col-1] = true;
-        if (this.NEValid(boardMatrix,piece))
-            validMovesMatrix[piece.row-1][piece.col+1] = true;
-        if (this.SEValid(boardMatrix,piece))
-            validMovesMatrix[piece.row+1][piece.col+1] = true;
-        if (this.SWValid(boardMatrix,piece))
-            validMovesMatrix[piece.row+1][piece.col-1] = true;
-        if (this.NWValidAttack(boardMatrix,piece))
-            validMovesMatrix[piece.row-2][piece.col-2] = true;
-        if (this.NEValidAttack(boardMatrix,piece))
-            validMovesMatrix[piece.row-2][piece.col+2] = true;
-        if (this.SEValidAttack(boardMatrix,piece))
-            validMovesMatrix[piece.row+2][piece.col+2] = true;
-        if (this.SWValidAttack(boardMatrix,piece))
-            validMovesMatrix[piece.row+2][piece.col-2] = true;
+ 
+
+
         this.setState({
             ...this.state,
             activeSquare:{row:piece.row, col:piece.col},
-            validMovesMatrix:validMovesMatrix
+            validMovesMatrix:ValidMoves.getValidMoves(boardMatrix, piece)
         })
     }
 
