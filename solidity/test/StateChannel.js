@@ -42,7 +42,7 @@ contract('StateChannel', (accounts) => {
 
     // })
 
-    it("should change the value of the games mapping appropriately", async () => {
+    it("should create a channel and change the value of the games mapping appropriately", async () => {
        
         let gameID = 20; //uint
 

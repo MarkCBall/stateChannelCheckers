@@ -103,7 +103,6 @@ class Board extends Component {
    
     handleMove = (board,validSpot,activeSquare) => {
         let boardMatrix = board;
-        //console.log(boardMatrix)
         let dataToUpdate = {row:validSpot.row, col:validSpot.col}
         if (validSpot.row === 7 || validSpot.row === 0){
             dataToUpdate = {...dataToUpdate, queen:true}
@@ -113,13 +112,13 @@ class Board extends Component {
             ...dataToUpdate
         }
         boardMatrix[activeSquare.row][activeSquare.col] = {active:0, row:activeSquare.row, col:activeSquare.col}
-        //console.log(boardMatrix)
         this.setState({
             ...this.state,
             boardMatrix:boardMatrix,
             validMovesMatrix: this.createEmptyValidMovesMatrix(),
             activeSquare: {}
         })
+        //do some calls to backend here
     }
 
     //currently you can kill your own piece??????
