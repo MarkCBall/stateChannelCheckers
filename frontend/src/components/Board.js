@@ -31,9 +31,9 @@ class Board extends Component {
 
 
     componentDidMount(){
-
+                                // "0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf"
                                   // "0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"
-        let piecesBN = new BigNumber("0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"); //64 digits long,
+        let piecesBN = new BigNumber("0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf"); //64 digits long,
         
         this.setState({
             ...this.state,

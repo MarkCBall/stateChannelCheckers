@@ -36,7 +36,7 @@ export default {
         }
         //parse the bignumber into pieces data
         let str = BN.toHexString()
-        for (let i=1;i<33;i++){
+        for (let i=9;i<33;i++){
             let pieceHex = str.substr(i*2,2)
             let pieceBinary =  (parseInt(pieceHex, 16)).toString(2).padStart(8,"0")
             let col = parseInt(pieceBinary.substr(5,3),2)
@@ -46,7 +46,7 @@ export default {
             if (pieceBinary.charAt(0) === "1"){
                 boardMatrix[row][col] = {
                     id: i-1,
-                    red: (i<17),
+                    red: (i<21),
                     active: (pieceBinary.charAt(0) === "1"),
                     queen: (pieceBinary.charAt(1) === "1"),
                     row:row,
