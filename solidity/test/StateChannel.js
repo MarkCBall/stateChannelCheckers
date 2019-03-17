@@ -12,10 +12,10 @@ contract('StateChannel', (accounts) => {
     //     this.contract = await contractname.new({from:owner})
     // })
     
-    describe("get owner", function () {
-        it("hi")
-        it("bye")
-    })
+    // describe("get owner", function () {
+    //     it("hi")
+    //     it("bye")
+    // })
 
     getSig = async (addr1,addr2,disputeContractAddr,gameID) => {
         let hashedEncodedChannelData = ethers.utils.solidityKeccak256(
@@ -30,15 +30,17 @@ contract('StateChannel', (accounts) => {
         return ethers.utils.splitSignature(flatSig)
     }
 
-    it('should create a channel if passed valid data and signature', async () => {
+    // it('should create a channel if passed valid data and signature', async () => {
        
-        let gameID = 8; //uint
+    //     let gameID = 8; //uint
 
-        let sig = await getSig(addr1,addr2,disputeContractAddr,gameID)
+    //     let sig = await getSig(addr1,addr2,disputeContractAddr,gameID)
       
-        const StateChannelInstance = await StateChannel.deployed();
-        await StateChannelInstance.InitChannel(addr1, sig.v, sig.r, sig.s, disputeContractAddr, gameID, {from:addr2})
-    })
+    //     // const StateChannelInstance = await StateChannel.deployed();
+    //     let StateChannelInstance = await StateChannel.new({from:accounts[0]})
+    //     await StateChannelInstance.InitChannel(addr1, sig.v, sig.r, sig.s, disputeContractAddr, gameID, {from:addr2})
+
+    // })
 
     it("should change the value of the games mapping appropriately", async () => {
        
@@ -50,7 +52,7 @@ contract('StateChannel', (accounts) => {
 
         await StateChannelInstance.InitChannel(addr1, sig.v, sig.r, sig.s, disputeContractAddr, gameID, {from:addr2})
 
-        let game = await StateChannelInstance.games.call(8)
+        let game = await StateChannelInstance.games.call(20)
 
         assert.deepEqual(game.addr1.toLowerCase(),addr1.toLowerCase(), "addr1 was not set correctly")
         assert.equal(game.addr2.toLowerCase(),addr2.toLowerCase(), "addr2 was not set correctly")
