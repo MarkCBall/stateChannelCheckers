@@ -32,12 +32,12 @@ class Board extends Component {
 
     componentDidMount(){
 
-                                    // "80828486898b8d8f9092949f0000000000000000a0abadafb0b2b4b6b9bbbdbf"
+                                  // "0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"
         let piecesBN = new BigNumber("0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"); //64 digits long,
         
         this.setState({
             ...this.state,
-            boardMatrix: BoardTranslations.MatrixtoBN(piecesBN)
+            boardMatrix: BoardTranslations.BNtoMatrix(piecesBN)
         })
     }
     
@@ -139,7 +139,8 @@ class Board extends Component {
                         </div>
                     )}
 
-                    <p>boardState:{BoardTranslations.BNtoMatrix(this.state.boardMatrix)}</p>
+
+                    <p>boardState:{BoardTranslations.MatrixtoBN(this.state.boardMatrix)}</p>
                     <p>{this.state.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
 
      

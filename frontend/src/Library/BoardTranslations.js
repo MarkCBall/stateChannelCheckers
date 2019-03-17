@@ -1,5 +1,5 @@
 export default {
-    BNtoMatrix:(board) =>{
+    MatrixtoBN:(board) =>{
         //convert board matrix into pieces array
         let pieces = []
         board.forEach((boardRow)=>{
@@ -25,7 +25,7 @@ export default {
         return piecesHex 
     },
 
-    MatrixtoBN: (BN) =>{
+    BNtoMatrix: (BN) =>{
         //setup an empty board
         let boardMatrix = []
         for (let row =0;row<8;row++){
