@@ -20,6 +20,7 @@ class Board extends Component {
             boardMatrix: [],
             validMovesMatrix: [],
             activeSquare: {},
+            p1Turn: true
             //BNState: ""
 
         }
@@ -96,7 +97,8 @@ class Board extends Component {
             ...this.state,
             boardMatrix:boardMatrix,
             validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
-            activeSquare: {}
+            activeSquare: {},
+            p1Turn: !this.state.p1Turn
         })
         //this.calcBNState(this.state.boardMatrix)
     }
@@ -109,13 +111,15 @@ class Board extends Component {
     
     handlePieceClick = (boardMatrix, piece) =>{
  
+        if (piece.red === this.state.p1Turn){
+            this.setState({
+                ...this.state,
+                activeSquare:{row:piece.row, col:piece.col},
+                validMovesMatrix:ValidMoves.getValidMoves(boardMatrix, piece)
+            })
+        }
 
-
-        this.setState({
-            ...this.state,
-            activeSquare:{row:piece.row, col:piece.col},
-            validMovesMatrix:ValidMoves.getValidMoves(boardMatrix, piece)
-        })
+        
     }
 
 
@@ -136,6 +140,7 @@ class Board extends Component {
                     )}
 
                     <p>boardState:{BoardTranslations.BNtoMatrix(this.state.boardMatrix)}</p>
+                    <p>{this.state.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
 
      
                 </div> 
