@@ -1,28 +1,29 @@
 # stateChannelCheckers
 
+## The board is state is represented by a singles bytes32 or uint. The first 8 bytes represent information about the previous move and the remaining bytes represent the boardgame pieces.
 
 
-## Decoding the board (a single uint256 represents the entire board):
+### Bytes 1-8 represent the most recent move used to get to the current board state.
+figure out and put details here
 
+### Decoding the board
 ```
 x is red o is black
 RED          RED           RED
-x | x | x | x | x | x | x | x  r0 (row 0)
-x | x | x | x | x | x | x | x  r1
---|-- |-- |-- |-- |-- |-- |--  r2
+x |   | x |   | x |   | x |    r0 (row 0)
+  | x |   | x |   | x |   | x  r1
+x |   | x |   | x |   | x |    r2
 --|-- |-- |-- |-- |-- |-- |--  r3
 --|-- |-- |-- |-- |-- |-- |--  r4
---|-- |-- |-- |-- |-- |-- |--  r5
-o | o | o | o | o | o | o | o  r6
-o | o | o | o | o | o | o | o  r7 (row 7)
+  | o |   | o |   | o |   | o  r5
+o |   | o |   | o |   | o |    r6
+  | o |   | o |   | o |   | o  r7 (row 7)
 BLACK        BLACK        BLACK
 c0 c1  c2  c3  c4  c5  c6  c7 
 (column 0)             (colum 7)
 ```
+#### Bytes 9-20 are red and 21-32 are black pieces
 
-### The board is orientated by game pieces, each piece is represented by 1 byte, there are 32 bytes and 32 boardgame pieces.
-
-#### The first 16 peices are red and the remaining are black
 
 - The first bit represents the status of the piece, if it has been killed yet. The next bit represents if the piece has reached the end of the board yet and become a queen. The next three bits represents the row number followed by column number as follows:
 - [1] 0 for a dead piece, 1 if it is in play
@@ -37,8 +38,6 @@ Decoded examples
 - 1x000111 is in row 0, column 7
 - 1x010101 is in row 2, column 5
 - ect
-
-Note that the 16 bytes are red and the remaining 16 bytes represent black pieces.
 
 
 
