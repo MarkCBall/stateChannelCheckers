@@ -22,53 +22,16 @@ class Board extends Component {
             //BNState: ""
 
         }
-}
-
-
-
-// BoardTranslations.MatrixtoBN()
-
-    calcMatrixState = (BN) =>{
-
     }
-    
-
 
     componentDidMount(){
 
                                     // "80828486898b8d8f9092949f0000000000000000a0abadafb0b2b4b6b9bbbdbf"
         let piecesBN = new BigNumber("0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"); //64 digits long,
-        //setup an empty board
-        let boardMatrix = []
-        for (let row =0;row<8;row++){
-            boardMatrix.push([])
-            for (let col=0;col<8;col++){
-                boardMatrix[row][col] = {row:row, col:col, active:0}
-            }
-        }
-        //parse the bignumber into pieces data
-        let str = piecesBN.toHexString()
-        for (let i=1;i<33;i++){
-            let pieceHex = str.substr(i*2,2)
-            let pieceBinary =  (parseInt(pieceHex, 16)).toString(2).padStart(8,"0")
-            let col = parseInt(pieceBinary.substr(5,3),2)
-            let row = parseInt(pieceBinary.substr(2,3),2)
-
-            //fill pieces into the board
-            if (pieceBinary.charAt(0) === "1"){
-                boardMatrix[row][col] = {
-                    id: i-1,
-                    red: (i<17),
-                    active: (pieceBinary.charAt(0) === "1"),
-                    queen: (pieceBinary.charAt(1) === "1"),
-                    row:row,
-                    col:col
-                }
-            }
-        }
+        
         this.setState({
             ...this.state,
-            boardMatrix:boardMatrix
+            boardMatrix: BoardTranslations.MatrixtoBN(piecesBN)
         })
 
     }
