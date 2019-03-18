@@ -5,17 +5,6 @@ import { HANDLE_MOVE } from "../constants/BoardRedux";
 import { CLEAR_SELECTION } from "../constants/BoardRedux";
 import { PREV_MOVE_STATS } from "../constants/BoardRedux";
 
-
-
-
-
-
-// import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
-// import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
-// import {HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE} from "../constants/LoginRedux";
-
-
-
 const initialState = {
     boardMatrix: [],
     validMovesMatrix: [],
@@ -64,18 +53,6 @@ export default function(state = initialState, action) {
         p1Turn:!state.p1Turn,
         turnNum:state.turnNum+1
     }
-
-
-    // case NEXT_TURN:
-    // return {
-    //     ...state,
-    //     p1Turn:!state.p1Turn,
-    //     turnNum:state.turnNum+1
-    // }
-
-    
-
-    
 
     default:
       return state;

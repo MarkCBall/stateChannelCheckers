@@ -33,7 +33,6 @@ export default {
     },
     handleMove:(dispatch, board,validSpot,activeSquare) => {
         return (dispatch) =>{
-            let p1Went = board[activeSquare.row][activeSquare.col].red
             dispatch({
                 type: PREV_MOVE_STATS,
                 payload: {
@@ -41,7 +40,6 @@ export default {
                     rowTo:validSpot.row,
                     colFrom:activeSquare.col,
                     colTo:validSpot.col,
-                    p1Went:p1Went
                 }
             })
             dispatch({

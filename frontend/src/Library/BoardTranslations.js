@@ -14,7 +14,6 @@ let prevMoveToHex = (boardMatrix, prevMove) => {
 export default {
     MatrixAndMoveToBNStr:(board,prevMove,turnNum) =>{
         let BNStr = "0x"
-        //BNStr += prevMove.p1Went ? "01" : "00"//THIS CAN BE BASED ON turnNum????????
         BNStr += prevMoveToHex(board,prevMove)
         BNStr += turnNum.toString(16).padStart(10, "0")
 
