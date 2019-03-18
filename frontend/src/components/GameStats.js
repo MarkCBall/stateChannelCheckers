@@ -28,7 +28,8 @@ class GameStats extends Component {
         return (
             <div>
                 {this.renderBoardBN(BoardTranslations.MatrixtoBN(this.props.boardMatrix))}
-                <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>        
+                <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
+                {this.props.prevMove.rowFrom}        
             </div>
         )
     }            
@@ -37,7 +38,8 @@ class GameStats extends Component {
 function mapStateToProps(state) {
     return {
         boardMatrix: state.BoardRedux.boardMatrix,
-        validp1TurnMovesMatrix: state.BoardRedux.p1Turn,
+        p1Turn: state.BoardRedux.p1Turn,
+        prevMove:state.BoardRedux.prevMove
     }
 }
 

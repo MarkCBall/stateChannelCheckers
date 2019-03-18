@@ -2,6 +2,12 @@ import { HANDLE_PIECE_CLICK } from "../constants/BoardRedux";
 import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
 import { HANDLE_MOVE } from "../constants/BoardRedux";
 import { NEXT_TURN } from "../constants/BoardRedux";
+import { CLEAR_SELECTION } from "../constants/BoardRedux";
+import { REMEMBER_PREV_MOVE } from "../constants/BoardRedux";
+
+
+
+
 
 
 // import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
@@ -14,7 +20,8 @@ const initialState = {
     boardMatrix: [],
     validMovesMatrix: [],
     activeSquare: {},
-    p1Turn: true
+    p1Turn: true,
+    prevMove:{}
 };
 
 export default function(state = initialState, action) {
@@ -38,6 +45,24 @@ export default function(state = initialState, action) {
         ...state,
         ...action.payload
     }
+    case HANDLE_MOVE:
+    return {
+        ...state,
+        boardMatrix:action.payload
+    }
+    case CLEAR_SELECTION:
+    return {
+        ...state,
+        validMovesMatrix:action.payload.validMovesMatrix,
+        activeSquare:action.payload.activeSquare
+    }
+    case REMEMBER_PREV_MOVE:
+    return {
+        ...state,
+        prevMove:action.payload
+    }
+
+
     case NEXT_TURN:
     return {
         ...state,

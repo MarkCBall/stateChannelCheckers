@@ -4,22 +4,8 @@ import ValidMoves from "../../Library/ValidMoves"
 import BoardTranslations from "../../Library/BoardTranslations"
 import { HANDLE_MOVE } from "../constants/BoardRedux";
 import { NEXT_TURN } from "../constants/BoardRedux";
-
-// import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
-// import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
-// import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
-// import {HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE} from "../constants/LoginRedux";
-// import {isValidAddress} from "ethereumjs-util";
-
-// import InteractDatabase from "./InteractDatabase";
-// import InteractBlockchain from "./InteractBlockchain";
-
-// //what does it mean to import itself??????? whoaaaa
-// import LoginRedux from "./LoginRedux";
-
-// import {ethers} from "ethers";
-
-
+import { CLEAR_SELECTION } from "../constants/BoardRedux";
+import { REMEMBER_PREV_MOVE } from "../constants/BoardRedux";
 
 
 
@@ -68,12 +54,35 @@ export default {
             boardMatrix[activeSquare.row][activeSquare.col] = {active:0, row:activeSquare.row, col:activeSquare.col}
             dispatch({
                 type: HANDLE_MOVE,
+                payload: boardMatrix
+            })
+            dispatch({
+                type: CLEAR_SELECTION,
                 payload: {
-                    boardMatrix:boardMatrix,
                     validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
                     activeSquare: {},
                 }
             })
+            
+            let prevMove ={
+                    // movedFrom:validSpot,
+                    // moveTo:activeSquare
+                    rowFrom:activeSquare.row,
+                    rowTo:validSpot.row,
+                    colFrom:activeSquare.col,
+                    colTo:validSpot.col
+                }
+            console.log(prevMove)
+            dispatch({
+                type: REMEMBER_PREV_MOVE,
+                payload: {
+                    rowFrom:activeSquare.row,
+                    rowTo:validSpot.row,
+                    colFrom:activeSquare.col,
+                    colTo:validSpot.col
+                }
+            })
+
             dispatch({type: NEXT_TURN})
         }
     }
