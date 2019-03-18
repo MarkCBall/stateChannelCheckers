@@ -4,13 +4,13 @@ import thunk from "redux-thunk";
 
 import InteractBlockchain from "./reducers/InteractBlockchain";
 import InteractDatabase from "./reducers/InteractDatabase";
-import InteractReduxState from "./reducers/InteractReduxState";
+import LoginRedux from "./reducers/LoginRedux";
 
 
 const rootReducer = combineReducers({
     InteractBlockchain,
     InteractDatabase,
-    InteractReduxState
+    LoginRedux
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk));

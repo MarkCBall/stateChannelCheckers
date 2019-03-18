@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-//import InteractReduxState from "../redux/actions/InteractReduxState";
-import InteractReduxState from "../redux/reducers/InteractReduxState";
+//import LoginRedux from "../redux/actions/LoginRedux";
+import LoginRedux from "../redux/reducers/LoginRedux";
 import ProposeNewCh from "./ProposeNewCh";
 import ChButton from "./ChButton";
 
@@ -73,8 +73,8 @@ function mapStateToProps(state) {
         OngoingChannels: state.InteractBlockchain.OngoingChannels,
         PendingChannels: state.InteractDatabase.PendingChannels,
         RequestedChannels: state.InteractDatabase.RequestedChannels,
-        activeChannel: state.InteractReduxState.activeChannel,
-        showNewChannelForm: state.InteractReduxState.showNewChannelForm
+        activeChannel: state.LoginRedux.activeChannel,
+        showNewChannelForm: state.LoginRedux.showNewChannelForm
     }
 }
 export default connect(mapStateToProps)(SelectCh);

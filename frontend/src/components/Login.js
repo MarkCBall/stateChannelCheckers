@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import InteractReduxState from "../redux/actions/InteractReduxState";
+import LoginRedux from "../redux/actions/LoginRedux";
 // import InteractDatabase from "../redux/actions/InteractDatabase";
 // import InteractBlockchain from "../redux/actions/InteractBlockchain";
 import {isValidAddress} from "ethereumjs-util";
@@ -70,10 +70,10 @@ class Login extends Component {
 
 function mapStateToProps(state) {
     return {
-        privKey : state.InteractReduxState.privKey,
-        pubPrivKeypairValid : state.InteractReduxState.pubPrivKeypairValid,
-        address: state.InteractReduxState.addressSignedIn,
-        addressIsValid: state.InteractReduxState.addressIsValid,
+        privKey : state.LoginRedux.privKey,
+        pubPrivKeypairValid : state.LoginRedux.pubPrivKeypairValid,
+        address: state.LoginRedux.addressSignedIn,
+        addressIsValid: state.LoginRedux.addressIsValid,
         //pendingChannels: state.InteractDatabase.PendingChannels
     }
 }
@@ -81,13 +81,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         // updateChButtons: (addressSignedIn) => {
-        //     dispatch(InteractReduxState.renderChButtons(dispatch, addressSignedIn))
+        //     dispatch(LoginRedux.renderChButtons(dispatch, addressSignedIn))
         // },
         handleAddressChange: (Event) => {
-            dispatch(InteractReduxState.handleAddressChange(dispatch, Event.target.value))  
+            dispatch(LoginRedux.handleAddressChange(dispatch, Event.target.value))  
         },
         handlePrivKeyChange: (Event) => {
-            dispatch(InteractReduxState.handlePrivKeyChange(dispatch, Event.target.value))
+            dispatch(LoginRedux.handlePrivKeyChange(dispatch, Event.target.value))
         }
 
     }

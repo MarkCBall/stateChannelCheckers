@@ -27,7 +27,7 @@ export default {
 
 
     //         //get wallets --> do this through metamask later?
-    //         let activeWallet = new ethers.Wallet(getState().InteractReduxState.privKey).connect(provider)
+    //         let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
 
 
     //         //can deployedcontract be done out of function and connect be done inside?
@@ -49,7 +49,7 @@ export default {
     //             //ACD : Active Channel Detail
     //             //console.log(getState())
 
-    //             let CID = getState().InteractReduxState.activeChannel.channel//83;
+    //             let CID = getState().LoginRedux.activeChannel.channel//83;
     //             //CID FROM ACD
 
 
@@ -89,13 +89,13 @@ export default {
     // initChannelTermination: (dispatch) => {
     //     return async (dispatch, getState) => {
             
-    //         let activeWallet = new ethers.Wallet(getState().InteractReduxState.privKey).connect(provider)
+    //         let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
     //         let deployedaddress = CONTRACT_ADDRESS
     //         let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(activeWallet);
                 
     //         var DBData = getState().InteractDatabase;
     //         console.log(getState())
-    //         let CID = getState().InteractReduxState.activeChannel.channel
+    //         let CID = getState().LoginRedux.activeChannel.channel
     //         let propTermBlockNum = 6147964 + (4*60*24)// query blockchain for this data later
     //         let u1Bal = DBData.LatestSignedTxDetails.u1Bal 
     //         let u2Bal = DBData.LatestSignedTxDetails.u2Bal

@@ -9,153 +9,153 @@ import { GET_LATEST_SIGNED_TX } from "../constants/InteractDatabase";
 
 export default {
 
-    getPendingChannels: (dispatch, address) => {
-        return (dispatch) => {
-            fetch("http://35.183.188.67:3001/Channel/pending", {
-                method: "GET",
-                mode: "cors", 
-                headers: {
-                    "address":address
-                }
-            }).then((response) =>{
-                return response.json()
-            }).then((response) => {
-                dispatch({
-                    type: GET_PENDING_CHANNELS,
-                    payload: response
-                })
-            })
-        }
-    },
-    getRequestedChannels: (dispatch, address) => {
-        return (dispatch) => {
-            fetch("http://35.183.188.67:3001/Channel/requested", {
-                method: "GET",
-                mode: "cors", 
-                headers: {
-                    "address":address
-                }
-            }).then((response) =>{
-                return response.json()
-            }).then((response) => {
-                dispatch({
-                    type: GET_REQUESTED_CHANNELS,
-                    payload: response
-                })
-            })
-        }
-    },
+    // getPendingChannels: (dispatch, address) => {
+    //     return (dispatch) => {
+    //         fetch("http://35.183.188.67:3001/Channel/pending", {
+    //             method: "GET",
+    //             mode: "cors", 
+    //             headers: {
+    //                 "address":address
+    //             }
+    //         }).then((response) =>{
+    //             return response.json()
+    //         }).then((response) => {
+    //             dispatch({
+    //                 type: GET_PENDING_CHANNELS,
+    //                 payload: response
+    //             })
+    //         })
+    //     }
+    // },
+    // getRequestedChannels: (dispatch, address) => {
+    //     return (dispatch) => {
+    //         fetch("http://35.183.188.67:3001/Channel/requested", {
+    //             method: "GET",
+    //             mode: "cors", 
+    //             headers: {
+    //                 "address":address
+    //             }
+    //         }).then((response) =>{
+    //             return response.json()
+    //         }).then((response) => {
+    //             dispatch({
+    //                 type: GET_REQUESTED_CHANNELS,
+    //                 payload: response
+    //             })
+    //         })
+    //     }
+    // },
 
-    getChannelDetails:(dispatch, CID) => {
-        return (dispatch, getState) => {
-            var addressSignedIn = getState().InteractReduxState.addressSignedIn;
-            fetch("http://35.183.188.67:3001/Channel/", {
-                method: "GET",
-                mode: "cors", 
-                headers: {
-                    "cid":CID
-                }
-            }).then((response) =>{
-                return response.json()
-            }).then((response) => {
+    // getChannelDetails:(dispatch, CID) => {
+    //     return (dispatch, getState) => {
+    //         var addressSignedIn = getState().LoginRedux.addressSignedIn;
+    //         fetch("http://35.183.188.67:3001/Channel/", {
+    //             method: "GET",
+    //             mode: "cors", 
+    //             headers: {
+    //                 "cid":CID
+    //             }
+    //         }).then((response) =>{
+    //             return response.json()
+    //         }).then((response) => {
 
-                //if (getState.InteractDatabase.ActiveChannelDetails.ChType != "ongoing"){
-                    //     var ChType = "";
-                    // if (addressSignedIn === response.u1Address){
-                    //     ChType = "proposed";
-                    // }
-                    // else if (addressSignedIn === response.u2Address){
-                    //     ChType = "requested";
-                    // }
-                //}
+    //             //if (getState.InteractDatabase.ActiveChannelDetails.ChType != "ongoing"){
+    //                 //     var ChType = "";
+    //                 // if (addressSignedIn === response.u1Address){
+    //                 //     ChType = "proposed";
+    //                 // }
+    //                 // else if (addressSignedIn === response.u2Address){
+    //                 //     ChType = "requested";
+    //                 // }
+    //             //}
                 
 
-                dispatch({
-                    type: GET_CHANNEL_DETAILS,
-                    payload: {
-                        ...response,
-                        userOneIsMe: 
-                            (addressSignedIn === response.u1Address) ? true : false
-                    }
-                })
-            })
-        }
-    },
+    //             dispatch({
+    //                 type: GET_CHANNEL_DETAILS,
+    //                 payload: {
+    //                     ...response,
+    //                     userOneIsMe: 
+    //                         (addressSignedIn === response.u1Address) ? true : false
+    //                 }
+    //             })
+    //         })
+    //     }
+    // },
 
-    getHighestNonce: (dispatch, CID) =>{
-        return (dispatch, getState) => {
-            fetch("http://35.183.188.67:3001/Transaction/HighestNonce", {
-                method: "GET",
-                mode: "cors", 
-                headers: {
-                    "cid":CID
-                }
-            }).then((response) =>{
-                //console.log(response)
-                return response.json()
-            }).then((HighestNonce) => {
-                //console.log(HighestNonce)
-                dispatch({
-                    type: GET_HIGHEST_NONCE,
-                    payload: HighestNonce
-                })
+    // getHighestNonce: (dispatch, CID) =>{
+    //     return (dispatch, getState) => {
+    //         fetch("http://35.183.188.67:3001/Transaction/HighestNonce", {
+    //             method: "GET",
+    //             mode: "cors", 
+    //             headers: {
+    //                 "cid":CID
+    //             }
+    //         }).then((response) =>{
+    //             //console.log(response)
+    //             return response.json()
+    //         }).then((HighestNonce) => {
+    //             //console.log(HighestNonce)
+    //             dispatch({
+    //                 type: GET_HIGHEST_NONCE,
+    //                 payload: HighestNonce
+    //             })
 
-                fetch("http://35.183.188.67:3001/Transaction/getTx", {
-                    method: "GET",
-                    mode: "cors", 
-                    headers: {
-                        "cid":CID,
-                        "nonce":HighestNonce
-                    }
-                }).then((response) =>{
-                    return response.json()
-                }).then((LatestTxDetails) => {
+    //             fetch("http://35.183.188.67:3001/Transaction/getTx", {
+    //                 method: "GET",
+    //                 mode: "cors", 
+    //                 headers: {
+    //                     "cid":CID,
+    //                     "nonce":HighestNonce
+    //                 }
+    //             }).then((response) =>{
+    //                 return response.json()
+    //             }).then((LatestTxDetails) => {
 
-                    dispatch({
-                        type: GET_LATEST_TX,
-                        payload: LatestTxDetails
-                    })
-                })
-            })
-        }
-    },
+    //                 dispatch({
+    //                     type: GET_LATEST_TX,
+    //                     payload: LatestTxDetails
+    //                 })
+    //             })
+    //         })
+    //     }
+    // },
 
 
-    getHighestSignedNonce: (dispatch, CID) =>{
-        return (dispatch, getState) => {
-            fetch("http://35.183.188.67:3001/Transaction/HighestSignedNonce", {
-                method: "GET",
-                mode: "cors", 
-                headers: {
-                    "cid":CID
-                }
-            }).then((response) =>{
-                return response.json()
-            }).then((HighestSignedNonce) => {
-                dispatch({
-                    type: GET_HIGHEST_SIGNED_NONCE,
-                    payload: HighestSignedNonce
-                })
+    // getHighestSignedNonce: (dispatch, CID) =>{
+    //     return (dispatch, getState) => {
+    //         fetch("http://35.183.188.67:3001/Transaction/HighestSignedNonce", {
+    //             method: "GET",
+    //             mode: "cors", 
+    //             headers: {
+    //                 "cid":CID
+    //             }
+    //         }).then((response) =>{
+    //             return response.json()
+    //         }).then((HighestSignedNonce) => {
+    //             dispatch({
+    //                 type: GET_HIGHEST_SIGNED_NONCE,
+    //                 payload: HighestSignedNonce
+    //             })
 
-                fetch("http://35.183.188.67:3001/Transaction/getTx", {
-                    method: "GET",
-                    mode: "cors", 
-                    headers: {
-                        "cid":CID,
-                        "nonce":HighestSignedNonce
-                    }
-                }).then((response) =>{
-                    return response.json()
-                }).then((LatestSignedTxDetails) => {
+    //             fetch("http://35.183.188.67:3001/Transaction/getTx", {
+    //                 method: "GET",
+    //                 mode: "cors", 
+    //                 headers: {
+    //                     "cid":CID,
+    //                     "nonce":HighestSignedNonce
+    //                 }
+    //             }).then((response) =>{
+    //                 return response.json()
+    //             }).then((LatestSignedTxDetails) => {
 
-                    dispatch({
-                        type: GET_LATEST_SIGNED_TX,
-                        payload: LatestSignedTxDetails
-                    })
-                })
-            })
-        }
-    }
+    //                 dispatch({
+    //                     type: GET_LATEST_SIGNED_TX,
+    //                     payload: LatestSignedTxDetails
+    //                 })
+    //             })
+    //         })
+    //     }
+    // }
 
    
 }

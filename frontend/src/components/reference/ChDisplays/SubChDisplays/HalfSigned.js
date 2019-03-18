@@ -117,8 +117,8 @@ class HalfSigned extends Component {
 function mapStateToProps(state) {
     return {
 
-        activeChannelNum: state.InteractReduxState.activeChannel.channel,
-        privateKey: state.InteractReduxState.privKey,
+        activeChannelNum: state.LoginRedux.activeChannel.channel,
+        privateKey: state.LoginRedux.privKey,
 
         //userOneIsMe,u1Address, u1InitialTokenBal,u1Sig OR u2Sig, u1TokenName.. same for u2
         ...state.InteractDatabase.ActiveChannelDetails,

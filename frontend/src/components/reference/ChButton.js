@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import InteractReduxState from "../redux/actions/InteractReduxState";
+import LoginRedux from "../redux/actions/LoginRedux";
 import InteractDatabase from "../redux/actions/InteractDatabase";
 
 
@@ -33,7 +33,7 @@ class ChButton extends Component {
 
 function mapStateToProps(state) {
     return {
-        activeChannel: state.InteractReduxState.activeChannel.channel
+        activeChannel: state.LoginRedux.activeChannel.channel
     }
 }
 function mapDispatchToProps(dispatch) {
@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(InteractDatabase.getHighestNonce(dispatch,CID));
             dispatch(InteractDatabase.getHighestSignedNonce(dispatch,CID));
             //
-            dispatch(InteractReduxState.setActiveChannel(dispatch, CID, isOngoing));
+            dispatch(LoginRedux.setActiveChannel(dispatch, CID, isOngoing));
         }
     }
 }

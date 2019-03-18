@@ -1,7 +1,7 @@
-import { CHANGE_ADDRESS_TEXT } from "../constants/InteractReduxState";
-import { SET_ACTIVE_CHANNEL } from "../constants/InteractReduxState";
-import { HANDLE_PRIVKEY_CHANGE } from "../constants/InteractReduxState";
-import {HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE} from "../constants/InteractReduxState";
+import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
+import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
+import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
+import {HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE} from "../constants/LoginRedux";
 
 
 

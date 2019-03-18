@@ -1,14 +1,14 @@
-import { CHANGE_ADDRESS_TEXT } from "../constants/InteractReduxState";
-// import { SET_ACTIVE_CHANNEL } from "../constants/InteractReduxState";
-import { HANDLE_PRIVKEY_CHANGE } from "../constants/InteractReduxState";
-// import {HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE} from "../constants/InteractReduxState";
+import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
+// import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
+import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
+// import {HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE} from "../constants/LoginRedux";
 import {isValidAddress} from "ethereumjs-util";
 
 // import InteractDatabase from "./InteractDatabase";
 // import InteractBlockchain from "./InteractBlockchain";
 
 // //what does it mean to import itself??????? whoaaaa
-// import InteractReduxState from "./InteractReduxState";
+// import LoginRedux from "./LoginRedux";
 
 import {ethers} from "ethers";
 
@@ -31,7 +31,7 @@ export default {
                 //if isValid address && addressSignedIn===ethers.utils....
                     //dispatch with true 
 
-                let privKey = getState().InteractReduxState.privKey
+                let privKey = getState().LoginRedux.privKey
                 let pubPrivKeypairValid = (addressSignedIn ===ethers.utils.computeAddress(privKey).toLowerCase())
                 dispatch({
                     type: CHANGE_ADDRESS_TEXT,
@@ -42,7 +42,7 @@ export default {
                     }
                 })
                 // if (isValidAddress(addressSignedIn)){
-                //     dispatch(InteractReduxState.renderChButtons(dispatch, addressSignedIn))
+                //     dispatch(LoginRedux.renderChButtons(dispatch, addressSignedIn))
                 // }
             }
             // dispatch({
@@ -79,7 +79,7 @@ export default {
                         pubPrivKeypairValid: true
                     }
                 })
-                //dispatch(InteractReduxState.renderChButtons(dispatch, correspondingPubAddress))
+                //dispatch(LoginRedux.renderChButtons(dispatch, correspondingPubAddress))
                
                 dispatch({
                     type: HANDLE_PRIVKEY_CHANGE,

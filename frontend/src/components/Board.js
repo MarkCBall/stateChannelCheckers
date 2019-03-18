@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import {ethers} from "ethers";
 import { BigNumber } from "ethers/utils";
 // import { connect } from "react-redux";
-// import InteractReduxState from "../redux/actions/InteractReduxState";
+// import LoginRedux from "../redux/actions/LoginRedux";
 // import InteractDatabase from "../redux/actions/InteractDatabase";
 // import InteractBlockchain from "../redux/actions/InteractBlockchain";
 // import {isValidAddress} from "ethereumjs-util";

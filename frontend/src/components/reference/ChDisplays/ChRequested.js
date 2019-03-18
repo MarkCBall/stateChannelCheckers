@@ -24,8 +24,8 @@ class ChRequested extends Component {
 
 function mapStateToProps(state) {
     return {
-        // address: state.InteractReduxState.addressSignedIn,
-        // addressIsValid: state.InteractReduxState.addressIsValid,
+        // address: state.LoginRedux.addressSignedIn,
+        // addressIsValid: state.LoginRedux.addressIsValid,
         // pendingChannels: state.InteractDatabase.PendingChannels
     }
 }
