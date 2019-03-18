@@ -14,13 +14,14 @@ export default function (state = initialState, action) {
 
         case POST_SIGNED_MOVE:
         let signedBoard = action.payload
-        console.log(signedBoard)
-        // newBoardsArray.push(action.payload)
+        let turnNum = signedBoard.turnNum
+        // console.log(signedBoard)
+        console.log(state.signedBoards)
             return { 
             ...state, 
             signedBoards: {
                 ...state.signedBoards,
-                [signedBoard.turnNum]:signedBoard
+                [turnNum]:signedBoard
             } 
         }      
 

@@ -12,7 +12,6 @@ export default {
 
         return (dispatch) => {
             let turnNum = boardBN.substr(10,8)
-            console.log(turnNum)
             dispatch({
                 type: POST_SIGNED_MOVE,
                 payload: {
