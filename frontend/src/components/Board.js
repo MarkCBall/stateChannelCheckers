@@ -35,10 +35,11 @@ class Board extends Component {
                                   // "0x80828486898b8d8f909294960000000000000000a9abadafb0b2b4b6b9bbbdbf"
         let piecesBN = new BigNumber("0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf"); //64 digits long,
         
-        this.setState({
-            ...this.state,
-            boardMatrix: BoardTranslations.BNtoMatrix(piecesBN)
-        })
+        this.props.setBoardMatrix(piecesBN)
+        // this.setState({
+        //     ...this.state,
+        //     boardMatrix: BoardTranslations.BNtoMatrix(piecesBN)
+        // })
     }
     
 
@@ -48,24 +49,24 @@ class Board extends Component {
             if (piece.active)
                 if (piece.red){
                     if (piece.queen){
-                        return <div className="red queen" onClick={()=>this.handlePieceClick(this.state.boardMatrix,piece)}></div>
+                        return <div className="red queen" onClick={()=>this.handlePieceClick(this.props.boardMatrix,piece)}></div>
                     }
                     else{
-                        return <div className="red" onClick={()=>this.handlePieceClick(this.state.boardMatrix,piece)}></div>
+                        return <div className="red" onClick={()=>this.handlePieceClick(this.props.boardMatrix,piece)}></div>
                     }
                 }else{
                     if (piece.queen){
-                        return <div className="black queen" onClick={()=>this.handlePieceClick(this.state.boardMatrix,piece)}></div>
+                        return <div className="black queen" onClick={()=>this.handlePieceClick(this.props.boardMatrix,piece)}></div>
                     }
                     else{
-                        return <div className="black" onClick={()=>this.handlePieceClick(this.state.boardMatrix,piece)}></div>
+                        return <div className="black" onClick={()=>this.handlePieceClick(this.props.boardMatrix,piece)}></div>
                     }
                 }
             }
 
         if ((this.props.validMovesMatrix[piece.row]!==undefined) && this.props.validMovesMatrix[piece.row][piece.col])
             //console.log(piece.row, piece.col)
-            return <div className="valid" onClick={()=>this.handleMove(this.state.boardMatrix,piece,this.props.activeSquare)}>{temp()}</div>
+            return <div className="valid" onClick={()=>this.handleMove(this.props.boardMatrix,piece,this.props.activeSquare)}>{temp()}</div>
         if (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
             return <div className="selected" >{temp()}</div>
         else 
@@ -100,7 +101,7 @@ class Board extends Component {
             activeSquare: {},
             p1Turn: !this.state.p1Turn
         })
-        //this.calcBNState(this.state.boardMatrix)
+        //this.calcBNState(this.props.boardMatrix)
     }
 
     
@@ -129,7 +130,7 @@ class Board extends Component {
                 
                 <div className="container center">
             
-                    {this.state.boardMatrix.map((row,rowIndex) =>
+                    {this.props.boardMatrix.map((row,rowIndex) =>
                         <div key={rowIndex} className="row">
                             {row.map((piece,colIndex) =>
                                 <div key={colIndex} className={"color"+((rowIndex+colIndex)%2)}>
@@ -140,7 +141,7 @@ class Board extends Component {
                     )}
 
 
-                    <p>boardState:{BoardTranslations.MatrixtoBN(this.state.boardMatrix)}</p>
+                    <p>boardState:{BoardTranslations.MatrixtoBN(this.props.boardMatrix)}</p>
                     <p>{this.state.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
 
      
@@ -167,6 +168,9 @@ function mapDispatchToProps(dispatch) {
     return {
         handlePieceClick: (boardMatrix, piece) =>{
             dispatch(BoardRedux.handlePieceClick(dispatch, boardMatrix, piece))
+        },
+        setBoardMatrix: (piecesBN) =>{
+            dispatch(BoardRedux.setBoardMatrix(dispatch, piecesBN))
         }
     }
 }

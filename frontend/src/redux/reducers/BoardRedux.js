@@ -1,4 +1,6 @@
 import { HANDLE_PIECE_CLICK } from "../constants/BoardRedux";
+import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
+
 // import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
 // import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
 // import {HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE} from "../constants/LoginRedux";
@@ -18,7 +20,14 @@ export default function(state = initialState, action) {
     case HANDLE_PIECE_CLICK:
     return {
         ...state,
-        ...action.payload
+        activeSquare:action.payload.activeSquare,
+        validMovesMatrix:action.payload.validMovesMatrix
+    }
+
+    case SET_BOARD_MATRIX:
+    return {
+        ...state,
+        boardMatrix:action.payload
     }
 
     default:

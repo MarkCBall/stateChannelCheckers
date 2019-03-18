@@ -1,5 +1,7 @@
 import { HANDLE_PIECE_CLICK } from "../constants/BoardRedux";
+import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
 import ValidMoves from "../../Library/ValidMoves"
+import BoardTranslations from "../../Library/BoardTranslations"
 // import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
 // import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
 // import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
@@ -31,10 +33,17 @@ export default {
                 })
             //}
         }
-        
-        
-
+    },
+    setBoardMatrix:(dispatch, piecesBN) => {
+        return (dispatch) =>{
+                dispatch({
+                    type: SET_BOARD_MATRIX,
+                    payload: BoardTranslations.BNtoMatrix(piecesBN)
+                })
+        }
     }
+
+
 
     // renderChButtons: (dispatch, addressSignedIn) => {
     //     return (dispatch) => {
