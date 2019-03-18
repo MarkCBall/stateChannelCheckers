@@ -14,6 +14,7 @@ class GameStats extends Component {
     }
 
     renderBoardBN = (boardBN) =>{
+        console.log(boardBN)
         return <div>
             {boardBN.substr(0,18)}
             <br/>{boardBN.substr(18,24)}

@@ -23,7 +23,7 @@ export default {
             })
         })
         //convert pieces array into hex string
-        for(let i=8;i<32;i++){
+        for(let i=1;i<25;i++){
             let pieceBinary = ""
             if (typeof pieces[i] !== 'undefined'){
                 pieceBinary +=  (pieces[i].active) ? "1" : "0"
@@ -33,6 +33,7 @@ export default {
             }
             else
                 pieceBinary = "00000000"
+            console.log(i,pieceBinary)
             BNStr += parseInt(pieceBinary,2).toString(16).padStart(2,"0")   
         }
         return BNStr 
