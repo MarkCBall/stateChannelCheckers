@@ -28,11 +28,11 @@ class GameStats extends Component {
             <div>
                 <br/>Propose board as a string:
                 <br/><button>Sign and send move</button><button>Post move to blockchain</button>
-                {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove))}
+                {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
                 if str != oldstr
                 <br/><br/>
                 opponent gave you this string
-                {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove))}
+                {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
                 <button>if invalid, repost previous move on blockchain</button>
 
             </div>
@@ -44,7 +44,8 @@ function mapStateToProps(state) {
     return {
         boardMatrix: state.BoardRedux.boardMatrix,
         p1Turn: state.BoardRedux.p1Turn,
-        prevMove:state.BoardRedux.prevMove
+        prevMove:state.BoardRedux.prevMove,
+        turnNum: state.BoardRedux.turnNum
     }
 }
 

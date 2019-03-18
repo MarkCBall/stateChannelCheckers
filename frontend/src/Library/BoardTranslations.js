@@ -8,23 +8,15 @@ let prevMoveToHex = (boardMatrix, prevMove) => {
         moveStr += (prevMove.rowTo + prevMove.rowFrom)/2
         moveStr += (prevMove.colTo + prevMove.colFrom)/2
     }
-    return moveStr.padEnd(16,"0")
+    return moveStr.padEnd(6,"0")
 }
 
-// let playerNumByte = (boardMatrix, prevMove) => {
-
-//     if ( (boardMatrix[prevMove.rowFrom] != undefined) && boardMatrix[prevMove.rowFrom][prevMove.colFrom].red)
-//         return "01"
-//     return "00"
-    
-// }
-
-
 export default {
-    MatrixAndMoveToBNStr:(board,prevMove) =>{
+    MatrixAndMoveToBNStr:(board,prevMove,turnNum) =>{
         let BNStr = "0x"
-        BNStr += prevMove.p1Went ? "01" : "00"
+        //BNStr += prevMove.p1Went ? "01" : "00"//THIS CAN BE BASED ON turnNum????????
         BNStr += prevMoveToHex(board,prevMove)
+        BNStr += turnNum.toString(16).padStart(10, "0")
 
         //convert board matrix into pieces array
         let pieces = []

@@ -3,9 +3,9 @@ import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
 import ValidMoves from "../../Library/ValidMoves"
 import BoardTranslations from "../../Library/BoardTranslations"
 import { HANDLE_MOVE } from "../constants/BoardRedux";
-import { NEXT_TURN } from "../constants/BoardRedux";
+// import { NEXT_TURN } from "../constants/BoardRedux";
 import { CLEAR_SELECTION } from "../constants/BoardRedux";
-import { REMEMBER_PREV_MOVE } from "../constants/BoardRedux";
+import { PREV_MOVE_STATS } from "../constants/BoardRedux";
 
 
 
@@ -35,13 +35,20 @@ export default {
         return (dispatch) =>{
             let p1Went = board[activeSquare.row][activeSquare.col].red
             dispatch({
-                type: REMEMBER_PREV_MOVE,
+                type: PREV_MOVE_STATS,
                 payload: {
                     rowFrom:activeSquare.row,
                     rowTo:validSpot.row,
                     colFrom:activeSquare.col,
                     colTo:validSpot.col,
                     p1Went:p1Went
+                }
+            })
+            dispatch({
+                type: CLEAR_SELECTION,
+                payload: {
+                    validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
+                    activeSquare: {},
                 }
             })
 
@@ -68,119 +75,7 @@ export default {
                 type: HANDLE_MOVE,
                 payload: boardMatrix
             })
-            dispatch({
-                type: CLEAR_SELECTION,
-                payload: {
-                    validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
-                    activeSquare: {},
-                }
-            })
-           
-
-            dispatch({type: NEXT_TURN})
+            // dispatch({type: NEXT_TURN})
         }
     }
-
-
-
-    // renderChButtons: (dispatch, addressSignedIn) => {
-    //     return (dispatch) => {
-    //         dispatch(InteractDatabase.getPendingChannels(dispatch, addressSignedIn))
-    //         dispatch(InteractDatabase.getRequestedChannels(dispatch, addressSignedIn))
-    //         dispatch(InteractBlockchain.getOngoingChannels(dispatch, addressSignedIn))
-    //     }
-    // },
-
-    // handleAddressChange: (dispatch,addressSignedIn) => {
-    //     //clean up redundant returns?
-    //     return (dispatch, getState) =>{
-    //         //set pubPrivKeypairValid according to logic
-    //         if (/^0[xX][0-9a-fA-F]*$/.test(addressSignedIn)){
-
-    //             //if isValid address && addressSignedIn===ethers.utils....
-    //                 //dispatch with true 
-
-    //             let privKey = getState().LoginRedux.privKey
-    //             let pubPrivKeypairValid = (addressSignedIn ===ethers.utils.computeAddress(privKey).toLowerCase())
-    //             dispatch({
-    //                 type: CHANGE_ADDRESS_TEXT,
-    //                 payload: {
-    //                     addressSignedIn:addressSignedIn,
-    //                     addressIsValid: isValidAddress(addressSignedIn),
-    //                     pubPrivKeypairValid: pubPrivKeypairValid
-    //                 }
-    //             })
-    //             // if (isValidAddress(addressSignedIn)){
-    //             //     dispatch(LoginRedux.renderChButtons(dispatch, addressSignedIn))
-    //             // }
-    //         }
-    //         // dispatch({
-    //         //     type: SET_ACTIVE_CHANNEL,
-    //         //     payload: {channel:0}})
-    //     }
-    // },
-    // // setActiveChannel:(dispatch,channel, isOngoing) => {
-    // //     return (dispatch) =>{
-    // //         dispatch({
-    // //             type: SET_ACTIVE_CHANNEL,
-    // //             payload: {
-    // //                 channel:channel,
-    // //                 isOngoing:isOngoing
-    // //             }
-    // //         })
-    // //     }
-    // // },
-    
-    // handlePrivKeyChange:(dispatch,privKeyText) => {
-    //     return (dispatch) =>{
-
-    //         //why doesn't it work do do the else clause always and let the change_address_text over-ride the pubPrivKeypairValid?
-            
-    //         //change address text should dispatch get pending channels ect
-
-    //         if (privKeyText.length===66){ //better validation to be done?
-    //             let correspondingPubAddress = ethers.utils.computeAddress(privKeyText).toLowerCase()
-    //             dispatch({
-    //                 type: CHANGE_ADDRESS_TEXT,
-    //                 payload: {
-    //                     addressSignedIn:correspondingPubAddress,
-    //                     addressIsValid: true,
-    //                     pubPrivKeypairValid: true
-    //                 }
-    //             })
-    //             //dispatch(LoginRedux.renderChButtons(dispatch, correspondingPubAddress))
-               
-    //             dispatch({
-    //                 type: HANDLE_PRIVKEY_CHANGE,
-    //                 payload: {
-    //                     privKey:privKeyText,
-    //                     pubPrivKeypairValid: true
-    //                 } 
-    //             })
-    //         }else{
-    //             dispatch({
-    //                 type: HANDLE_PRIVKEY_CHANGE,
-    //                 payload: {
-    //                     privKey:privKeyText,
-    //                     pubPrivKeypairValid: false
-    //                 } 
-    //             })
-    //         }
-    //         // dispatch({type: SET_ACTIVE_CHANNEL,payload: {channel:0}})
-    //     }
-    // },
-
-    // // handleTogglePNC:(dispatch, showNewChannelForm ) => { //meaning: handleTogglePrroposeNewChannel
-    // //     return (dispatch) => {
-           
-    // //         dispatch({
-    // //             type: HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE,
-    // //             payload: {
-    // //                 showNewChannelForm: !showNewChannelForm
-
-    //             }
-    //         })
-    //     }
-    // }
-
 }

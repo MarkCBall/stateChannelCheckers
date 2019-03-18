@@ -1,9 +1,9 @@
 import { HANDLE_PIECE_CLICK } from "../constants/BoardRedux";
 import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
 import { HANDLE_MOVE } from "../constants/BoardRedux";
-import { NEXT_TURN } from "../constants/BoardRedux";
+// import { NEXT_TURN } from "../constants/BoardRedux";
 import { CLEAR_SELECTION } from "../constants/BoardRedux";
-import { REMEMBER_PREV_MOVE } from "../constants/BoardRedux";
+import { PREV_MOVE_STATS } from "../constants/BoardRedux";
 
 
 
@@ -21,7 +21,8 @@ const initialState = {
     validMovesMatrix: [],
     activeSquare: {},
     p1Turn: true,
-    prevMove:{}
+    prevMove: {},
+    turnNum: 0
 };
 
 export default function(state = initialState, action) {
@@ -56,18 +57,21 @@ export default function(state = initialState, action) {
         validMovesMatrix:action.payload.validMovesMatrix,
         activeSquare:action.payload.activeSquare
     }
-    case REMEMBER_PREV_MOVE:
+    case PREV_MOVE_STATS:
     return {
         ...state,
-        prevMove:action.payload
+        prevMove:action.payload,
+        p1Turn:!state.p1Turn,
+        turnNum:state.turnNum+1
     }
 
 
-    case NEXT_TURN:
-    return {
-        ...state,
-        p1Turn:!state.p1Turn
-    }
+    // case NEXT_TURN:
+    // return {
+    //     ...state,
+    //     p1Turn:!state.p1Turn,
+    //     turnNum:state.turnNum+1
+    // }
 
     
 

@@ -17,7 +17,7 @@ class Board extends Component {
     render() {
         return (
             <div>
-                <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
+                <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"} -- TURN# {this.props.turnNum}</p>
                 <div className="container">
                     {this.props.boardMatrix.map((row,rowIndex) =>
                         <div key={rowIndex} className="row">
@@ -36,7 +36,8 @@ function mapStateToProps(state) {
     return {
         boardMatrix: state.BoardRedux.boardMatrix,
         p1Turn: state.BoardRedux.p1Turn,
-        prevMove:state.BoardRedux.prevMove
+        prevMove:state.BoardRedux.prevMove,
+        turnNum:state.BoardRedux.turnNum
     }
 }
 export default connect(mapStateToProps)(Board);

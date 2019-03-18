@@ -34,17 +34,17 @@ class Game extends Component {
 
 function mapStateToProps(state) {
     return {
-        boardMatrix: state.BoardRedux.boardMatrix,
-        p1Turn: state.BoardRedux.p1Turn,
-        prevMove:state.BoardRedux.prevMove
+        // boardMatrix: state.BoardRedux.boardMatrix,
+        // p1Turn: state.BoardRedux.p1Turn,
+        // prevMove:state.BoardRedux.prevMove
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        calcBoardMatrix: (piecesBN) =>{
-            dispatch(BoardRedux.calcBoardMatrix(dispatch, piecesBN))
-        },
+        // calcBoardMatrix: (piecesBN) =>{
+        //     dispatch(BoardRedux.calcBoardMatrix(dispatch, piecesBN))
+        // },
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
