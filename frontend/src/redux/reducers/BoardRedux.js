@@ -10,7 +10,7 @@ const initialState = {
     validMovesMatrix: [],
     activeSquare: {},
     p1Turn: true,
-    prevMove: {},
+    prevMove: {pieceNumMoved:0,pieceNumJumped:0},
     turnNum: 0
 };
 

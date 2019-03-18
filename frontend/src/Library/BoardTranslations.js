@@ -1,21 +1,18 @@
-let prevMoveToHex = (boardMatrix, prevMove) => {
+let prevMoveToHex = (prevMove) => {
     let moveStr = ""
-    moveStr += prevMove.rowFrom ? prevMove.rowFrom : "0"
-    moveStr += prevMove.colFrom ? prevMove.colFrom : "0"
-    moveStr += prevMove.rowTo ? prevMove.rowTo : "0"
-    moveStr += prevMove.colTo ? prevMove.colTo : "0"
-    if (Math.abs(prevMove.rowFrom - prevMove.rowTo)>1){
-        moveStr += (prevMove.rowTo + prevMove.rowFrom)/2
-        moveStr += (prevMove.colTo + prevMove.colFrom)/2
-    }
-    return moveStr.padEnd(6,"0")
+    //adds piecenum of active piece in first byte
+    moveStr += prevMove.pieceNumMoved.toString(16).padStart(2,"0")
+    //add piecenum of jumped piece in second byte
+    moveStr += prevMove.pieceNumJumped.toString(16).padStart(2,"0")
+    //put code for double jump in here
+    return moveStr.padEnd(8,"0")
 }
 
 export default {
     MatrixAndMoveToBNStr:(board,prevMove,turnNum) =>{
         let BNStr = "0x"
-        BNStr += prevMoveToHex(board,prevMove)
-        BNStr += turnNum.toString(16).padStart(10, "0")
+        BNStr += prevMoveToHex(prevMove)
+        BNStr += turnNum.toString(16).padStart(8, "0")
 
         //convert board matrix into pieces array
         let pieces = []
@@ -61,7 +58,7 @@ export default {
             //fill pieces into the board
             if (pieceBinary.charAt(0) === "1"){
                 boardMatrix[row][col] = {
-                    id: i-1,
+                    id: i-8,
                     red: (i<21),
                     active: (pieceBinary.charAt(0) === "1"),
                     queen: (pieceBinary.charAt(1) === "1"),

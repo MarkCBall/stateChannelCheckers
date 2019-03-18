@@ -33,6 +33,17 @@ export default {
     },
     handleMove:(dispatch, board,validSpot,activeSquare) => {
         return (dispatch) =>{
+            let pieceNumJumped
+            let killedRow
+            let killedCol
+            if (Math.abs(validSpot.row - activeSquare.row)>1){
+                killedRow = (validSpot.row + activeSquare.row)/2
+                killedCol = (validSpot.col + activeSquare.col)/2
+                pieceNumJumped = board[killedRow][killedCol].id
+            }else{
+                pieceNumJumped = 0
+            }
+
             dispatch({
                 type: PREV_MOVE_STATS,
                 payload: {
@@ -40,6 +51,8 @@ export default {
                     rowTo:validSpot.row,
                     colFrom:activeSquare.col,
                     colTo:validSpot.col,
+                    pieceNumMoved: board[activeSquare.row][activeSquare.col].id,
+                    pieceNumJumped: pieceNumJumped
                 }
             })
             dispatch({
@@ -57,9 +70,7 @@ export default {
                 dataToUpdate = {...dataToUpdate, queen:true}
             }
             //if you moved two squares, it was an attack - kill the jumped piece
-            if (Math.abs(validSpot.row - activeSquare.row)>1){
-                let killedRow = (validSpot.row + activeSquare.row)/2
-                let killedCol = (validSpot.col + activeSquare.col)/2
+            if (pieceNumJumped>0){
                 boardMatrix[killedRow][killedCol] = {active:0, row:killedRow, col:killedCol}
             }
             //copy the old piece into the new location
