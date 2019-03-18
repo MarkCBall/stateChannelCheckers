@@ -14,15 +14,11 @@ class GameStats extends Component {
     }
 
     renderBoardBN = (boardBN) =>{
-        //console.log(BNString)
         return <div>
-            <br/>Board as a string is:
-            {/* //<br/>{this.prevMoveToHex(this.props.boardMatrix, this.props.prevMove)} */}
-            <br/>{boardBN.substr(0,18)}
+            {boardBN.substr(0,18)}
             <br/>{boardBN.substr(18,24)}
             <br/>{boardBN.substr(42,24)}
         </div>
-
     }
 
     
@@ -30,8 +26,15 @@ class GameStats extends Component {
      render() {
         return (
             <div>
+                <br/>Propose board as a string:
+                <br/><button>Sign and send move</button><button>Post move to blockchain</button>
                 {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove))}
-                <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
+                if str != oldstr
+                <br/><br/>
+                opponent gave you this string
+                {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove))}
+                <button>if invalid, repost previous move on blockchain</button>
+
             </div>
         )
     }            

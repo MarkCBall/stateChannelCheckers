@@ -33,6 +33,18 @@ export default {
     },
     handleMove:(dispatch, board,validSpot,activeSquare) => {
         return (dispatch) =>{
+            let p1Went = board[activeSquare.row][activeSquare.col].red
+            dispatch({
+                type: REMEMBER_PREV_MOVE,
+                payload: {
+                    rowFrom:activeSquare.row,
+                    rowTo:validSpot.row,
+                    colFrom:activeSquare.col,
+                    colTo:validSpot.col,
+                    p1Went:p1Went
+                }
+            })
+
             let boardMatrix = board;
             let dataToUpdate = {row:validSpot.row, col:validSpot.col}
             //if you get to the end of the board, make the piece a queen
@@ -63,24 +75,7 @@ export default {
                     activeSquare: {},
                 }
             })
-            
-            let prevMove ={
-                    // movedFrom:validSpot,
-                    // moveTo:activeSquare
-                    rowFrom:activeSquare.row,
-                    rowTo:validSpot.row,
-                    colFrom:activeSquare.col,
-                    colTo:validSpot.col
-                }
-            dispatch({
-                type: REMEMBER_PREV_MOVE,
-                payload: {
-                    rowFrom:activeSquare.row,
-                    rowTo:validSpot.row,
-                    colFrom:activeSquare.col,
-                    colTo:validSpot.col
-                }
-            })
+           
 
             dispatch({type: NEXT_TURN})
         }

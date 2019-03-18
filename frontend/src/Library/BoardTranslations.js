@@ -11,10 +11,19 @@ let prevMoveToHex = (boardMatrix, prevMove) => {
     return moveStr.padEnd(16,"0")
 }
 
+// let playerNumByte = (boardMatrix, prevMove) => {
+
+//     if ( (boardMatrix[prevMove.rowFrom] != undefined) && boardMatrix[prevMove.rowFrom][prevMove.colFrom].red)
+//         return "01"
+//     return "00"
+    
+// }
+
 
 export default {
     MatrixAndMoveToBNStr:(board,prevMove) =>{
         let BNStr = "0x"
+        BNStr += prevMove.p1Went ? "01" : "00"
         BNStr += prevMoveToHex(board,prevMove)
 
         //convert board matrix into pieces array

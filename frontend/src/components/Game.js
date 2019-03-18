@@ -21,6 +21,9 @@ class Game extends Component {
                     gameID__________CreateNew/AcceptGame<br/>
                     Your color RED/BLACK  ----
                     You are wagering XXX tokenName on this game<br/>
+                    <br/>
+                    Game is currently -NOT- timed on the blockchain
+                    <br/> (if enforced)-You need to make a move by block# XXX-   current block# is ####
 
 
                 </p>

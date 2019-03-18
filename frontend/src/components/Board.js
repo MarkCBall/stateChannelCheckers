@@ -17,14 +17,12 @@ class Board extends Component {
     render() {
         return (
             <div>
+                <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
                 <div className="container">
                     {this.props.boardMatrix.map((row,rowIndex) =>
                         <div key={rowIndex} className="row">
                             {row.map((piece,colIndex) =>
-                                
                                 this.renderSquare(rowIndex, colIndex, piece)
-                                    
-                                
                             )}
                         </div>
                     )}
