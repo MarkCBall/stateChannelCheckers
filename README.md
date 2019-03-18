@@ -5,20 +5,13 @@
 
 ### Bytes 1-8 represent the most recent move used to get to the current board state.
 -The first byte represents the pieceNum of the piece that was moved
--The second byte represents the row and column of where the moved piece was moved to
--The third, fourth and fifth byte represents pieceNum any piece that was jumped(killed). One byte per pieceNum.
--The last three bytes represent the turn number or nonce of the game.
+-The second, third and fourth bytes represents pieceNum any piece that was jumped(killed). One byte per pieceNum.
+-The last four bytes represent the turn number or nonce of the game.
 
 #### PieceNum as bytes
 The first piece is represented in the piece stored at the 9th byte of the data structure. The second piece is in the 10th byte. There are 24 total pieces. See below on how to decode the byte into piece data.
 
 The last three bits of the 9th byte represent the column number of the 1st piece.
-
-
-#### Bytes representing rows and columns
--  The first four bits is row and second four bits is column
-00010010 is row 1 colum 2
-01110000 is row 7 colum 0
 
 ### Decoding the board (Bytes 9-32)
 ```
