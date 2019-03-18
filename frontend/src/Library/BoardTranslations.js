@@ -9,8 +9,8 @@ export default {
             })
         })
         //convert pieces array into hex string
-        let piecesHex = "0x"
-        for(let i=0;i<32;i++){
+        let piecesHex = ""
+        for(let i=8;i<32;i++){
             let pieceBinary = ""
             if (typeof pieces[i] !== 'undefined'){
                 pieceBinary +=  (pieces[i].active) ? "1" : "0"

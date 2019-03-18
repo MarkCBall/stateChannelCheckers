@@ -72,7 +72,6 @@ export default {
                     colFrom:activeSquare.col,
                     colTo:validSpot.col
                 }
-            console.log(prevMove)
             dispatch({
                 type: REMEMBER_PREV_MOVE,
                 payload: {

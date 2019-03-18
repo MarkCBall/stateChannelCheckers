@@ -17,19 +17,32 @@ class GameStats extends Component {
         //console.log(BNString)
         return <div>
             <br/>Board as a string is:
-            <br/>{boardBN.substr(0,18)}
-            <br/>{boardBN.substr(18,24)}
-            <br/>{boardBN.substr(42,24)}
+            <br/>{this.prevMoveToHex(this.props.boardMatrix, this.props.prevMove)}
+            <br/>{boardBN.substr(0,24)}
+            <br/>{boardBN.substr(24,24)}
         </div>
 
+    }
+
+    prevMoveToHex = (boardMatrix, prevMove) => {
+        let moveStr = ""
+        moveStr += prevMove.rowFrom ? prevMove.rowFrom : "0"
+        moveStr += prevMove.colFrom ? prevMove.colFrom : "0"
+        moveStr += prevMove.rowTo ? prevMove.rowTo : "0"
+        moveStr += prevMove.colTo ? prevMove.colTo : "0"
+        if (Math.abs(prevMove.rowFrom - prevMove.rowTo)>1){
+            moveStr += (prevMove.rowTo + prevMove.rowFrom)/2
+            moveStr += (prevMove.colTo + prevMove.colFrom)/2
+        }
+        return "0x"+ moveStr.padStart(16,"0")
     }
 
      render() {
         return (
             <div>
+                {BoardTranslations.MatrixtoBN(this.props.boardMatrix)}<br/>
                 {this.renderBoardBN(BoardTranslations.MatrixtoBN(this.props.boardMatrix))}
                 <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
-                {this.props.prevMove.rowFrom}        
             </div>
         )
     }            
