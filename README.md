@@ -4,11 +4,10 @@
 
 
 ### Bytes 1-8 represent the most recent move used to get to the current board state.
--The first byte represents the player who made the move. 0 for red and 1 for black
--The second byte represents the row and colum of where the moved piece came from
--The third byte represents the row and column of where the moved piece was moved to
--The fourth byte represents the row and column of any piece that was killed
--The last four bytes represent the turn number of nonce of the game.
+-The first byte represents the row and colum of where the moved piece came from
+-The second byte represents the row and column of where the moved piece was moved to
+-The third byte represents the row and column of any piece that was jumped(killed) - note piece at 00 can never be jumped so it represents no pieces jumped
+-The last five bytes represent the turn number or nonce of the game.
 
 #### Bytes representing rows and columns
 -  The first four bits is row and second four bits is column
