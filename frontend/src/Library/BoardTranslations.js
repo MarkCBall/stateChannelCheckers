@@ -1,5 +1,22 @@
+let prevMoveToHex = (boardMatrix, prevMove) => {
+    let moveStr = ""
+    moveStr += prevMove.rowFrom ? prevMove.rowFrom : "0"
+    moveStr += prevMove.colFrom ? prevMove.colFrom : "0"
+    moveStr += prevMove.rowTo ? prevMove.rowTo : "0"
+    moveStr += prevMove.colTo ? prevMove.colTo : "0"
+    if (Math.abs(prevMove.rowFrom - prevMove.rowTo)>1){
+        moveStr += (prevMove.rowTo + prevMove.rowFrom)/2
+        moveStr += (prevMove.colTo + prevMove.colFrom)/2
+    }
+    return moveStr.padEnd(16,"0")
+}
+
+
 export default {
-    MatrixtoBN:(board) =>{
+    MatrixAndMoveToBN:(board,prevMove) =>{
+        let BNStr = "0x"
+        BNStr += prevMoveToHex(board,prevMove)
+
         //convert board matrix into pieces array
         let pieces = []
         board.forEach((boardRow)=>{
@@ -9,7 +26,6 @@ export default {
             })
         })
         //convert pieces array into hex string
-        let piecesHex = ""
         for(let i=8;i<32;i++){
             let pieceBinary = ""
             if (typeof pieces[i] !== 'undefined'){
@@ -20,9 +36,9 @@ export default {
             }
             else
                 pieceBinary = "00000000"
-            piecesHex += parseInt(pieceBinary,2).toString(16).padStart(2,"0")   
+            BNStr += parseInt(pieceBinary,2).toString(16).padStart(2,"0")   
         }
-        return piecesHex 
+        return BNStr 
     },
 
     BNtoMatrix: (BN) =>{
