@@ -32,7 +32,6 @@ class GameStats extends Component {
                     this.props.signAndPostMove(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
                     >Sign and send move</button><button>Post move to blockchain</button>
                 {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
-                if str != oldstr
                 <br/><br/>
                 opponent gave you this string
                 {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}

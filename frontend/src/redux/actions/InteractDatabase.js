@@ -1,16 +1,32 @@
 import { POST_SIGNED_MOVE } from "../constants/InteractDatabase";
 // import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
 
-
+import {ethers} from "ethers";
 
 
 export default {
 
     signAndPostMove: (dispatch, boardBN) => {
-        //let sig = library.sign(boardBN)
+        
+
+
+
+
         //post to the server
 
-        return (dispatch) => {
+
+        return (dispatch, getState) => {
+            //sign the board from the logged in account
+
+            //boardBN should be a BN not a string!
+            console.log(getState())
+            let boardHash = ethers.utils.solidityKeccak256(['uint'],[boardBN]);
+            let arrayifiedBoardHash = ethers.utils.arrayify(boardHash)
+
+            // let firstwallet = new ethers.Wallet(this.props.privateKey)
+            // let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)//.then(console.log)
+            // let sig = ethers.utils.splitSignature(flatSig);
+
             let turnNum = boardBN.substr(10,8)
             dispatch({
                 type: POST_SIGNED_MOVE,
