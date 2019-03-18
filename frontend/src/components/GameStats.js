@@ -30,8 +30,7 @@ class GameStats extends Component {
      render() {
         return (
             <div>
-                {BoardTranslations.MatrixAndMoveToBN(this.props.boardMatrix,this.props.prevMove)}<br/>
-                {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBN(this.props.boardMatrix,this.props.prevMove))}
+                {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove))}
                 <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
             </div>
         )

@@ -13,7 +13,7 @@ let prevMoveToHex = (boardMatrix, prevMove) => {
 
 
 export default {
-    MatrixAndMoveToBN:(board,prevMove) =>{
+    MatrixAndMoveToBNStr:(board,prevMove) =>{
         let BNStr = "0x"
         BNStr += prevMoveToHex(board,prevMove)
 
