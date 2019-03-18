@@ -29,8 +29,8 @@
     box-shadow: inset -4px 0 0 yellow, inset 0 -4px 0 yellow, inset 4px 0 0 yellow, inset 0 4px 0 yellow;
 }
 .valid{
-    width:45px;
-    height:45px;
+    width:40px;
+    height:40px;
     background: green;
     border-radius: 50%;
 }

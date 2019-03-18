@@ -24,7 +24,7 @@ class Piece extends Component {
                         className="valid" 
                         onClick={()=>
                             this.props.handleMove(this.props.boardMatrix,piece,this.props.activeSquare)
-                        }>
+                        }><div></div>
                     </div>
         //if its selected, hightling and render it
         else if (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
