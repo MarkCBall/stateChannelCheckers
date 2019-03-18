@@ -4,47 +4,46 @@ import { connect } from "react-redux";
 
 
 class Piece extends Component {
- 
+
     renderPiece = (piece) => {
-        //console.log(piece) make into component
-        let temp = () =>{
-            if (piece.active)
-                if (piece.red){
-                    if (piece.queen){
-                        return <div className="red queen" onClick={()=>this.props.handlePieceClick(this.props.boardMatrix,piece)}></div>
-                    }
-                    else{
-                        return <div className="red" onClick={()=>this.props.handlePieceClick(this.props.boardMatrix,piece)}></div>
-                    }
-                }else{
-                    if (piece.queen){
-                        return <div className="black queen" onClick={()=>this.props.handlePieceClick(this.props.boardMatrix,piece)}></div>
-                    }
-                    else{
-                        return <div className="black" onClick={()=>this.props.handlePieceClick(this.props.boardMatrix,piece)}></div>
-                    }
-                }
-            }
-
-        if ((this.props.validMovesMatrix[piece.row]!==undefined) && this.props.validMovesMatrix[piece.row][piece.col])
-            //console.log(piece.row, piece.col)
-            return <div className="valid" onClick={()=>this.props.handleMove(this.props.boardMatrix,piece,this.props.activeSquare)}>{temp()}</div>
-        if (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
-            return <div className="selected" >{temp()}</div>
-        else 
-            return temp()
+        if (piece.active){
+            let classN = (piece.red) ? "red" : "black"
+            classN += (piece.queen) ? " queen" : ""
+            return  <div 
+                        className={classN} 
+                        onClick={()=>
+                            this.props.handlePieceClick(this.props.boardMatrix,piece)
+                        }>
+                    </div>
+        }
     }
-
-
+    fillSquare = (piece) => {
+        //if its a valid location to move to, hightlight it
+        if ((this.props.validMovesMatrix[piece.row]!==undefined) && this.props.validMovesMatrix[piece.row][piece.col])
+            return  <div 
+                        className="valid" 
+                        onClick={()=>
+                            this.props.handleMove(this.props.boardMatrix,piece,this.props.activeSquare)
+                        }>
+                    </div>
+        //if its selected, hightling and render it
+        else if (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
+            return  <div 
+                        className="selected">
+                            {this.renderPiece(piece)}
+                        </div>
+        //render it
+        else 
+            return this.renderPiece(piece)
+    }
 
     render() {
         return (
             <div>
-                {this.renderPiece(this.props.piece)}              
+                {this.fillSquare(this.props.piece)}              
             </div>
         )
-    }
-                
+    }            
 }
 
 function mapStateToProps(state) {
@@ -60,9 +59,6 @@ function mapDispatchToProps(dispatch) {
         handlePieceClick: (boardMatrix, piece) =>{
             dispatch(BoardRedux.handlePieceClick(dispatch, boardMatrix, piece))
         },
-        // calcBoardMatrix: (piecesBN) =>{
-        //     dispatch(BoardRedux.calcBoardMatrix(dispatch, piecesBN))
-        // },
         handleMove: (board,validSpot,activeSquare) =>{
             dispatch(BoardRedux.handleMove(dispatch, board,validSpot,activeSquare))
         }
