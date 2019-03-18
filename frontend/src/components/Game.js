@@ -18,7 +18,8 @@ class Game extends Component {
         return (
             <div>
                 <p>
-                    gameID__________CreateNew/AcceptGame<br/>
+                    opponent: addr=0xf6d5c6d500cac10ee7e6efb5c1b479cfb789950a   privkey =0x88f37cfbaed8c0c515c62a17a3a1ce2f397d08bbf20dcc788b69f11b5a5c9791
+                    <br/>gameID__________CreateNew/AcceptGame<br/>
                     Your color RED/BLACK  ----
                     You are wagering XXX tokenName on this game<br/>
                     <br/>

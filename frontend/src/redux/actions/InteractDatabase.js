@@ -6,7 +6,6 @@ import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
 
 export default {
 
-    //should rowFrom represent pieceNum not row and col for both pieceFROM and killedPiece??
 
     //array of BoardBN at each turn# in DB state
         //can cleanse to only hold last few moves?
