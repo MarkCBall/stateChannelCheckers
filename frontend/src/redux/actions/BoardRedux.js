@@ -84,7 +84,6 @@ export default {
                 type: HANDLE_MOVE,
                 payload: boardMatrix
             })
-            // dispatch({type: NEXT_TURN})
         }
     }
 }

@@ -33,7 +33,6 @@ export default {
             }
             else
                 pieceBinary = "00000000"
-            console.log(i,pieceBinary)
             BNStr += parseInt(pieceBinary,2).toString(16).padStart(2,"0")   
         }
         return BNStr 

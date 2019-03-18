@@ -1,30 +1,58 @@
 import { POST_SIGNED_MOVE } from "../constants/InteractDatabase";
-import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
+// import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
 
 
 
 
 export default {
 
+    signAndPostMove: (dispatch, boardBN) => {
+        //let sig = library.sign(boardBN)
+        //post to the server
 
-    //array of BoardBN at each turn# in DB state
-        //can cleanse to only hold last few moves?
+        return (dispatch) => {
+            let turnNum = boardBN.substr(10,8)
+            console.log(turnNum)
+            dispatch({
+                type: POST_SIGNED_MOVE,
+                payload: {
+                    board: boardBN,
+                    turnNum:turnNum,
+                    sig: "put sig here"
+                }
+            })
+        }
+    }
 
-    //signAndPostMove
-        //sign the boardBN
-        //post it to the server
-        //save BoardBN
+    //         fetch("http://35.183.188.67:3001/Channel/pending", {
+    //             method: "GET",
+    //             mode: "cors", 
+    //             headers: {
+    //                 "address":address
+    //             }
+    //         }).then((response) =>{
+    //             return response.json()
+    //         }).then((response) => {
+    //             dispatch({
+    //                 type: GET_PENDING_CHANNELS,
+    //                 payload: response
+    //             })
+    //         })
+    //     }
+    // },
+
+
     //getLatestMove
-        //get the boardBN
-        //check if the move was valid against the previous BoardBN
-            //if turnNum = turnNum+1
-            //CHECK VALIDITY OF THE PROPOSED MOVE
-                //if double move, one must be killed
-                //if +1 +1 validMoveDir ect - must be valid
-                //
-            //CHECK IF THE PROPOSED MOVE RESULTS IN PROPOSED BOARD STATE
-                //kill pieceID as needed
-                //move piece as needed
+    //get the boardBN
+    //check if the move was valid against the previous BoardBN
+    //if turnNum = turnNum+1
+    //CHECK VALIDITY OF THE PROPOSED MOVE
+    //if double move, one must be killed
+    //if +1 +1 validMoveDir ect - must be valid
+    //
+    //CHECK IF THE PROPOSED MOVE RESULTS IN PROPOSED BOARD STATE
+    //kill pieceID as needed
+    //move piece as needed
 
 
 
@@ -91,7 +119,7 @@ export default {
     //                 //     ChType = "requested";
     //                 // }
     //             //}
-                
+
 
     //             dispatch({
     //                 type: GET_CHANNEL_DETAILS,
@@ -180,5 +208,5 @@ export default {
     //     }
     // }
 
-   
+
 }

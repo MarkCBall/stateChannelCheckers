@@ -7,9 +7,7 @@ import './Board.css';
 class Board extends Component {
 
     renderSquare = (rowIndex, colIndex, piece) =>{
-        // let fromSquare = (rowIndex === this.props.prevMove.rowFrom && colIndex === this.props.prevMove.colFrom)
         return <div key={colIndex} className={"color"+((rowIndex+colIndex)%2)}>
-                    {/* {fromSquare? <div  className="from"></div>:null} */}
                     <Piece piece={piece}/>
                 </div>
     }

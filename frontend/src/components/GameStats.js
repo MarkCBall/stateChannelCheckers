@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import BoardRedux from "../redux/actions/BoardRedux";
+import InteractDatabase from "../redux/actions/InteractDatabase";
 import { connect } from "react-redux";
 
 import BoardTranslations from "../Library/BoardTranslations"
@@ -9,12 +10,11 @@ class GameStats extends Component {
 
 
     componentDidMount(){
-        let piecesBN = new BigNumber("0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf"); //64 digits long,
-        this.props.calcBoardMatrix(piecesBN)
+        let boardBN = new BigNumber("0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf"); //64 digits long,
+        this.props.calcBoardMatrix(boardBN)
     }
 
     renderBoardBN = (boardBN) =>{
-        console.log(boardBN)
         return <div>
             {boardBN.substr(0,18)}
             <br/>{boardBN.substr(18,24)}
@@ -28,7 +28,9 @@ class GameStats extends Component {
         return (
             <div>
                 <br/>Propose board as a string:
-                <br/><button>Sign and send move</button><button>Post move to blockchain</button>
+                <br/><button onClick={()=> 
+                    this.props.signAndPostMove(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
+                    >Sign and send move</button><button>Post move to blockchain</button>
                 {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
                 if str != oldstr
                 <br/><br/>
@@ -52,9 +54,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        calcBoardMatrix: (piecesBN) =>{
-            dispatch(BoardRedux.calcBoardMatrix(dispatch, piecesBN))
+        calcBoardMatrix: (boardBN) =>{
+            dispatch(BoardRedux.calcBoardMatrix(dispatch, boardBN))
         },
+        signAndPostMove: (boardBN) =>{
+            dispatch(InteractDatabase.signAndPostMove(dispatch, boardBN))
+        },
+
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GameStats);
