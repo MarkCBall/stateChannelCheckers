@@ -4,7 +4,16 @@
 
 
 ### Bytes 1-8 represent the most recent move used to get to the current board state.
-figure out and put details here
+-The first byte represents the player who made the move. 0 for red and 1 for black
+-The second byte represents the row and colum of where the moved piece came from
+-The third byte represents the row and column of where the moved piece was moved to
+-The fourth byte represents the row and column of any piece that was killed
+-The last four bytes represent the turn number of nonce of the game.
+
+#### Bytes representing rows and columns
+-  The first four bits is row and second four bits is column
+00010010 is row 1 colum 2
+01110000 is row 7 colum 0
 
 ### Decoding the board
 ```
@@ -31,7 +40,7 @@ c0 c1  c2  c3  c4  c5  c6  c7
 - [3] row#
 - [3] column#
 
-Decoded examples
+Decoded byte examples
 - 0xxxxxxx is a dead piece, it is not in play
 - 10xxxxxx is a regular piece, it can only move forwards
 - 11xxxxxx is a queen, it has reached the end of the board and go go forward or backwards
