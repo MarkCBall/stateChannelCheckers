@@ -14,9 +14,15 @@ class Piece extends Component {
                         onClick={()=>
                             this.props.handlePieceClick(this.props.boardMatrix,piece)
                         }>
+                        {/* {this.addMoveText(piece)} */}
                     </div>
         }
     }
+    // addMoveText = (piece) =>{
+    //     if (this.props.prevMove.rowTo === piece.row && this.props.prevMove.colTo === piece.col )
+    //     return 2
+    // }
+
     fillSquare = (piece) => {
         //if its a valid location to move to, hightlight it
         if ((this.props.validMovesMatrix[piece.row]!==undefined) && this.props.validMovesMatrix[piece.row][piece.col])
@@ -51,6 +57,7 @@ function mapStateToProps(state) {
         boardMatrix: state.BoardRedux.boardMatrix,
         validMovesMatrix: state.BoardRedux.validMovesMatrix,
         activeSquare: state.BoardRedux.activeSquare,
+        prevMove:state.BoardRedux.prevMove
     }
 }
 
