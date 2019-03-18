@@ -2,6 +2,8 @@ import { HANDLE_PIECE_CLICK } from "../constants/BoardRedux";
 import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
 import ValidMoves from "../../Library/ValidMoves"
 import BoardTranslations from "../../Library/BoardTranslations"
+import { HANDLE_MOVE } from "../constants/BoardRedux";
+
 // import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
 // import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
 // import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
@@ -40,6 +42,46 @@ export default {
                     type: SET_BOARD_MATRIX,
                     payload: BoardTranslations.BNtoMatrix(piecesBN)
                 })
+        }
+    },
+    handleMove:(dispatch, board,validSpot,activeSquare) => {
+        return (dispatch) =>{
+            let boardMatrix = board;
+            let dataToUpdate = {row:validSpot.row, col:validSpot.col}
+            //if you get to the end of the board, make the piece a queen
+            if (validSpot.row === 7 || validSpot.row === 0){
+                dataToUpdate = {...dataToUpdate, queen:true}
+            }
+            //if you moved two squares, it was an attack - kill the jumped piece
+            if (Math.abs(validSpot.row - activeSquare.row)>1){
+                let killedRow = (validSpot.row + activeSquare.row)/2
+                let killedCol = (validSpot.col + activeSquare.col)/2
+                boardMatrix[killedRow][killedCol] = {active:0, row:killedRow, col:killedCol}
+            }
+            //copy the old piece into the new location
+            boardMatrix[validSpot.row][validSpot.col] = {
+                ...boardMatrix[activeSquare.row][activeSquare.col],
+                ...dataToUpdate
+            }
+            //delete the old piece from the old location
+            boardMatrix[activeSquare.row][activeSquare.col] = {active:0, row:activeSquare.row, col:activeSquare.col}
+
+
+       
+
+
+
+            dispatch({
+                type: HANDLE_MOVE,
+                payload: {
+                    boardMatrix:boardMatrix,
+                    validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
+                    activeSquare: {},
+                    p1Turn: true//!this.state.p1Turn
+                }
+            })
+
+                //dispatch      this.calcBNState(this.props.boardMatrix)
         }
     }
 

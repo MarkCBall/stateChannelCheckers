@@ -17,7 +17,7 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            boardMatrix: [],
+            //boardMatrix: [],
             validMovesMatrix: [],
             activeSquare: {},
             p1Turn: true
@@ -75,32 +75,33 @@ class Board extends Component {
 
    
     handleMove = (board,validSpot,activeSquare) => {
-        let boardMatrix = board;
-        let dataToUpdate = {row:validSpot.row, col:validSpot.col}
-        //if you get to the end of the board, make the piece a queen
-        if (validSpot.row === 7 || validSpot.row === 0){
-            dataToUpdate = {...dataToUpdate, queen:true}
-        }
-        //if you moved two squares, it was an attack - kill the jumped piece
-        if (Math.abs(validSpot.row - activeSquare.row)>1){
-            let killedRow = (validSpot.row + activeSquare.row)/2
-            let killedCol = (validSpot.col + activeSquare.col)/2
-            boardMatrix[killedRow][killedCol] = {active:0, row:killedRow, col:killedCol}
-        }
-        //copy the old piece into the new location
-        boardMatrix[validSpot.row][validSpot.col] = {
-            ...boardMatrix[activeSquare.row][activeSquare.col],
-            ...dataToUpdate
-        }
-        //delete the old piece from the old location
-        boardMatrix[activeSquare.row][activeSquare.col] = {active:0, row:activeSquare.row, col:activeSquare.col}
-        this.setState({
-            ...this.state,
-            boardMatrix:boardMatrix,
-            validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
-            activeSquare: {},
-            p1Turn: !this.state.p1Turn
-        })
+        this.props.handleMove(board,validSpot,activeSquare)
+        // let boardMatrix = board;
+        // let dataToUpdate = {row:validSpot.row, col:validSpot.col}
+        // //if you get to the end of the board, make the piece a queen
+        // if (validSpot.row === 7 || validSpot.row === 0){
+        //     dataToUpdate = {...dataToUpdate, queen:true}
+        // }
+        // //if you moved two squares, it was an attack - kill the jumped piece
+        // if (Math.abs(validSpot.row - activeSquare.row)>1){
+        //     let killedRow = (validSpot.row + activeSquare.row)/2
+        //     let killedCol = (validSpot.col + activeSquare.col)/2
+        //     boardMatrix[killedRow][killedCol] = {active:0, row:killedRow, col:killedCol}
+        // }
+        // //copy the old piece into the new location
+        // boardMatrix[validSpot.row][validSpot.col] = {
+        //     ...boardMatrix[activeSquare.row][activeSquare.col],
+        //     ...dataToUpdate
+        // }
+        // //delete the old piece from the old location
+        // boardMatrix[activeSquare.row][activeSquare.col] = {active:0, row:activeSquare.row, col:activeSquare.col}
+        // this.setState({
+        //     ...this.state,
+        //     boardMatrix:boardMatrix,
+        //     validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
+        //     activeSquare: {},
+        //     p1Turn: !this.state.p1Turn
+        // })
         //this.calcBNState(this.props.boardMatrix)
     }
 
@@ -171,6 +172,9 @@ function mapDispatchToProps(dispatch) {
         },
         setBoardMatrix: (piecesBN) =>{
             dispatch(BoardRedux.setBoardMatrix(dispatch, piecesBN))
+        },
+        handleMove: (board,validSpot,activeSquare) =>{
+            dispatch(BoardRedux.handleMove(dispatch, board,validSpot,activeSquare))
         }
     }
 }
