@@ -3,6 +3,7 @@ import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
 import ValidMoves from "../../Library/ValidMoves"
 import BoardTranslations from "../../Library/BoardTranslations"
 import { HANDLE_MOVE } from "../constants/BoardRedux";
+import { NEXT_TURN } from "../constants/BoardRedux";
 
 // import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
 // import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
@@ -24,8 +25,8 @@ import { HANDLE_MOVE } from "../constants/BoardRedux";
 
 export default {
     handlePieceClick: (dispatch, boardMatrix, piece) => {
-        return (dispatch) =>{
-            //if (piece.red === this.state.p1Turn){
+        return (dispatch,getState) =>{
+            if (piece.red === getState().BoardRedux.p1Turn){
                 dispatch({
                     type: HANDLE_PIECE_CLICK,
                         payload: {
@@ -33,10 +34,10 @@ export default {
                             validMovesMatrix:ValidMoves.getValidMoves(boardMatrix, piece)
                         }
                 })
-            //}
+            }
         }
     },
-    setBoardMatrix:(dispatch, piecesBN) => {
+    calcBoardMatrix:(dispatch, piecesBN) => {
         return (dispatch) =>{
                 dispatch({
                     type: SET_BOARD_MATRIX,
@@ -65,23 +66,15 @@ export default {
             }
             //delete the old piece from the old location
             boardMatrix[activeSquare.row][activeSquare.col] = {active:0, row:activeSquare.row, col:activeSquare.col}
-
-
-       
-
-
-
             dispatch({
                 type: HANDLE_MOVE,
                 payload: {
                     boardMatrix:boardMatrix,
                     validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
                     activeSquare: {},
-                    p1Turn: true//!this.state.p1Turn
                 }
             })
-
-                //dispatch      this.calcBNState(this.props.boardMatrix)
+            dispatch({type: NEXT_TURN})
         }
     }
 

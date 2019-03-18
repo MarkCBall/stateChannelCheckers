@@ -1,6 +1,7 @@
 import { HANDLE_PIECE_CLICK } from "../constants/BoardRedux";
 import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
 import { HANDLE_MOVE } from "../constants/BoardRedux";
+import { NEXT_TURN } from "../constants/BoardRedux";
 
 
 // import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
@@ -37,9 +38,13 @@ export default function(state = initialState, action) {
         ...state,
         ...action.payload
     }
+    case NEXT_TURN:
+    return {
+        ...state,
+        p1Turn:!state.p1Turn
+    }
 
-
-
+    
 
     
 
