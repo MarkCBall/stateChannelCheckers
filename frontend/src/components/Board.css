@@ -11,10 +11,23 @@
 .red{
     width:40px;
     height:40px;
-    background: red;
+    background: rgba(255, 0, 0, 0.479);
     border-radius: 50%;
 }
 .black{
+    width:40px;
+    height:40px;
+    background: rgba(0, 0, 0, 0.479);
+    border-radius: 50%;
+
+}
+.Red{
+    width:40px;
+    height:40px;
+    background: red;
+    border-radius: 50%;
+}
+.Black{
     width:40px;
     height:40px;
     background: black;

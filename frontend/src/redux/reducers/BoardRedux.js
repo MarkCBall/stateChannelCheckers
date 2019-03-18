@@ -33,11 +33,6 @@ export default function(state = initialState, action) {
     case HANDLE_MOVE:
     return {
         ...state,
-        ...action.payload
-    }
-    case HANDLE_MOVE:
-    return {
-        ...state,
         boardMatrix:action.payload
     }
     case CLEAR_SELECTION:

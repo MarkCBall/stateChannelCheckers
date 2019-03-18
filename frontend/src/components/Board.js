@@ -17,7 +17,7 @@ class Board extends Component {
     render() {
         return (
             <div>
-                <p>{this.props.turnNum%2 ? "P2 BLACK TURN" : "P1 RED TURN"} -- TURN# {this.props.turnNum}</p>
+                <p>TURN# {this.props.turnNum}</p>
                 <div className="container">
                     {this.props.boardMatrix.map((row,rowIndex) =>
                         <div key={rowIndex} className="row">

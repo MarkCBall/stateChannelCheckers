@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import BoardRedux from "../redux/actions/BoardRedux";
+// import BoardRedux from "../redux/actions/BoardRedux";
 import { connect } from "react-redux";
 
-import BoardTranslations from "../Library/BoardTranslations"
-import { BigNumber } from "ethers/utils";
+// import BoardTranslations from "../Library/BoardTranslations"
+// import { BigNumber } from "ethers/utils";
 
 class Game extends Component {
 

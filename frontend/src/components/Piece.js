@@ -5,23 +5,30 @@ import { connect } from "react-redux";
 
 class Piece extends Component {
 
-    renderPiece = (piece) => {
+    getPieceClassName = (piece,turnNum) => {
         if (piece.active){
-            let classN = (piece.red) ? "red" : "black"
-            classN += (piece.queen) ? " queen" : ""
-            return  <div 
-                        className={classN} 
-                        onClick={()=>
-                            this.props.handlePieceClick(this.props.boardMatrix,piece)
-                        }>
-                        {/* {this.addMoveText(piece)} */}
-                    </div>
+            let className = ""
+            if (turnNum%2) //if black
+                className += (piece.red) ? "red" : "Black"
+            else
+                className += (piece.red) ? "Red" : "black"
+            className += (piece.queen) ? " queen" : ""
+            return className
         }
+        
     }
-    // addMoveText = (piece) =>{
-    //     if (this.props.prevMove.rowTo === piece.row && this.props.prevMove.colTo === piece.col )
-    //     return 2
-    // }
+
+    renderPiece = (piece) => {
+        return  <div 
+                    className={this.getPieceClassName(piece,this.props.turnNum)} 
+                    onClick={()=>
+                        this.props.handlePieceClick(this.props.boardMatrix,piece)
+                    }>
+                    {/* {this.addMoveText(piece)} */}
+                </div>
+
+    }
+
 
     fillSquare = (piece) => {
         //if its a valid location to move to, hightlight it
@@ -57,7 +64,8 @@ function mapStateToProps(state) {
         boardMatrix: state.BoardRedux.boardMatrix,
         validMovesMatrix: state.BoardRedux.validMovesMatrix,
         activeSquare: state.BoardRedux.activeSquare,
-        prevMove:state.BoardRedux.prevMove
+        prevMove: state.BoardRedux.prevMove,
+        turnNum: state.BoardRedux.turnNum
     }
 }
 
