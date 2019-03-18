@@ -1,3 +1,5 @@
+import { HANDLE_PIECE_CLICK } from "../constants/BoardRedux";
+import ValidMoves from "../../Library/ValidMoves"
 // import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
 // import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
 // import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
@@ -12,7 +14,27 @@
 
 // import {ethers} from "ethers";
 
+
+
+
+
 export default {
+    handlePieceClick: (dispatch, boardMatrix, piece) => {
+        return (dispatch) =>{
+            //if (piece.red === this.state.p1Turn){
+                dispatch({
+                    type: HANDLE_PIECE_CLICK,
+                        payload: {
+                            activeSquare:{row:piece.row, col:piece.col},
+                            validMovesMatrix:ValidMoves.getValidMoves(boardMatrix, piece)
+                        }
+                })
+            //}
+        }
+        
+        
+
+    }
 
     // renderChButtons: (dispatch, addressSignedIn) => {
     //     return (dispatch) => {

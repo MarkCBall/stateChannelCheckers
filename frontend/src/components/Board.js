@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 // import {ethers} from "ethers";
 import { BigNumber } from "ethers/utils";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 // import LoginRedux from "../redux/actions/LoginRedux";
-// import InteractDatabase from "../redux/actions/InteractDatabase";
+ import BoardRedux from "../redux/actions/BoardRedux";
 // import InteractBlockchain from "../redux/actions/InteractBlockchain";
 // import {isValidAddress} from "ethereumjs-util";
 
@@ -63,10 +63,10 @@ class Board extends Component {
                 }
             }
 
-        if ((this.state.validMovesMatrix[piece.row]!==undefined) && this.state.validMovesMatrix[piece.row][piece.col])
+        if ((this.props.validMovesMatrix[piece.row]!==undefined) && this.props.validMovesMatrix[piece.row][piece.col])
             //console.log(piece.row, piece.col)
-            return <div className="valid" onClick={()=>this.handleMove(this.state.boardMatrix,piece,this.state.activeSquare)}>{temp()}</div>
-        if (piece.row === this.state.activeSquare.row && piece.col === this.state.activeSquare.col)
+            return <div className="valid" onClick={()=>this.handleMove(this.state.boardMatrix,piece,this.props.activeSquare)}>{temp()}</div>
+        if (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
             return <div className="selected" >{temp()}</div>
         else 
             return temp()
@@ -110,14 +110,14 @@ class Board extends Component {
 
     
     handlePieceClick = (boardMatrix, piece) =>{
- 
-        if (piece.red === this.state.p1Turn){
-            this.setState({
-                ...this.state,
-                activeSquare:{row:piece.row, col:piece.col},
-                validMovesMatrix:ValidMoves.getValidMoves(boardMatrix, piece)
-            })
-        }
+        this.props.handlePieceClick(boardMatrix, piece)
+        // if (piece.red === this.state.p1Turn){
+        //     this.setState({
+        //         ...this.state,
+        //         activeSquare:{row:piece.row, col:piece.col},
+        //         validMovesMatrix:ValidMoves.getValidMoves(boardMatrix, piece)
+        //     })
+        // }
 
         
     }
@@ -152,4 +152,25 @@ class Board extends Component {
                 
 }
 
-export default Board;
+
+
+function mapStateToProps(state) {
+    return {
+        boardMatrix: state.BoardRedux.boardMatrix,
+        validMovesMatrix: state.BoardRedux.validMovesMatrix,
+        activeSquare: state.BoardRedux.activeSquare,
+        p1Turn: state.BoardRedux.p1Turn
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        handlePieceClick: (boardMatrix, piece) =>{
+            dispatch(BoardRedux.handlePieceClick(dispatch, boardMatrix, piece))
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Board);
+
+
+// export default Board;
