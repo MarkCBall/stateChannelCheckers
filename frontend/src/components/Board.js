@@ -20,17 +20,10 @@ class Board extends Component {
         this.props.calcBoardMatrix(piecesBN)
     }
     
-
-
-
-
-
     render() {
         return (
             <div>
-                
                 <div className="container center">
-            
                     {this.props.boardMatrix.map((row,rowIndex) =>
                         <div key={rowIndex} className="row">
                             {row.map((piece,colIndex) =>
@@ -44,14 +37,10 @@ class Board extends Component {
 
                     <p>boardState:{BoardTranslations.MatrixtoBN(this.props.boardMatrix)}</p>
                     <p>{this.props.p1Turn ? "P1 RED TURN" : "P2 BLACK TURN"}</p>
-
-     
-                </div> 
-                          
+                </div>        
             </div>
         )
-    }
-                
+    }       
 }
 
 
