@@ -14,7 +14,7 @@
 00010010 is row 1 colum 2
 01110000 is row 7 colum 0
 
-### Decoding the board
+### Decoding the board (Bytes 9-32)
 ```
 x is red o is black
 RED          RED           RED
