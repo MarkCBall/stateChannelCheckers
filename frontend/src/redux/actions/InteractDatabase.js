@@ -1,13 +1,37 @@
-import { GET_PENDING_CHANNELS } from "../constants/InteractDatabase";
-import { GET_REQUESTED_CHANNELS } from "../constants/InteractDatabase";
-import { GET_CHANNEL_DETAILS } from "../constants/InteractDatabase";
-import { GET_HIGHEST_NONCE } from "../constants/InteractDatabase";
-import { GET_LATEST_TX } from "../constants/InteractDatabase";
-import { GET_HIGHEST_SIGNED_NONCE } from "../constants/InteractDatabase";
-import { GET_LATEST_SIGNED_TX } from "../constants/InteractDatabase";
+import { POST_SIGNED_MOVE } from "../constants/InteractDatabase";
+import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
+
+
 
 
 export default {
+
+    //should rowFrom represent pieceNum not row and col for both pieceFROM and killedPiece??
+
+    //array of BoardBN at each turn# in DB state
+        //can cleanse to only hold last few moves?
+
+    //signAndPostMove
+        //sign the boardBN
+        //post it to the server
+        //save BoardBN
+    //getLatestMove
+        //get the boardBN
+        //check if the move was valid against the previous BoardBN
+            //if turnNum = turnNum+1
+            //CHECK VALIDITY OF THE PROPOSED MOVE
+                //if double move, one must be killed
+                //if +1 +1 validMoveDir ect - must be valid
+                //
+            //CHECK IF THE PROPOSED MOVE RESULTS IN PROPOSED BOARD STATE
+                //kill pieceID as needed
+                //move piece as needed
+
+
+
+
+
+
 
     // getPendingChannels: (dispatch, address) => {
     //     return (dispatch) => {
