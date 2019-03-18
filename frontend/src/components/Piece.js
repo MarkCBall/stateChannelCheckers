@@ -15,25 +15,26 @@ class Piece extends Component {
             className += (piece.queen) ? " queen" : ""
             return className
         }
-        
     }
 
     renderPiece = (piece) => {
-        return  <div 
-                    className={this.getPieceClassName(piece,this.props.turnNum)} 
-                    onClick={()=>
-                        this.props.handlePieceClick(this.props.boardMatrix,piece)
-                    }>
-                    {/* {this.addMoveText(piece)} */}
-                </div>
-
+        let pieceDiv = <div 
+                        className={this.getPieceClassName(piece,this.props.turnNum)} 
+                        onClick={()=>
+                            this.props.handlePieceClick(this.props.boardMatrix,piece)
+                        }>
+                    </div>
+        if (piece.row === this.props.prevMove.rowTo && piece.col === this.props.prevMove.colTo)
+            return <div className="last-moved-highlight">{pieceDiv}</div>
+        return pieceDiv
     }
 
 
     fillSquare = (piece) => {
+        let squareDiv
         //if its a valid location to move to, hightlight it
         if ((this.props.validMovesMatrix[piece.row]!==undefined) && this.props.validMovesMatrix[piece.row][piece.col])
-            return  <div 
+            squareDiv = <div 
                         className="valid" 
                         onClick={()=>
                             this.props.handleMove(this.props.boardMatrix,piece,this.props.activeSquare)
@@ -41,13 +42,18 @@ class Piece extends Component {
                     </div>
         //if its selected, hightling and render it
         else if (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
-            return  <div 
+            squareDiv = <div 
                         className="selected">
                             {this.renderPiece(piece)}
                         </div>
         //render it
         else 
-            return this.renderPiece(piece)
+            squareDiv = this.renderPiece(piece)
+            
+        //if the square is where the last piece moved from, highlight it
+        if (piece.row === this.props.prevMove.rowFrom && piece.col === this.props.prevMove.colFrom)
+            return <div className="last-moved-highlight"><div className="blank">{squareDiv}</div></div>
+        return squareDiv
     }
 
     render() {
