@@ -86,13 +86,14 @@ export default {
             let wallet = ethers.Wallet.fromMnemonic(phrase).connect(provider);
 
             let contractaddress = "0x59b8c37a34bc5f9ce80c71d5c6f307e698e6e20a"
-            let contractabi = [{"constant":false,"inputs":[{"name":"salt","type":"uint256"}],"name":"deploy","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"salt","type":"uint256"}],"name":"Deployed","type":"event"}]
+            let contractabi = [{"constant":true,"inputs":[{"name":"salt","type":"uint256"}],"name":"deploy","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"salt","type":"uint256"}],"name":"Deployed","type":"event"}]
             let contract = new ethers.Contract(contractaddress,contractabi,wallet)
 
-            contract.deploy(343)
-            .then(console.log)
+            contract.deploy(55).then((x) => console.log("should be false",x))
 
-            console.log("get data called")
+            contract.deploy(5).then((x) => console.log("should be true",x))
+
+           
 
 
 
