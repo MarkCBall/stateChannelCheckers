@@ -93,25 +93,21 @@ export default {
 
             contract.deploy(5).then((x) => console.log("should be true",x))
 
+            // pragma solidity >0.4.99 <0.6.0;
+            // contract Factory {
+            //   event Deployed(uint256 salt);
+            //   bool x ;
+            //   function deploy(uint256 salt) public view returns(bool){
+            //     if (salt<50 && !x)
+            //         return true;
+            //     return false;
+            //   }
+            // }
+
+            
+
+
            
-
-
-
-            // let contract = new ethers.Contract( addressOrName , abi , providerOrSigner )
-
-
-            // let StateChannelJson = require('./build/contracts/StateChannels.json')
-            // let StateChannelAbi = StateChannelJson.abi;
-            // let StateChannelBytecode = StateChannelJson.bytecode
-            // let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(secondwallet);
-            // let deployedContract = await ContractFactory.deploy()
-
-            // await deployedContract.CreateChannel(
-            //     v1, r1, s1, CID, u1Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal
-            // )//.then((x) => console.log("\n\nthen", x))
-            // .catch((err) => console.log("\n\ncatch", err))
-
-
 
 
             //if (ecrecover
@@ -137,6 +133,23 @@ export default {
                             //else require oldCol - newCol < 3
                             //require oldRow!=newRow && oldCol!-newCol
 
+
+            //TESTS
+            //should allow a red queen to move backwards
+            //should allow a black queen to move backwards 
+            //should make a piece a queen when it reaches the end of the board
+            //should move a piece and kill a piece on a jump move
+            //should move a piece in a simple move
+            
+            //should store the new move as current state
+
+            //shouldn't allow a player to move an opponent's piece
+            //should increment the turn number
+            //should fail when sig is wrong
+            //shouldn't allow red nonqueen to move backwards
+            //shouldn't allow black nonqueen to move forwards
+            //shouldn't allow an horizontal/vertical move
+            //shouldn't allow a jump over an empty square
 
 
             //let prevBoardBN = getState().InteractDatabase.signedBoards[latestMove.turnNum-1]
@@ -178,3 +191,21 @@ export default {
         }
     }
 }
+
+
+
+
+ // let contract = new ethers.Contract( addressOrName , abi , providerOrSigner )
+
+
+            // let StateChannelJson = require('./build/contracts/StateChannels.json')
+            // let StateChannelAbi = StateChannelJson.abi;
+            // let StateChannelBytecode = StateChannelJson.bytecode
+            // let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(secondwallet);
+            // let deployedContract = await ContractFactory.deploy()
+
+            // await deployedContract.CreateChannel(
+            //     v1, r1, s1, CID, u1Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal
+            // )//.then((x) => console.log("\n\nthen", x))
+            // .catch((err) => console.log("\n\ncatch", err))
+
