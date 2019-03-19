@@ -31,6 +31,10 @@ class GameStats extends Component {
                 <br/><button onClick={()=> 
                     this.props.signAndPostMove(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
                     >Sign and send move</button><button>Post move to blockchain</button>
+
+                <br/><button onClick={()=>{this.props.getLatestMove()}}>get latest move</button>
+
+
                 {this.renderBoardBN(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
                 <br/><br/>
                 opponent gave you this string
@@ -58,6 +62,9 @@ function mapDispatchToProps(dispatch) {
         },
         signAndPostMove: (boardBN) =>{
             dispatch(InteractDatabase.signAndPostMove(dispatch, boardBN))
+        },
+        getLatestMove: ()=>{
+            dispatch(InteractDatabase.getLatestMove(dispatch))
         },
 
     }

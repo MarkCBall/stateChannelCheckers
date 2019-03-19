@@ -18,7 +18,17 @@ export default {
             let sig = ethers.utils.splitSignature(flatSig);
             
             //post to the server
-
+            // fetch("http://35.183.188.67:3001/Channel", {
+            //     method: "POST",
+            //     mode: "cors",
+            //     headers: {
+            //         "Content-Type": "application/json; charset=utf-8",
+            //         //"cid":this.props.activeChannel,
+            //     },
+            //     body: JSON.stringify(body)
+            // })
+            // .then("success",console.log)
+            // .catch("failure",console.log)
 
 
             let turnNum = boardBNStr.substr(10,8)
@@ -33,25 +43,30 @@ export default {
         }
     },
 
-    //         fetch("http://35.183.188.67:3001/Channel/pending", {
-    //             method: "GET",
-    //             mode: "cors", 
-    //             headers: {
-    //                 "address":address
-    //             }
-    //         }).then((response) =>{
-    //             return response.json()
-    //         }).then((response) => {
-    //             dispatch({
-    //                 type: GET_PENDING_CHANNELS,
-    //                 payload: response
-    //             })
-    //         })
-    //     }
-    // },
+
 
     getLatestMove: (dispatch) => {
         return async (dispatch,getState) => {
+
+
+                //         fetch("http://35.183.188.67:3001/Channel/pending", {
+                //             method: "GET",
+                //             mode: "cors", 
+                //             headers: {
+                //                 "address":address
+                //             }
+                //         }).then((response) =>{
+                //             return response.json()
+                //         }).then((response) => {
+                //             dispatch({
+                //                 type: GET_PENDING_CHANNELS,
+                //                 payload: response
+                //             })
+                //         })
+                //     }
+                // },
+
+
             //query the server-- temp testing data given here
             let opponentMove = {
                 board:"0x0e0a00000000000480828486898b8d8f99009496a992adafb0b2b4b6b9bbbdbf",
@@ -63,10 +78,45 @@ export default {
                     v:27
                 }
             }
+            // ganache-cli -m "smart fun man behind sea joke split cherry force season once pair"
+            let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+            let phrase = "smart fun man behind sea joke split cherry force season once pair"
+            // let path = "m/44'/60'/0'/0/"
+            // let secondwallet = ethers.Wallet.fromMnemonic(phrase, path + "1").connect(provider);
+            let wallet = ethers.Wallet.fromMnemonic(phrase).connect(provider);
+
+            let contractaddress = "0x59b8c37a34bc5f9ce80c71d5c6f307e698e6e20a"
+            let contractabi = [{"constant":false,"inputs":[{"name":"salt","type":"uint256"}],"name":"deploy","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"salt","type":"uint256"}],"name":"Deployed","type":"event"}]
+            let contract = new ethers.Contract(contractaddress,contractabi,wallet)
+
+            contract.deploy(343)
+            .then(console.log)
+
+            console.log("get data called")
+
+
+
+            // let contract = new ethers.Contract( addressOrName , abi , providerOrSigner )
+
+
+            // let StateChannelJson = require('./build/contracts/StateChannels.json')
+            // let StateChannelAbi = StateChannelJson.abi;
+            // let StateChannelBytecode = StateChannelJson.bytecode
+            // let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(secondwallet);
+            // let deployedContract = await ContractFactory.deploy()
+
+            // await deployedContract.CreateChannel(
+            //     v1, r1, s1, CID, u1Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal
+            // )//.then((x) => console.log("\n\nthen", x))
+            // .catch((err) => console.log("\n\ncatch", err))
+
+
+
+
             //if (ecrecover
             //console.log("signature verifies sender was ", calculatedAddress)
 
-            //validateMove()
+        
             if (opponentMove.turnNum === getState().BoardRedux.turnNum+1)
                 console.log("passed turnNum +1 test")
            
@@ -90,10 +140,14 @@ export default {
 
             //let prevBoardBN = getState().InteractDatabase.signedBoards[latestMove.turnNum-1]
             
-            // let pieceNumMoved = parsePieceNumMoved(opponentMove)
-            // let pieceNumKilled = parsePieceNumKilled(opponentMove)
+            // let pNumMoved = parsePieceNumMoved(opponentMove)
+            // let pNumKilled = parsePieceNumKilled(opponentMove)
+
             
-            //oldRow,oldCol = piece = getPieceByID(prevBoardBN,pieceNumMoved)
+            // let pOld red queen oldRow,oldCol = piece = getPieceByID(prevBoardBN,pieceNumMoved)
+
+            //require turnNum%2 != pOld.red
+
             //newRow,newCol = getPieceByID(latestMoveBN,pieceNumMoved)
 
             //require (red === (new - old < 0)) || queen
