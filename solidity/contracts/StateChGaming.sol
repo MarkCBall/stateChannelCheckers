@@ -1,24 +1,26 @@
 pragma solidity ^0.5.0;
 
-contract ValidatingContract{
-    function stateValid(uint256, uint256) public pure returns(bool){}
-    function p1Won(uint) public pure returns(bool){}
-    function p1MovedLast(uint) public pure returns (bool){}
-    function gameTied(uint) public pure returns(bool){}
-    function getNonce(uint) public pure returns(uint){}
-}
+import "./ValidatingContract.sol";
+// contract ValidatingContract{
+//     function stateValid(uint256, uint256) public pure returns(bool){}
+//     function p1Won(uint) public pure returns(bool){}
+//     function p1MovedLast(uint) public pure returns (bool){}
+//     function gameTied(uint) public pure returns(bool){}
+//     function getNonce(uint) public pure returns(uint){}
+// }
 
-contract ERC20 {
-    function totalSupply() public view returns (uint);
-    function balanceOf(address) public view returns (uint);
-    function allowance(address, address) public view returns (uint);
-    function transfer(address, uint) public returns (bool);
-    function approve(address, uint) public returns (bool);
-    function transferFrom(address from, address, uint) public returns (bool);
+import "./ERC20.sol";
+// contract ERC20 {
+//     function totalSupply() public view returns (uint);
+//     function balanceOf(address) public view returns (uint);
+//     function allowance(address, address) public view returns (uint);
+//     function transfer(address, uint) public returns (bool);
+//     function approve(address, uint) public returns (bool);
+//     function transferFrom(address, address, uint) public returns (bool);
 
-    event Transfer(address indexed from, address indexed to, uint tokens);
-    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
-}
+//     event Transfer(address indexed from, address indexed to, uint tokens);
+//     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+// }
 
 contract StateChGaming {
 
@@ -36,8 +38,8 @@ contract StateChGaming {
     mapping (uint256 => game) public allGames;
 
     function initGame(uint256 _stakedAmount, ERC20 _erc20Addr, uint256 _gameID, address _p1, address _p2, ValidatingContract _vcAddr, uint256 _blocksPerTurn, uint8 _v, bytes32 _r, bytes32 _s) public {
-        // require(_erc20Addr.transferFrom(_p1, address(this),_stakedAmount));
-        // require(_erc20Addr.transferFrom(_p2, address(this),_stakedAmount));
+        require(_erc20Addr.transferFrom(_p1, address(this),_stakedAmount));
+        require(_erc20Addr.transferFrom(_p2, address(this),_stakedAmount));
         
         bytes32 DataHash = keccak256(abi.encodePacked(_stakedAmount, _erc20Addr,_gameID, _p1, _p2, _vcAddr, _blocksPerTurn));
         address calcAddr = addrFromHashAndSig(DataHash, _v,_r,_s);

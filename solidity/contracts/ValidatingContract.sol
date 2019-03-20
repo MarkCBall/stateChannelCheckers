@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-contract validatingContract{
+contract ValidatingContract{
     function stateValid(uint256, uint256) public pure returns(bool){
         return true;
     }

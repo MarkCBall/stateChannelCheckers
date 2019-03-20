@@ -1,8 +1,10 @@
 const StateChGaming = artifacts.require("StateChGaming");
+const ValidatingContract = artifacts.require("ValidatingContract");
+const ERC20 = artifacts.require("ERC20");
+// const ERC20 = artifacts.require("ERC20");
 
 
 const truffleAssert = require('truffle-assertions');
-
 const SigLib = require("../Library/SigLib")
 
 contract('StateChGaming', async (accounts) => {
@@ -10,17 +12,13 @@ contract('StateChGaming', async (accounts) => {
     //         this.contract = await contractname.new({from:owner})
     //     })
     describe("Function - initGame", async ()=>{
-
-        // let StateChGamingInstance = await StateChGaming.deployed();
-        //do this for validating contract and ERC20 contract + other transfers ect
-
         //mock data
         let _stakedAmount = 1000000
-        let _erc20Addr = accounts[9]//FIX THIS
+        let _erc20Addr
         let _gameID = 1
         let _p1REF = 0//should be addr
         let _p2REF = 1//should be addr
-        let _vcAddr = accounts[9]//contractInstance.address
+        let _vcAddr //= await ValidatingContract.deployed().address;
         let _blocksPerTurn = 100
 
         let getParametersSigned = () => {
@@ -30,7 +28,21 @@ contract('StateChGaming', async (accounts) => {
             }
         }
 
+        // let StateChGamingInstance = await StateChGaming.deployed();
+        //WHY CAN'T THIS BE INSIDE IT?
         it('should set gameData correctly', async () => {
+            var ValidatingContractInstance = await ValidatingContract.deployed()
+            _vcAddr = ValidatingContractInstance.address;
+            var ERC20Instance = await ERC20.new(_stakedAmount*100,{from:accounts[_p1REF]})
+            _erc20Addr = ERC20Instance.address;
+
+
+
+            await ERC20Instance.transfer(accounts[_p2REF],_stakedAmount, {from:accounts[_p1REF]})
+            await ERC20Instance.approve(ValidatingContract.address,_stakedAmount, {from:accounts[_p1REF]})
+            await ERC20Instance.approve(ValidatingContract.address,_stakedAmount, {from:accounts[_p2REF]})
+
+
             let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
             let StateChGamingInstance = await StateChGaming.deployed();
             await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
@@ -77,6 +89,7 @@ contract('StateChGaming', async (accounts) => {
             )
         })
         it('shouldnt init a channel unless funds were withdrawn')
+        //allowance has already been used in other it block - SHOULD FAIL due to ERC20 transferFrom
     })
     describe("Function - initBCMove", ()=>{
         it('should update the game blockNum and state')
