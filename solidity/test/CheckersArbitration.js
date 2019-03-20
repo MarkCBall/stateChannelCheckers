@@ -23,15 +23,19 @@ contract('StateChGaming', async (accounts) => {
         let _vcAddr = accounts[9]//contractInstance.address
         let _blocksPerTurn = 100
 
-        it('should set gameData correctly', async () => {
-            let pars_unsigned_initGame ={
+        let getParametersSigned = () => {
+            return {
                 pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
                 parTypes:['uint','address','uint','address','address','address','uint'],
             }
-            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
+        }
+
+        it('should set gameData correctly', async () => {
+            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
             let StateChGamingInstance = await StateChGaming.deployed();
             await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
             let response = await StateChGamingInstance.allGames.call(_gameID)
+
             assert.equal(response.gamePayout, _stakedAmount*2, "gamePayout not set correctly" )
             assert.equal(response.tokenAddr,_erc20Addr , "tokenAddr not set correctly")
             assert.equal(response.state,3151051977652667687974785799204386029420487659316301249983 , "state not set to uninitiated board")
@@ -42,15 +46,10 @@ contract('StateChGaming', async (accounts) => {
         })
         it('shouldnt work with incorrect signature', async () => {
             _gameID = 2
-            let pars_unsigned_initGame ={
-                pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
-                parTypes:['uint','address','uint','address','address','address','uint'],
-            }
-            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
+            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
             //set r = s to force signature to be incorrect
             pars_signed_initGame.pars[8] = pars_signed_initGame.pars[9]
             let StateChGamingInstance = await StateChGaming.deployed();
-
             await truffleAssert.reverts(
                 StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
                 ,"a player didnt sign or send"
@@ -58,13 +57,8 @@ contract('StateChGaming', async (accounts) => {
         })
         it('shouldnt work if sent by a third party', async () => {
             _gameID = 2
-            let pars_unsigned_initGame ={
-                pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
-                parTypes:['uint','address','uint','address','address','address','uint'],
-            }
-            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
+            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
             let StateChGamingInstance = await StateChGaming.deployed();
-
             //sending from account[3] - SHOULD FAIL
             await truffleAssert.reverts(
                 StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[3]})
@@ -74,24 +68,39 @@ contract('StateChGaming', async (accounts) => {
         it('should fail when if the requested gameID exists', async () => {
             //game 1 is already used - SHOULD FAIL
             _gameID = 1
-            let pars_unsigned_initGame ={
-                pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
-                parTypes:['uint','address','uint','address','address','address','uint'],
-            }
-            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
+            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
             let StateChGamingInstance = await StateChGaming.deployed();
-
             //sending from account[3] - SHOULD FAIL
             await truffleAssert.reverts(
                 StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
                 ,"can not have duplicate gameIDs"
             )
         })
-
     })
-    describe("describe block2", ()=>{
-        it('ccc')
-        it('ddd')
+    describe("Function - initBCMove", ()=>{
+        it('should update the game blockNum and state')
+        it('shouldnt work with incorrect signature')
+        it('shouldnt work if sent by a third party')
+        it('shouldnt work if the nonce is not higher than saved nonce')
+    })
+
+    describe("Function - makeMoveTimed", ()=>{
+        it('')
+    })
+    describe("Function - makeMoveUntimed", ()=>{
+        it('')
+    })
+    describe("Function - enforcedBCMove", ()=>{
+        it('')
+    })
+    describe("Function - unenforcedBCMove", ()=>{
+        it('')
+    })
+    describe("Function - payoutVictory", ()=>{
+        it('')
+    })
+    describe("Function - payoutTimeout", ()=>{
+        it('')
     })
 
 
