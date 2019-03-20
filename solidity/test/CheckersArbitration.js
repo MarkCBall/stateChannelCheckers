@@ -9,34 +9,34 @@ contract('StateChGaming', async (accounts) => {
             //mock data
             let _stakedAmount = 1000000//MAKE BIG NUMBER 1000000000000000000
             let _erc20Addr = accounts[9]//FIX THIS
-            let _gameID = 1;
-            let _p1 = accounts[0]
-            let _p2 = accounts[1]
-            let _vcAddr = accounts[9]//FIX THIS
+            let _gameID = 1
+            let _p1REF = 0//should be addr
+            let _p2REF = 1//should be addr
+            let _vcAddr = accounts[9]//contractInstance.address
             let _blocksPerTurn = 100
 
             let pars_unsigned_initGame ={
-                pars:[_stakedAmount,_erc20Addr,_gameID,_p1,_p2,_vcAddr,_blocksPerTurn],
+                pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
                 parTypes:['uint','address','uint','address','address','address','uint'],
             }
             //sign mock data
-            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, 0)
-            // console.log("library return is ",pars_signed_initGame)
+            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
 
             //call the function
             let StateChGamingInstance = await StateChGaming.deployed();
 
-            await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:_p2})
+            await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
             
-
-           
-    
-
             //check the contract was changed
-            let response = await StateChGamingInstance.allGames.call(1)
+            let response = await StateChGamingInstance.allGames.call(_gameID)
             //assert and stuff 
-            console.log(response)
-
+            assert.equal(response.gamePayout, _stakedAmount*2, "gamePayout not set correctly" )
+            assert.equal(response.tokenAddr,_erc20Addr , "tokenAddr not set correctly")
+            assert.equal(response.state,3151051977652667687974785799204386029420487659316301249983 , "state not set to uninitiated board")
+            assert.equal(response.p1,accounts[_p1REF] , "p1Addr not set correctly")
+            assert.equal(response.p2,accounts[_p2REF] , "p2Addr not set correctly")
+            assert.equal(response.vcAddr,_vcAddr , "validating contract address not set correctly")
+            assert.equal(response.blocksPerTurn,_blocksPerTurn , "blocksPerTurn not set correctly")
         })
         it('bbb')
     })
