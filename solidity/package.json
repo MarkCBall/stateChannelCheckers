@@ -1,25 +1,26 @@
 {
-    "name": "vyper",
-    "version": "1.0.0",
-    "description": "",
-    "main": "truffle-config.js",
-    "directories": {
-      "test": "test"
-    },
-    "scripts": {
-      "build:sol": "truffle compile",
-      "build:vyper": "truper",
-      "build": "npm run build:sol && npm run build:vyper",
-      "console": "truffle console",
-      "migrate:ganache": "truffle migrate --network ganache",
-      "migrate:mainnet": "truffle migrate --network mainnet",
-      "test": "truffle test"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "ganache-cli": "^6.4.1",
-      "openzeppelin-test-helpers": "^0.2.0",
-      "truper": "0.0.2"
-    }
+  "name": "vyper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build:sol": "truffle compile",
+    "build:vyper": "truper",
+    "build": "npm run build:sol && npm run build:vyper",
+    "console": "truffle console",
+    "migrate:ganache": "truffle migrate --network ganache",
+    "migrate:mainnet": "truffle migrate --network mainnet",
+    "test": "truffle test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^4.0.27",
+    "ganache-cli": "^6.4.1",
+    "openzeppelin-test-helpers": "^0.2.0",
+    "truper": "0.0.2"
   }
+}

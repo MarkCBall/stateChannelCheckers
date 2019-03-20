@@ -49,7 +49,7 @@ contract StateChGaming {
         //starting board state is 0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf or 3151051977652667687974785799204386029420487659316301249983
         allGames[_gameID] = game(_stakedAmount*2, _erc20Addr, 3151051977652667687974785799204386029420487659316301249983, _p1, _p2, 100000000000000000000000000000, _vcAddr, _blocksPerTurn);
     }
-    function addrFromHashAndSig(bytes32 DataHash, uint8 v, bytes32 r, bytes32 s) public pure returns(address) {
+    function addrFromHashAndSig(bytes32 DataHash, uint8 v, bytes32 r, bytes32 s) private pure returns(address) {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, DataHash));
         return ecrecover(prefixedHash, v, r, s);

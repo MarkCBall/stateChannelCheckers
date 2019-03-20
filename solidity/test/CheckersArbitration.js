@@ -4,15 +4,15 @@ const SigLib = require("../Library/SigLib")
 
 contract('StateChGaming', async (accounts) => {
 
-    describe("Function - initGame", ()=>{
+    describe("Function - initGame", async ()=>{
         it('should set gameData correctly', async () => {
             //mock data
-            let _stakedAmount = 1000000000000000000
-            let _erc20Addr = accounts[10]//FIX THIS
+            let _stakedAmount = 1000000//MAKE BIG NUMBER 1000000000000000000
+            let _erc20Addr = accounts[9]//FIX THIS
             let _gameID = 1;
             let _p1 = accounts[0]
             let _p2 = accounts[1]
-            let _vcAddr = accounts[10]//FIX THIS
+            let _vcAddr = accounts[9]//FIX THIS
             let _blocksPerTurn = 100
 
             let pars_unsigned_initGame ={
@@ -20,13 +20,22 @@ contract('StateChGaming', async (accounts) => {
                 parTypes:['uint','address','uint','address','address','address','uint'],
             }
             //sign mock data
-            let pars_signed_initGame = SigLib.signPars()
-            console.log("library return is ",pars_signed_initGame)
+            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, 0)
+            // console.log("library return is ",pars_signed_initGame)
 
-            
             //call the function
+            let StateChGamingInstance = await StateChGaming.deployed();
+
+            await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:_p2})
+            
+
+           
+    
 
             //check the contract was changed
+            let response = await StateChGamingInstance.allGames.call(1)
+            //assert and stuff 
+            console.log(response)
 
         })
         it('bbb')
@@ -35,7 +44,7 @@ contract('StateChGaming', async (accounts) => {
         it('ccc')
         it('ddd')
     })
-    it('should return the correct address from data and signature')//, async () => {
+    // it('should return the correct address from data and signature')//, async () => {
         // let sendingAddress = "0x7156526fbd7a3c72969b54f64e42c10fbb768c8a"
         // const SigLibInstance = await SigLib.deployed();
         // // let SigLibInstance = await SigLib.new({from:accounts[0]})
