@@ -20,7 +20,7 @@ contract ERC20 {
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
-contract StateChGaming {//is ValidatingContract, ERC20{
+contract StateChGaming {
 
     struct game{
         uint256 gamePayout;
@@ -34,7 +34,6 @@ contract StateChGaming {//is ValidatingContract, ERC20{
     }
     
     mapping (uint256 => game) public allGames;
- 
 
     function initGame(uint256 _stakedAmount, ERC20 _erc20Addr, uint256 _gameID, address _p1, address _p2, ValidatingContract _vdAddr, uint256 _blocksPerTurn, uint8 _v, bytes32 _r, bytes32 _s) public {
         // require(_erc20Addr.transferFrom(_p1, address(this),_stakedAmount));
@@ -98,6 +97,7 @@ contract StateChGaming {//is ValidatingContract, ERC20{
         allGames[_gameID].blockNum = block.number;//is allGames[_gameID] needed here to change state?
         allGames[_gameID].state = _state;
     }
+
     //this function is needed in case you give the BC and unenforced move and the opponent doesn't continue to play
     function makeMoveTimed(uint _gameID) public senderLastPlayed(_gameID) {
         allGames[_gameID].blockNum = block.number;
@@ -110,7 +110,7 @@ contract StateChGaming {//is ValidatingContract, ERC20{
         allGames[_gameID].blockNum = block.number;
         allGames[_gameID].state = _state;
     }
-    //view    
+
     function unenforcedBCMove(uint _gameID, uint _state) public opponentLastPlayed(_gameID, _state) validMove(_gameID, _state){
         allGames[_gameID].blockNum = 100000000000000000000000000000;
         allGames[_gameID].state = _state;

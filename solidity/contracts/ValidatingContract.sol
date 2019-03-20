@@ -1,9 +1,21 @@
+pragma solidity ^0.5.0;
+
 contract validatingContract{
-    function stateValid(uint256, uint256) public pure returns(bool){}
-    function p1Won(uint) public pure returns(bool){}
-    function p1MovedLast(uint) public pure returns (bool){}
-    function gameTied(uint) public pure returns(bool){}
-    function getNonce(uint) public pure returns(uint){}
+    function stateValid(uint256, uint256) public pure returns(bool){
+        return true;
+    }
+    function p1Won(uint) public pure returns(bool){
+        return true;
+    }
+    function p1MovedLast(uint) public pure returns (bool){
+        return true;
+    }
+    function gameTied(uint) public pure returns(bool){
+        return true;
+    }
+    function getNonce(uint) public pure returns(uint){
+        return 10;
+    }
 }
     //grab more notes from interactDatabase action
 
