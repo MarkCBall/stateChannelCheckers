@@ -35,11 +35,11 @@ contract StateChGaming {
     
     mapping (uint256 => game) public allGames;
 
-    function initGame(uint256 _stakedAmount, ERC20 _erc20Addr, uint256 _gameID, address _p1, address _p2, ValidatingContract _vdAddr, uint256 _blocksPerTurn, uint8 _v, bytes32 _r, bytes32 _s) public {
+    function initGame(uint256 _stakedAmount, ERC20 _erc20Addr, uint256 _gameID, address _p1, address _p2, ValidatingContract _vcAddr, uint256 _blocksPerTurn, uint8 _v, bytes32 _r, bytes32 _s) public {
         // require(_erc20Addr.transferFrom(_p1, address(this),_stakedAmount));
         // require(_erc20Addr.transferFrom(_p2, address(this),_stakedAmount));
         
-        bytes32 DataHash = keccak256(abi.encodePacked(_stakedAmount, _erc20Addr,_gameID, _p1, _p2, _vdAddr, _blocksPerTurn));
+        bytes32 DataHash = keccak256(abi.encodePacked(_stakedAmount, _erc20Addr,_gameID, _p1, _p2, _vcAddr, _blocksPerTurn));
         address calcAddr = addrFromHashAndSig(DataHash, _v,_r,_s);
         require(_p1 == calcAddr || _p1 == msg.sender);
         require(_p2 == calcAddr || _p2 == msg.sender);
@@ -47,7 +47,7 @@ contract StateChGaming {
         //require the gameID doesn't already exist
         require (allGames[_gameID].p1 == address(0));
         //starting board state is 0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf or 3151051977652667687974785799204386029420487659316301249983
-        allGames[_gameID] = game(_stakedAmount*2, _erc20Addr, 3151051977652667687974785799204386029420487659316301249983, _p1, _p2, 100000000000000000000000000000, _vdAddr, _blocksPerTurn);
+        allGames[_gameID] = game(_stakedAmount*2, _erc20Addr, 3151051977652667687974785799204386029420487659316301249983, _p1, _p2, 100000000000000000000000000000, _vcAddr, _blocksPerTurn);
     }
     function addrFromHashAndSig(bytes32 DataHash, uint8 v, bytes32 r, bytes32 s) public pure returns(address) {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";

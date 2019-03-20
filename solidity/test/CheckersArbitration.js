@@ -1,10 +1,34 @@
 const StateChGaming = artifacts.require("StateChGaming");
 
+const SigLib = require("../Library/SigLib")
 
 contract('StateChGaming', async (accounts) => {
 
-    describe("describe block1", ()=>{
-        it('aaa')
+    describe("Function - initGame", ()=>{
+        it('should set gameData correctly', async () => {
+            //mock data
+            let _stakedAmount = 1000000000000000000
+            let _erc20Addr = accounts[10]//FIX THIS
+            let _gameID = 1;
+            let _p1 = accounts[0]
+            let _p2 = accounts[1]
+            let _vcAddr = accounts[10]//FIX THIS
+            let _blocksPerTurn = 100
+
+            let pars_unsigned_initGame ={
+                pars:[_stakedAmount,_erc20Addr,_gameID,_p1,_p2,_vcAddr,_blocksPerTurn],
+                parTypes:['uint','address','uint','address','address','address','uint'],
+            }
+            //sign mock data
+            let pars_signed_initGame = SigLib.signPars()
+            console.log("library return is ",pars_signed_initGame)
+
+            
+            //call the function
+
+            //check the contract was changed
+
+        })
         it('bbb')
     })
     describe("describe block2", ()=>{
