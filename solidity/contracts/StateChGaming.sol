@@ -38,8 +38,8 @@ contract StateChGaming {
     mapping (uint256 => game) public allGames;
 
     function initGame(uint256 _stakedAmount, ERC20 _erc20Addr, uint256 _gameID, address _p1, address _p2, ValidatingContract _vcAddr, uint256 _blocksPerTurn, uint8 _v, bytes32 _r, bytes32 _s) public {
-        require(_erc20Addr.transferFrom(_p1, address(this),_stakedAmount));
-        require(_erc20Addr.transferFrom(_p2, address(this),_stakedAmount));
+        require(_erc20Addr.transferFrom(_p1, address(this),_stakedAmount),"not enough funds");
+        require(_erc20Addr.transferFrom(_p2, address(this),_stakedAmount),"not enough funds");
         
         bytes32 DataHash = keccak256(abi.encodePacked(_stakedAmount, _erc20Addr,_gameID, _p1, _p2, _vcAddr, _blocksPerTurn));
         address calcAddr = addrFromHashAndSig(DataHash, _v,_r,_s);
