@@ -1,0 +1,69 @@
+.color0 {
+    width:40px;
+    height:40px;
+    background: grey;
+  }
+.color1{
+    width:40px;
+    height:40px;
+    background: rgb(99, 71, 11);
+  }
+.red{
+    width:40px;
+    height:40px;
+    background: rgba(255, 0, 0, 0.479);
+    border-radius: 50%;
+}
+.black{
+    width:40px;
+    height:40px;
+    background: rgba(0, 0, 0, 0.479);
+    border-radius: 50%;
+
+}
+.Red{
+    width:40px;
+    height:40px;
+    background: red;
+    border-radius: 50%;
+}
+.Black{
+    width:40px;
+    height:40px;
+    background: black;
+    border-radius: 50%;
+
+}
+.queen{
+    border-style: double;
+    border-width: 10px;
+}
+.selected{
+    box-shadow: inset -4px 0 0 yellow, inset 0 -4px 0 yellow, inset 4px 0 0 yellow, inset 0 4px 0 yellow;
+}
+.last-moved-highlight{
+    box-shadow: inset -4px 0 0 blue, inset 0 -4px 0 blue, inset 4px 0 0 blue, inset 0 4px 0 blue;
+}
+.last-moved-from{
+    width:40px;
+    height:40px;
+    background: rgba(0, 0, 255, 0.5);
+    border-radius: 50%;
+}
+.blank{
+    width:40px;
+    height:40px;
+}
+.valid{
+    width:40px;
+    height:40px;
+    background: green;
+    border-radius: 50%;
+}
+
+/* .from{
+    width:40px;
+    height:40px;
+    background: rgba(0, 0, 255, 0.3);
+    border-radius: 50%;
+} */

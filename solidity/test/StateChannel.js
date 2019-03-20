@@ -8,7 +8,14 @@ contract('StateChannel', (accounts) => {
     let addr1 = "0x20b2e1f1dc798951435234cb8a892f7483bd790e";
     let addr2 = accounts[1];
     let disputeContractAddr = "0x1111111111111111111111111111111111111111" ;//fix this later!
+    // beforeEach(async function(){
+    //     this.contract = await contractname.new({from:owner})
+    // })
     
+    // describe("get owner", function () {
+    //     it("hi")
+    //     it("bye")
+    // })
 
     getSig = async (addr1,addr2,disputeContractAddr,gameID) => {
         let hashedEncodedChannelData = ethers.utils.solidityKeccak256(
@@ -23,17 +30,19 @@ contract('StateChannel', (accounts) => {
         return ethers.utils.splitSignature(flatSig)
     }
 
-    it('should create a channel if passed valid data and signature', async () => {
+    // it('should create a channel if passed valid data and signature', async () => {
        
-        let gameID = 8; //uint
+    //     let gameID = 8; //uint
 
-        let sig = await getSig(addr1,addr2,disputeContractAddr,gameID)
+    //     let sig = await getSig(addr1,addr2,disputeContractAddr,gameID)
       
-        const StateChannelInstance = await StateChannel.deployed();
-        await StateChannelInstance.InitChannel(addr1, sig.v, sig.r, sig.s, disputeContractAddr, gameID, {from:addr2})
-    })
+    //     // const StateChannelInstance = await StateChannel.deployed();
+    //     let StateChannelInstance = await StateChannel.new({from:accounts[0]})
+    //     await StateChannelInstance.InitChannel(addr1, sig.v, sig.r, sig.s, disputeContractAddr, gameID, {from:addr2})
 
-    it("should change the value of the games mapping appropriately", async () => {
+    // })
+
+    it("should create a channel and change the value of the games mapping appropriately", async () => {
        
         let gameID = 20; //uint
 
@@ -43,7 +52,7 @@ contract('StateChannel', (accounts) => {
 
         await StateChannelInstance.InitChannel(addr1, sig.v, sig.r, sig.s, disputeContractAddr, gameID, {from:addr2})
 
-        let game = await StateChannelInstance.games.call(8)
+        let game = await StateChannelInstance.games.call(20)
 
         assert.deepEqual(game.addr1.toLowerCase(),addr1.toLowerCase(), "addr1 was not set correctly")
         assert.equal(game.addr2.toLowerCase(),addr2.toLowerCase(), "addr2 was not set correctly")
@@ -60,6 +69,7 @@ contract('StateChannel', (accounts) => {
       
         const StateChannelInstance = await StateChannel.deployed();
 
+        //USE OPEN-ZEPPELING-TEST-HELPERS -- check the github for how its made
         //how can I do this better?
         try {
                 await StateChannelInstance.InitChannel(addr1, sig.v, sig.r, sig.s, disputeContractAddr, gameID, {from:addr2}) 
