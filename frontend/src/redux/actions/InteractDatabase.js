@@ -78,6 +78,10 @@ export default {
                     v:27
                 }
             }
+
+
+            //verify the given move is valid
+
             // ganache-cli -m "smart fun man behind sea joke split cherry force season once pair"
             let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
             let phrase = "smart fun man behind sea joke split cherry force season once pair"
