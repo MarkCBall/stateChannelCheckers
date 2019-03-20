@@ -41,11 +41,11 @@ contract StateChGaming {
         
         bytes32 DataHash = keccak256(abi.encodePacked(_stakedAmount, _erc20Addr,_gameID, _p1, _p2, _vcAddr, _blocksPerTurn));
         address calcAddr = addrFromHashAndSig(DataHash, _v,_r,_s);
-        require(_p1 == calcAddr || _p1 == msg.sender);
-        require(_p2 == calcAddr || _p2 == msg.sender);
+        require(_p1 == calcAddr || _p1 == msg.sender, "a player didnt sign or send");
+        require(_p2 == calcAddr || _p2 == msg.sender, "a player didnt sign or send");
 
         //require the gameID doesn't already exist
-        require (allGames[_gameID].p1 == address(0));
+        require (allGames[_gameID].p1 == address(0), "can not have duplicate gameIDs");
         //starting board state is 0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf or 3151051977652667687974785799204386029420487659316301249983
         allGames[_gameID] = game(_stakedAmount*2, _erc20Addr, 3151051977652667687974785799204386029420487659316301249983, _p1, _p2, 100000000000000000000000000000, _vcAddr, _blocksPerTurn);
     }

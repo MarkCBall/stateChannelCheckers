@@ -1,35 +1,37 @@
 const StateChGaming = artifacts.require("StateChGaming");
 
+
+const truffleAssert = require('truffle-assertions');
+
 const SigLib = require("../Library/SigLib")
 
 contract('StateChGaming', async (accounts) => {
 
-    describe("Function - initGame", async ()=>{
-        it('should set gameData correctly', async () => {
-            //mock data
-            let _stakedAmount = 1000000//MAKE BIG NUMBER 1000000000000000000
-            let _erc20Addr = accounts[9]//FIX THIS
-            let _gameID = 1
-            let _p1REF = 0//should be addr
-            let _p2REF = 1//should be addr
-            let _vcAddr = accounts[9]//contractInstance.address
-            let _blocksPerTurn = 100
 
+
+    describe("Function - initGame", async ()=>{
+
+        // let StateChGamingInstance = await StateChGaming.deployed();
+        //do this for validating contract and ERC20 contract + other transfers ect
+
+        //mock data
+        let _stakedAmount = 1000000
+        let _erc20Addr = accounts[9]//FIX THIS
+        let _gameID = 1
+        let _p1REF = 0//should be addr
+        let _p2REF = 1//should be addr
+        let _vcAddr = accounts[9]//contractInstance.address
+        let _blocksPerTurn = 100
+
+        it('should set gameData correctly', async () => {
             let pars_unsigned_initGame ={
                 pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
                 parTypes:['uint','address','uint','address','address','address','uint'],
             }
-            //sign mock data
             let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
-
-            //call the function
             let StateChGamingInstance = await StateChGaming.deployed();
-
             await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
-            
-            //check the contract was changed
             let response = await StateChGamingInstance.allGames.call(_gameID)
-            //assert and stuff 
             assert.equal(response.gamePayout, _stakedAmount*2, "gamePayout not set correctly" )
             assert.equal(response.tokenAddr,_erc20Addr , "tokenAddr not set correctly")
             assert.equal(response.state,3151051977652667687974785799204386029420487659316301249983 , "state not set to uninitiated board")
@@ -38,25 +40,61 @@ contract('StateChGaming', async (accounts) => {
             assert.equal(response.vcAddr,_vcAddr , "validating contract address not set correctly")
             assert.equal(response.blocksPerTurn,_blocksPerTurn , "blocksPerTurn not set correctly")
         })
-        it('bbb')
+        it('shouldnt work with incorrect signature', async () => {
+            _gameID = 2
+            let pars_unsigned_initGame ={
+                pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
+                parTypes:['uint','address','uint','address','address','address','uint'],
+            }
+            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
+            //set r = s to force signature to be incorrect
+            pars_signed_initGame.pars[8] = pars_signed_initGame.pars[9]
+            let StateChGamingInstance = await StateChGaming.deployed();
+
+            await truffleAssert.reverts(
+                StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+                ,"a player didnt sign or send"
+            )
+        })
+        it('shouldnt work if sent by a third party', async () => {
+            _gameID = 2
+            let pars_unsigned_initGame ={
+                pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
+                parTypes:['uint','address','uint','address','address','address','uint'],
+            }
+            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
+            let StateChGamingInstance = await StateChGaming.deployed();
+
+            //sending from account[3] - SHOULD FAIL
+            await truffleAssert.reverts(
+                StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[3]})
+                ,"a player didnt sign or send"
+            )
+        })
+        it('should fail when if the requested gameID exists', async () => {
+            //game 1 is already used - SHOULD FAIL
+            _gameID = 1
+            let pars_unsigned_initGame ={
+                pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
+                parTypes:['uint','address','uint','address','address','address','uint'],
+            }
+            let pars_signed_initGame = await SigLib.signPars(pars_unsigned_initGame, _p1REF)
+            let StateChGamingInstance = await StateChGaming.deployed();
+
+            //sending from account[3] - SHOULD FAIL
+            await truffleAssert.reverts(
+                StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+                ,"can not have duplicate gameIDs"
+            )
+        })
+
     })
     describe("describe block2", ()=>{
         it('ccc')
         it('ddd')
     })
-    // it('should return the correct address from data and signature')//, async () => {
-        // let sendingAddress = "0x7156526fbd7a3c72969b54f64e42c10fbb768c8a"
-        // const SigLibInstance = await SigLib.deployed();
-        // // let SigLibInstance = await SigLib.new({from:accounts[0]})
-        // let signedMessage = "0x1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8" //signedMessage = web3.sha3("hello")
-        // let v = 28
-        // let r = "0x9242685bf161793cc25603c231bc2f568eb630ea16aa137d2664ac8038825608"
-        // let s = "0x4f8ae3bd7535248d0bd448298cc2e2071e56992d0774dc340c368ae950852ada"
-        // let address = await SigLibInstance.getOriginAddress.call(signedMessage, v, r, s)
-        // address = address.toLowerCase();
-        // sendingAddress = sendingAddress.toLowerCase();
-        // assert.equal(address, sendingAddress, "getOriginAddress did not return correct address")
-    // });
+
+
 });
 
 // var ethers = require('ethers');
