@@ -219,14 +219,18 @@ contract('StateChGaming', async (accounts) => {
         // console.log("---------------------")
 
         // for (n = 1; n<25;n++){
-        //     console.log(`piece# ${n} is:`,await ValidatingContractInstance.getPieceByNum.call(n, STATE))
+        //     console.log(`piece# ${n} is:`,await ValidatingContractInstance.getPieceIntByNum.call(n, STATE))
         // }
 
-        console.log("nonce is:",await ValidatingContractInstance.getNonce.call(STATE))
-        console.log("getPieceNumMoved is:",await ValidatingContractInstance.getPieceNumMoved.call(STATE))
-        console.log("getPieceNumJumped is:",await ValidatingContractInstance.getPieceNumJumped.call(STATE))
+        // console.log("nonce is:",await ValidatingContractInstance.getNonce.call(STATE))
+        // console.log("getPieceNumMoved is:",await ValidatingContractInstance.getPieceNumMoved.call(STATE))
+        // console.log("getPieceNumJumped is:",await ValidatingContractInstance.getPieceNumJumped.call(STATE))
+
         
-        
+                        for (n = 1; n<25;n++){
+                            console.log(`piece# ${n} is:`,await ValidatingContractInstance.getPieceStructByNum.call(n, STATE))
+                        }
+        console.log("red has pieces:",await ValidatingContractInstance.redHasPieces.call(STATE))
 
         
     })

@@ -1,25 +1,69 @@
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
 
 contract ValidatingContract{
+
+    // struct piece {
+    //     bool active;
+    //     bool red;
+    //     bool queen;
+    //     uint row;
+    //     uint col;
+    // }
+    //PUBLIC FUNCTIONS
     function stateValid(uint256, uint256) public pure returns(bool){
         return true;
     }
-    function p1Won(uint) public pure returns(bool){
-        return true;
+    function p1Won(uint data) public pure returns(bool){
+        if (!blackHasPieces(data))
+            return true;
+        if (!redHasPieces(data))
+            return false;
+        revert();
     }
-    function p1MovedLast(uint) public pure returns (bool){
-        return true;
+    function p1MovedLast(uint data) public pure returns (bool){
+        return red(getPieceByNum(getPieceNumMoved(data),data));
     }
     function gameTied(uint) public pure returns(bool){
-        return true;
+        //NOT IMPLIMENTED
+        return false;
     }
-    // function getNonce(uint board) public pure returns(uint){
-    //     //(board/16^48)%(16^8) --> this gets byte 4-8
-    //     return (board/6277101735386680763835789423207666416102355444464034512896)%4294967296;
+    function getNonce(uint data) public pure returns(uint){
+        //shift it over by 24 bytes and take five bytes
+        return (data >> 192) % 1099511627776 ;
+    }
+
+
+    //PRIVATE FUNCTIONS
+    //LOW LEVEL WORK WITH STATE FUNCTIONS
+    function redHasPieces(uint data) public pure returns(bool){
+        for (uint i = 0; i < 13;i++){
+            if (active(getPieceByNum(i,data))){
+                return true;
+            }
+        }
+    }
+    function blackHasPieces(uint data) public pure returns(bool){
+        for (uint i = 13; i < 25;i++){
+            if (active(getPieceByNum(i,data))){
+                return true;
+            }
+        }
+    }
+    //INTERPRET PIECE
+    function active(uint pInt) public pure returns(bool){ return (pInt>127); }
+    function red(uint pInt) public pure returns(bool){ return ((pInt%128)>63); }
+    function queen(uint pInt) public pure returns(bool){ return ((pInt%64)>31); }
+    function rowNum(uint pInt) public pure returns(uint){ return ((pInt%64) >> 3); }
+    function colNum(uint pInt) public pure returns(uint){ return (pInt%8); }
+
+    // //IS THIS NEEDED? TESTING ONLY? REMOVE EXPERIMENTAL ENCODER AFTER?
+    // function getPieceStructByNum(uint n,uint data) public pure returns (piece memory pStruct){
+    //     uint pInt = getPieceByNum(n,data);
+    //     pStruct = piece(active(pInt), red(pInt), queen(pInt), rowNum(pInt), colNum(pInt) );
     // }
 
-
-
+    //GET BYTES
     function getByteAt(uint n, uint data) public pure returns(uint bte){
         assembly{bte := byte(n,data)}
         return bte;
@@ -27,10 +71,7 @@ contract ValidatingContract{
     function getPieceByNum(uint n, uint data) public pure returns(uint bte){
         return getByteAt(n+7, data);
     }
-    function getNonce(uint data) public pure returns(uint){
-        //shift it over by 24 bytes and take five bytes
-        return (data >> 192) % 1099511627776 ;
-    }
+    //GET INFO
     function getPieceNumMoved(uint data) public pure returns(uint){
         return getByteAt(0, data);
     }
