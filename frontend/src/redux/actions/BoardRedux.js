@@ -11,6 +11,7 @@ import { PREV_MOVE_STATS } from "../constants/BoardRedux";
 
 export default {
     handlePieceClick: (dispatch, boardMatrix, piece) => {
+        console.log(piece)
         return (dispatch,getState) =>{
             if (piece.red === getState().BoardRedux.p1Turn){
                 dispatch({
