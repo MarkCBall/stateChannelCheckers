@@ -13,18 +13,42 @@ contract ValidatingContract{
     function gameTied(uint) public pure returns(bool){
         return true;
     }
-    function getNonce(uint board) public pure returns(uint){
-        //(board/16^48)%(16^8) --> this gets byte 4-8
-        return (board/6277101735386680763835789423207666416102355444464034512896)%4294967296;
+    // function getNonce(uint board) public pure returns(uint){
+    //     //(board/16^48)%(16^8) --> this gets byte 4-8
+    //     return (board/6277101735386680763835789423207666416102355444464034512896)%4294967296;
+    // }
+
+
+
+    function getByteAt(uint n, uint data) public pure returns(uint bte){
+        assembly{bte := byte(n,data)}
+        return bte;
+    }
+    function getPieceByNum(uint n, uint data) public pure returns(uint bte){
+        return getByteAt(n+7, data);
+    }
+    function getNonce(uint data) public pure returns(uint){
+        //shift it over by 24 bytes and take five bytes
+        return (data >> 192) % 1099511627776 ;
+    }
+    function getPieceNumMoved(uint data) public pure returns(uint){
+        return getByteAt(0, data);
+    }
+    function getPieceNumJumped(uint data) public pure returns(uint){
+        return getByteAt(1, data);
     }
 
-    function getBytes(uint numba, uint byteNum) public pure returns(uint){
-        //this fails when bytenum is <32 - too high a number?
-        uint numBytesToCut = 63-byteNum;
-        return numba/(256**numBytesToCut)%256;
 
-    }
+
 }
+
+
+
+
+
+
+
+
     //grab more notes from interactDatabase action
 
     // MOVE THESE TO OTHER CONTRACT
