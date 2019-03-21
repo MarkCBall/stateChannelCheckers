@@ -1,6 +1,9 @@
 const StateChGaming = artifacts.require("StateChGaming");
 const ValidatingContract = artifacts.require("ValidatingContract");
 const ERC20 = artifacts.require("ERC20");
+// BigNumber  
+// const BN = require("bn.js")
+const ethers = require("ethers/utils");
 
 
 const truffleAssert = require('truffle-assertions');
@@ -53,7 +56,7 @@ contract('StateChGaming', async (accounts) => {
 
 
     // describe("Function - initGame", async ()=>{
-    //     
+        
     //     it('should set gameData correctly', async () => {
     //         let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
     //         let pars_signed_initGame = await SigLib.signPars(getinitGameParams(), _p1REF)
@@ -61,7 +64,8 @@ contract('StateChGaming', async (accounts) => {
     //         let response = await StateChGamingInstance.allGames.call(_gameID)
     //         assert.equal(response.gamePayout, _stakedAmount*2, "gamePayout not set correctly" )
     //         assert.equal(response.tokenAddr,_erc20Addr , "tokenAddr not set correctly")
-    //         assert.equal(response.state,3151051977652667687974785799204386029420487659316301249983 , "state not set to uninitiated board")
+    //         //equality not working on BN, comparing the hash of the BNs instead
+    //         assert.equal(web3.utils.keccak256(response.state), web3.utils.keccak256(web3.utils.toBN('0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf'))  , "state not set to uninitiated board")
     //         assert.equal(response.p1,accounts[_p1REF] , "p1Addr not set correctly")
     //         assert.equal(response.p2,accounts[_p2REF] , "p2Addr not set correctly")
     //         assert.equal(response.vcAddr,_vcAddr , "validating contract address not set correctly")
@@ -77,7 +81,7 @@ contract('StateChGaming', async (accounts) => {
     //             ,"a player didnt sign or send"
     //         )
     //     })
-    //     it('shouldnt work if sent by a third party', async () => {
+    //     it('shouldnt work without a p1 and p2 addresses signed or sent from', async () => {
     //         let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
     //         let pars_signed_initGame = await SigLib.signPars(getinitGameParams(), _p1REF)
     //         //SHOULD FAIL BECAUSE sending from account[3]
@@ -142,24 +146,49 @@ contract('StateChGaming', async (accounts) => {
 
         let getinitBCMoveParams = () => {
             return {
-                pars:[_state],
-                parTypes:['uint'],
+                pars:[_gameID,_state],//INCLUDE GAMEID?
+                parTypes:['uint','uint'],
             }
         }
 
         beforeEach(async ()=>{
-            _state = 55555555555555555555//firstMove
+            //use BN not bignumber?
+            _state = web3.utils.hexToBytes('0x0b0000000000000380828486898b8d8f9092a296a9a4adafb0b2b4b6b9bbbdbf')
+            // _state = new ethers.BigNumber("0x0b0000000000000380828486898b8d8f9092a296a9a4adafb0b2b4b6b9bbbdbf")//third move
+            // console.log(_state)
             let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
             let pars_signed_initGame = await SigLib.signPars(getinitGameParams(), _p1REF)
+            // console.log(pars_signed_initGame)
             await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
         })
         
 
 
         it('should update the game blockNum and state',async () =>{
-
+            let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
+            let pars_signed_initBCMove = await SigLib.signPars(getinitBCMoveParams(), _p2REF)
+            // console.log(getinitBCMoveParams())
+            // console.log(pars_signed_initBCMove)
+            await StateChGamingInstance.initBCMove(...pars_signed_initBCMove.pars, {from:accounts[_p1REF]})
             let response = await StateChGamingInstance.allGames.call(_gameID)
-            console.log(response)
+            // console.log(response)
+            // console.log(new web3.utils.BN("0x0b0000000000000380828486898b8d8f9092a296a9a4adafb0b2b4b6b9bbbdbf"))
+            // console.log()
+
+
+            // assert.equal(response.state,_state , "state not set correctly")
+            // assert.equal(response.blockNum,,"blockNum not set correctly")
+
+
+
+
+
+
+            // assert.equal(response.gamePayout, _stakedAmount*2, "gamePayout not set correctly" )
+            //         assert.equal(response.tokenAddr,_erc20Addr , "tokenAddr not set correctly")
+
+            // let response = await StateChGamingInstance.allGames.call(_gameID)
+            // console.log(response)
 
 
         })
