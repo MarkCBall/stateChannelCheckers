@@ -83,7 +83,7 @@ contract StateChGaming {
         _;
     }
 
-    function initBCMove(uint _gameID, uint _state, uint8 _v, bytes32 _r, bytes32 _s) public validMove(_gameID, _state) {
+    function initBCMove(uint _gameID, uint _state, uint8 _v, bytes32 _r, bytes32 _s) public {
         game memory gm = allGames[_gameID];
 
         //if gameID not included, vulnerable if you are playing two games with both same addresses
