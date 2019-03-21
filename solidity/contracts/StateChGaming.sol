@@ -77,11 +77,11 @@ contract StateChGaming {
         
         bytes32 DataHash = keccak256(abi.encodePacked(_gameID,_state));
         address calcAddr = addrFromHashAndSig(DataHash, _v,_r,_s);
-        require(gm.p1 == calcAddr || gm.p1 == msg.sender);
-        require(gm.p2 == calcAddr || gm.p2 == msg.sender);
+        require(gm.p1 == calcAddr || gm.p1 == msg.sender,"a player didnt sign or send");
+        require(gm.p2 == calcAddr || gm.p2 == msg.sender,"a player didnt sign or send");
 
         //require that the new nonce is > the old nonce
-        // require(gm.vcAddr.getNonce(_state) > gm.vcAddr.getNonce(gm.state));
+        require(gm.vcAddr.getNonce(_state) > gm.vcAddr.getNonce(gm.state),"a new board must be at a higher turnNum");
         allGames[_gameID].blockNum = block.number;
         allGames[_gameID].state = _state;
     }
