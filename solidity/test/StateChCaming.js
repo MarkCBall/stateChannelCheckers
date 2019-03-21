@@ -1,47 +1,160 @@
 const StateChGaming = artifacts.require("StateChGaming");
 const ValidatingContract = artifacts.require("ValidatingContract");
 const ERC20 = artifacts.require("ERC20");
-// const ERC20 = artifacts.require("ERC20");
 
 
 const truffleAssert = require('truffle-assertions');
 const SigLib = require("../Library/SigLib")
 
 contract('StateChGaming', async (accounts) => {
-    // beforeEach(async function(){
-    //         this.contract = await contractname.new({from:owner})
-    //     })
-    
-    describe("Function - initGame", async ()=>{
-        //mock data
-        let _stakedAmount
-        let _erc20Addr
-        let _gameID
-        let _p1REF
-        let _p2REF
-        let _vcAddr
-        let _blocksPerTurn
+    //mock data
+    let _stakedAmount
+    let _erc20Addr
+    let _gameID
+    let _p1REF
+    let _p2REF
+    let _vcAddr
+    let _blocksPerTurn
 
-        let STATE_CH_GAME_ADDRESS
-        
+    let STATE_CH_GAME_ADDRESS
+    
+    beforeEach(async ()=>{
+        //reset parameter data
+        _stakedAmount = 1000000
+        _gameID = 1
+        _p1REF = 0
+        _p2REF = 1
+        _blocksPerTurn = 100
+
+        //get StateChGaming address
+        let StateChGamingInstance = await StateChGaming.new()
+        STATE_CH_GAME_ADDRESS = StateChGamingInstance.address
+        //get validating contract
+        var ValidatingContractInstance = await ValidatingContract.new()
+        _vcAddr = ValidatingContractInstance.address;
+        //pre approve ERC20 approve
+        var ERC20Instance = await ERC20.new((_stakedAmount*100),{from:accounts[_p1REF]})
+        _erc20Addr = ERC20Instance.address;
+        await ERC20Instance.transfer(accounts[_p2REF],_stakedAmount, {from:accounts[_p1REF]})
+        await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount, {from:accounts[_p1REF]})
+        await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount, {from:accounts[_p2REF]})
+    })
+    
+
+
+
+
+    // describe("Function - initGame", async ()=>{
+    //     let getParametersSigned = () => {
+    //         return {
+    //             pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
+    //             parTypes:['uint','address','uint','address','address','address','uint'],
+    //         }
+    //     }
+    //     it('should set gameData correctly', async () => {
+    //         let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
+    //         let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
+    //         await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+    //         let response = await StateChGamingInstance.allGames.call(_gameID)
+    //         assert.equal(response.gamePayout, _stakedAmount*2, "gamePayout not set correctly" )
+    //         assert.equal(response.tokenAddr,_erc20Addr , "tokenAddr not set correctly")
+    //         assert.equal(response.state,3151051977652667687974785799204386029420487659316301249983 , "state not set to uninitiated board")
+    //         assert.equal(response.p1,accounts[_p1REF] , "p1Addr not set correctly")
+    //         assert.equal(response.p2,accounts[_p2REF] , "p2Addr not set correctly")
+    //         assert.equal(response.vcAddr,_vcAddr , "validating contract address not set correctly")
+    //         assert.equal(response.blocksPerTurn,_blocksPerTurn , "blocksPerTurn not set correctly")
+    //     })
+    //     it('shouldnt work with incorrect signature', async () => {
+    //         let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
+    //         let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
+    //         //SHOULD FAIL BECAUSE r = s to force signature to be incorrect
+    //         pars_signed_initGame.pars[8] = pars_signed_initGame.pars[9]
+    //         await truffleAssert.reverts(
+    //             StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+    //             ,"a player didnt sign or send"
+    //         )
+    //     })
+    //     it('shouldnt work if sent by a third party', async () => {
+    //         let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
+    //         let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
+    //         //SHOULD FAIL BECAUSE sending from account[3]
+    //         await truffleAssert.reverts(
+    //             StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[3]})
+    //             ,"a player didnt sign or send"
+    //         )
+    //     })
+    //     it('should fail when if the requested gameID exists', async () => {
+    //         //approve copious amounts of ERC20 token transferFrom
+    //         let ERC20Instance = await ERC20.at(_erc20Addr)
+    //         await ERC20Instance.transfer(accounts[_p2REF],_stakedAmount*10, {from:accounts[_p1REF]})
+    //         await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount*10, {from:accounts[_p1REF]})
+    //         await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount*10, {from:accounts[_p2REF]})
+    //         let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
+    //         let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
+    //         await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+    //         //proof everything else works to make a second gameID
+    //         _gameID = 2
+    //         pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
+    //         await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+    //         //but it fails without changing gameID before the next initGame
+    //         await truffleAssert.reverts(
+    //             StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+    //             ,"can not have duplicate gameIDs"
+    //         )
+    //     })
+    //     it('shouldnt init a channel unless the funds were transferFrom', async () => {
+    //         //approve enough ERC20 tokens for initGame only twice
+    //         let ERC20Instance = await ERC20.at(_erc20Addr)
+    //         await ERC20Instance.transfer(accounts[_p2REF],_stakedAmount*2, {from:accounts[_p1REF]})
+    //         await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount*2, {from:accounts[_p1REF]})
+    //         await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount*2, {from:accounts[_p2REF]})
+    //         let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
+    //         let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
+    //         await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+    //         //proof everything else works to make a second gameID
+    //         _gameID = 2
+    //         pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
+    //         await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+    //         //but it fails now because it only had funds for transferFrom twice
+    //         _gameID = 3
+    //         await truffleAssert.reverts(
+    //             StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+    //         )
+    //     })
+    // })
+
+
+
+
+
+
+
+
+
+
+
+    describe("Function - initBCMove", ()=>{
+        //mock data
+        let _state
+
         let getParametersSigned = () => {
             return {
-                pars:[_stakedAmount,_erc20Addr,_gameID,accounts[_p1REF],accounts[_p2REF],_vcAddr,_blocksPerTurn],
-                parTypes:['uint','address','uint','address','address','address','uint'],
+                pars:[_state],
+                parTypes:['uint'],
             }
         }
 
         beforeEach(async ()=>{
             //reset parameter data
-            _stakedAmount = 1000000
-            _gameID = 1
-            _p1REF = 0
-            _p2REF = 1
-            _blocksPerTurn = 100
+            _state = 4543454343
 
             //get StateChGaming address
             let StateChGamingInstance = await StateChGaming.new()
-            STATE_CH_GAME_ADDRESS = StateChGamingInstance.address
+            //init a new game
+
+            //STATE_CH_GAME_ADDRESS = StateChGamingInstance.address
+
+
             //get validating contract
             var ValidatingContractInstance = await ValidatingContract.new()
             _vcAddr = ValidatingContractInstance.address;
@@ -51,91 +164,17 @@ contract('StateChGaming', async (accounts) => {
             await ERC20Instance.transfer(accounts[_p2REF],_stakedAmount, {from:accounts[_p1REF]})
             await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount, {from:accounts[_p1REF]})
             await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount, {from:accounts[_p2REF]})
-
-
-
-            // console.log("statech addr1 ",STATE_CH_GAME_ADDRESS )
-            // console.log(await ERC20Instance.balanceOf.call(accounts[_p1REF]))
-            // console.log(await ERC20Instance.allowance.call(accounts[_p1REF],StateChGamingInstance.address))
-            // function allowance(address tokenOwner, address spender)
-
         })
         
-        it('should set gameData correctly', async () => {
-            let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
-            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
-            await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
-            let response = await StateChGamingInstance.allGames.call(_gameID)
-            assert.equal(response.gamePayout, _stakedAmount*2, "gamePayout not set correctly" )
-            assert.equal(response.tokenAddr,_erc20Addr , "tokenAddr not set correctly")
-            assert.equal(response.state,3151051977652667687974785799204386029420487659316301249983 , "state not set to uninitiated board")
-            assert.equal(response.p1,accounts[_p1REF] , "p1Addr not set correctly")
-            assert.equal(response.p2,accounts[_p2REF] , "p2Addr not set correctly")
-            assert.equal(response.vcAddr,_vcAddr , "validating contract address not set correctly")
-            assert.equal(response.blocksPerTurn,_blocksPerTurn , "blocksPerTurn not set correctly")
-        })
 
-        it('shouldnt work with incorrect signature', async () => {
-            let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
-            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
-            //SHOULD FAIL BECAUSE r = s to force signature to be incorrect
-            pars_signed_initGame.pars[8] = pars_signed_initGame.pars[9]
-            await truffleAssert.reverts(
-                StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
-                ,"a player didnt sign or send"
-            )
-        })
-        it('shouldnt work if sent by a third party', async () => {
-            let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
-            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
-            //SHOULD FAIL BECAUSE sending from account[3]
-            await truffleAssert.reverts(
-                StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[3]})
-                ,"a player didnt sign or send"
-            )
-        })
-        it('should fail when if the requested gameID exists', async () => {
-            //approve copious amounts of ERC20 token transferFrom
-            let ERC20Instance = await ERC20.at(_erc20Addr)
-            await ERC20Instance.transfer(accounts[_p2REF],_stakedAmount*10, {from:accounts[_p1REF]})
-            await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount*10, {from:accounts[_p1REF]})
-            await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount*10, {from:accounts[_p2REF]})
-            let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
-            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
-            await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
 
-            //proof everything else works to make a second gameID
-            _gameID = 2
-            pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
-            await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
+        it('should update the game blockNum and state',async () =>{
 
-            //but it fails without changing gameID before the next initGame
-            await truffleAssert.reverts(
-                StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
-                ,"can not have duplicate gameIDs"
-            )
+
         })
-        it('shouldnt init a channel unless the funds were transferFrom', async () => {
-            //approve enough ERC20 tokens for initGame only twice
-            let ERC20Instance = await ERC20.at(_erc20Addr)
-            await ERC20Instance.transfer(accounts[_p2REF],_stakedAmount*2, {from:accounts[_p1REF]})
-            await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount*2, {from:accounts[_p1REF]})
-            await ERC20Instance.approve(STATE_CH_GAME_ADDRESS,_stakedAmount*2, {from:accounts[_p2REF]})
-            let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
-            let pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
-            await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
-
-            //proof everything else works to make a second gameID
-            _gameID = 2
-            pars_signed_initGame = await SigLib.signPars(getParametersSigned(), _p1REF)
-            await StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
-
-            //but it fails now because it only had funds for transferFrom twice
-            _gameID = 3
-            await truffleAssert.reverts(
-                StateChGamingInstance.initGame(...pars_signed_initGame.pars, {from:accounts[_p2REF]})
-            )
-        })
+        // it('shouldnt work with incorrect signature')
+        // it('shouldnt work if sent by a third party')//,()=>{console.log("y")})
+        // it('shouldnt work if the nonce is not higher than saved nonce')
     })
 
 
@@ -148,12 +187,6 @@ contract('StateChGaming', async (accounts) => {
 
 
 
-    // describe("Function - initBCMove", ()=>{
-    //     it('should update the game blockNum and state')
-    //     it('shouldnt work with incorrect signature')
-    //     it('shouldnt work if sent by a third party')//,()=>{console.log("y")})
-    //     it('shouldnt work if the nonce is not higher than saved nonce')
-    // })
 
     // describe("Function - makeMoveTimed", ()=>{
     //     it('should set the blockNumber')
