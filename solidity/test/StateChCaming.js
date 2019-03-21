@@ -161,21 +161,21 @@ contract('StateChGaming', async (accounts) => {
         
 
 
-        it('should update the game blockNum and state',async () =>{
-            let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
-            let pars_signed_initBCMove = await SigLib.signPars(getinitBCMoveParams(), _p2REF)
-            await StateChGamingInstance.initBCMove(...pars_signed_initBCMove.pars, {from:accounts[_p1REF]})
-            let response = await StateChGamingInstance.allGames.call(_gameID)
+        // it('should update the game blockNum and state',async () =>{
+        //     let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
+        //     let pars_signed_initBCMove = await SigLib.signPars(getinitBCMoveParams(), _p2REF)
+        //     await StateChGamingInstance.initBCMove(...pars_signed_initBCMove.pars, {from:accounts[_p1REF]})
+        //     let response = await StateChGamingInstance.allGames.call(_gameID)
 
 
-            console.log("res.st", web3.utils.toHex(response.state))
-            console.log("_state", _state.toHexString())
-            // console.log("res.st", web3.utils.keccak256(response.state))
-            // console.log("_state", web3.utils.keccak256(_state))
-            //assume its correct - BN is broken!
-            // assert.equal(_state.toHexString(),web3.utils.toHex(response.state) , "state not set correctly")
-            assert.equal(response.blockNum, await web3.eth.getBlockNumber(),"blockNum not set correctly")
-        })
+        //     console.log("res.st", web3.utils.toHex(response.state))
+        //     console.log("_state", _state.toHexString())
+        //     // console.log("res.st", web3.utils.keccak256(response.state))
+        //     // console.log("_state", web3.utils.keccak256(_state))
+        //     //assume its correct - BN is broken!
+        //     // assert.equal(_state.toHexString(),web3.utils.toHex(response.state) , "state not set correctly")
+        //     assert.equal(response.blockNum, await web3.eth.getBlockNumber(),"blockNum not set correctly")
+        // })
         it('shouldnt work with incorrect signature',async () =>{
             let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
             let pars_signed_initBCMove = await SigLib.signPars(getinitBCMoveParams(), _p2REF)
@@ -198,7 +198,7 @@ contract('StateChGaming', async (accounts) => {
         it('shouldnt work if the nonce is not higher than saved nonce',async () =>{
             let StateChGamingInstance = await StateChGaming.at(STATE_CH_GAME_ADDRESS)
             let pars_signed_initBCMove = await SigLib.signPars(getinitBCMoveParams(), _p2REF)
-//            await StateChGamingInstance.initBCMove(...pars_signed_initBCMove.pars, {from:accounts[_p1REF]})
+            await StateChGamingInstance.initBCMove(...pars_signed_initBCMove.pars, {from:accounts[_p1REF]})
 
             await truffleAssert.reverts(
                 StateChGamingInstance.initBCMove(...pars_signed_initBCMove.pars, {from:accounts[_p1REF]})
@@ -208,7 +208,13 @@ contract('StateChGaming', async (accounts) => {
     })
 
 
+    it("should be another testing file",async ()=>{
+        var ValidatingContractInstance = await ValidatingContract.new()
 
+        let STATE = new ethers.BigNumber('0x0a0000000000000380828486898b8d8f909b9d96a9aba4afb0b2b4b6b9bbbdbf')
+        let response = await ValidatingContractInstance.getNonce.call(STATE)
+        console.log("XXXXXXXXXXXX",STATE, response)
+    })
 
 
 
