@@ -6,7 +6,6 @@ module.exports = {
   // for more details on how to specify configuration options!
   
 
-// ganache-cli -m "a"
   compilers: {
         solc: {
             version: "0.5.0",
