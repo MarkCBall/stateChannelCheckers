@@ -22,11 +22,30 @@ class GameStats extends Component {
         </div>
     }
 
+    downloadData = () =>{
+        var file = new Blob([JSON.stringify(this.props.boardMatricies)], {type: 'application/json'});
+        if (window.navigator.msSaveOrOpenBlob) // IE10+
+            window.navigator.msSaveOrOpenBlob(file, 'BoardHistory');
+        else { // Others
+            var a = document.createElement("a"),
+                    url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = 'BoardHistory';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);  
+            }, 0); 
+        }
+    }
+
     
 
      render() {
         return (
             <div>
+                <button onClick={this.downloadData}>Download Board History</button>
                 <br/>Propose board as a string:
                 <br/><button onClick={()=> 
                     this.props.signAndPostMove(BoardTranslations.MatrixAndMoveToBNStr(this.props.boardMatrix,this.props.prevMove,this.props.turnNum))}
@@ -48,6 +67,7 @@ class GameStats extends Component {
 
 function mapStateToProps(state) {
     return {
+        boardMatricies: state.BoardRedux.boardMatricies,
         boardMatrix: state.BoardRedux.boardMatrix,
         p1Turn: state.BoardRedux.p1Turn,
         prevMove:state.BoardRedux.prevMove,

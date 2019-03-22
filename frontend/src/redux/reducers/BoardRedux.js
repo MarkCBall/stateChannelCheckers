@@ -4,6 +4,7 @@ import { HANDLE_MOVE } from "../constants/BoardRedux";
 // import { NEXT_TURN } from "../constants/BoardRedux";
 import { CLEAR_SELECTION } from "../constants/BoardRedux";
 import { PREV_MOVE_STATS } from "../constants/BoardRedux";
+import BoardTranslations from "../../Library/BoardTranslations"
 
 const initialState = {
     boardMatrix: [],
@@ -11,7 +12,8 @@ const initialState = {
     activeSquare: {},
     p1Turn: true,
     prevMove: {pieceNumMoved:0,pieceNumJumped:0},
-    turnNum: 0
+    turnNum: 0,
+    boardMatricies: {0:"0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf"}
 };
 
 export default function(state = initialState, action) {
@@ -33,7 +35,11 @@ export default function(state = initialState, action) {
     case HANDLE_MOVE:
     return {
         ...state,
-        boardMatrix:action.payload
+        boardMatrix:action.payload,
+        boardMatricies:{
+            ...state.boardMatricies,
+            [state.turnNum]:BoardTranslations.MatrixAndMoveToBNStr(action.payload,state.prevMove,state.turnNum)
+        }
     }
     case CLEAR_SELECTION:
     return {
