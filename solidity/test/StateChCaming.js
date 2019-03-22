@@ -4,7 +4,7 @@ const ERC20 = artifacts.require("ERC20");
 // BigNumber  
 // const BN = require("bn.js")
 const ethers = require("ethers/utils");
-
+// ganache-cli -m "smart fun man hind sea joke split cherry force season once pair"
 
 const truffleAssert = require('truffle-assertions');
 const SigLib = require("../Library/SigLib")
@@ -227,11 +227,30 @@ contract('StateChGaming', async (accounts) => {
         // console.log("getPieceNumJumped is:",await ValidatingContractInstance.getPieceNumJumped.call(STATE))
 
         
-                        for (n = 1; n<25;n++){
-                            console.log(`piece# ${n} is:`,await ValidatingContractInstance.getPieceStructByNum.call(n, STATE))
-                        }
-        console.log("red has pieces:",await ValidatingContractInstance.redHasPieces.call(STATE))
+                        // for (n = 1; n<25;n++){
+                        //     console.log(`piece# ${n} is:`,await ValidatingContractInstance.getPieceStructByNum.call(n, STATE))
+                        // }
+        // console.log("red has pieces:",await ValidatingContractInstance.redHasPieces.call(STATE))
 
+
+        // let num = 3  
+        // console.log(`zero piece num ${num}`,await ValidatingContractInstance.XORPieceByte(STATE, num, await ValidatingContractInstance.getPieceByNum(STATE, num)))
+        // // function setPieceByte(uint data, uint pieceNum, uint bte) public pure returns(uint){
+
+        let states = [
+            new ethers.BigNumber('0x000000000000000080828486898b8d8f90929496a9abadafb0b2b4b6b9bbbdbf'),
+            new ethers.BigNumber('0x090000000000000180828486898b8d8f99929496a9abadafb0b2b4b6b9bbbdbf'),
+            new ethers.BigNumber('0x0d0000000000000280828486898b8d8f99929496a2abadafb0b2b4b6b9bbbdbf'),
+            new ethers.BigNumber('0x0a0000000000000380828486898b8d8f999b9496a2abadafb0b2b4b6b9bbbdbf'),
+            new ethers.BigNumber('0x0d0900000000000480828486898b8d8f009b949690abadafb0b2b4b6b9bbbdbf')
+                                    // "a0000000000000380828486898b8d8f009b949690abadafb0b2b4b6b9bbbdbf>"
+        ]
+
+        for (let x = 0; x<4;x++){
+            console.log(await ValidatingContractInstance.validStateUpdate(states[x],states[x+1]))
+        }
+        
+        // console.log(await ValidatingContractInstance.validStateUpdate(states[2],states[3]))
         
     })
 

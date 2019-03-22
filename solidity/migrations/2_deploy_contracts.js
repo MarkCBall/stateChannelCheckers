@@ -1,4 +1,3 @@
-// ganache-cli -m "a"
 
 const StateChGaming = artifacts.require("StateChGaming");
 const ERC20 = artifacts.require("ERC20");
