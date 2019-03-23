@@ -31,9 +31,6 @@ let SWValidAttack = (boardMatrix, piece) => {
         && !boardMatrix[piece.row + 2][piece.col - 2].active && (boardMatrix[piece.row + 1][piece.col - 1].red !== piece.red))
 }
 
-
-
-//FIX THIS DUPLICATE CODE
 let createEmptyValidMovesMatrix= () => {
     let validMovesMatrix = []
     for (let row = 0; row < 8; row++) {
@@ -44,7 +41,6 @@ let createEmptyValidMovesMatrix= () => {
     }
     return validMovesMatrix
 }
-
 
 export default {
     createEmptyValidMovesMatrix: () => {
@@ -59,7 +55,7 @@ export default {
     },
 
     getValidMoves: (boardMatrix, piece) => {
-        let validMovesMatrix = createEmptyValidMovesMatrix()//FIX THIS DUPLICATE CODE
+        let validMovesMatrix = createEmptyValidMovesMatrix()
         if (NWValid(boardMatrix, piece))
             validMovesMatrix[piece.row - 1][piece.col - 1] = true;
         if (NEValid(boardMatrix, piece))
@@ -79,5 +75,3 @@ export default {
         return validMovesMatrix
     }
 }
- //getValidMoves;
-    // createEmptyValidMovesMatrix
