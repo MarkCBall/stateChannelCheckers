@@ -47,16 +47,7 @@ let createEmptyValidMovesMatrix= () => {
 
 
 export default {
-    createEmptyValidMovesMatrix: () => {
-        let validMovesMatrix = []
-        for (let row = 0; row < 8; row++) {
-            validMovesMatrix.push([])
-            for (let col = 0; col < 8; col++) {
-                validMovesMatrix[row][col] = false;
-            }
-        }
-        return validMovesMatrix
-    },
+    createEmptyValidMovesMatrix:createEmptyValidMovesMatrix,
 
     getValidMoves: (boardMatrix, piece) => {
         let validMovesMatrix = createEmptyValidMovesMatrix()//FIX THIS DUPLICATE CODE
