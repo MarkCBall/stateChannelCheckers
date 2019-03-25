@@ -61,8 +61,6 @@ contract('ValidatingContract', async (accounts) => {
     describe("Function - gameTied", async ()=>{
         it('is not implimented')
     })
-
-
     describe("Function - validStateUpdate", async ()=>{
         describe("Game#1", async ()=>{
             let gameStates = validGames.g1
@@ -177,7 +175,6 @@ contract('ValidatingContract', async (accounts) => {
                 try {
                     let validMove = await ValidatingContractInstance.validStateUpdate(oldState,testStateBN)
                     if(validMove){
-                        // console.log("a valid move ends in state:",testStateBN )
                         numValidMoves++
                     }
                 }catch{}

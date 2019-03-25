@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.5.0;
 
 import "./ValidatingContract.sol";
 // contract ValidatingContract{
@@ -72,9 +72,6 @@ contract StateChGaming {
 
     function initBCMove(uint _gameID, uint _state, uint8 _v, bytes32 _r, bytes32 _s) public {
         game memory gm = allGames[_gameID];
-
-        //if gameID not included, vulnerable if you are playing two games with both same addresses
-        
         bytes32 DataHash = keccak256(abi.encodePacked(_gameID,_state));
         address calcAddr = addrFromHashAndSig(DataHash, _v,_r,_s);
         require(gm.p1 == calcAddr || gm.p1 == msg.sender,"a player didnt sign or send");
