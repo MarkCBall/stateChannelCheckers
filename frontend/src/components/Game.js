@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import BoardRedux from "../redux/actions/BoardRedux";
+import GameData from "../redux/actions/GameData";
 import { connect } from "react-redux";
 
 // import BoardTranslations from "../Library/BoardTranslations"
@@ -7,17 +7,17 @@ import { connect } from "react-redux";
 
 class Game extends Component {
 
-
-
-
- 
-
-    
-
      render() {
         return (
             <div>
                 <p>
+                    <strong>Enter game#:</strong>
+                    <input
+                        type="text" 
+                        onChange={this.props.handleGameIDChange}
+                        value={this.props.gameID}
+                        /><br/>
+
                     opponent: addr=0xf6d5c6d500cac10ee7e6efb5c1b479cfb789950a<br/>   privkey =0x88f37cfbaed8c0c515c62a17a3a1ce2f397d08bbf20dcc788b69f11b5a5c9791
                     <br/>gameID__________CreateNew/AcceptGame<br/>
                     Your color RED/BLACK  ----
@@ -35,7 +35,7 @@ class Game extends Component {
 
 function mapStateToProps(state) {
     return {
-        // boardMatrix: state.BoardRedux.boardMatrix,
+        gameID: state.GameData.gameID,
         // p1Turn: state.BoardRedux.p1Turn,
         // prevMove:state.BoardRedux.prevMove
     }
@@ -43,9 +43,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        // calcBoardMatrix: (piecesBN) =>{
-        //     dispatch(BoardRedux.calcBoardMatrix(dispatch, piecesBN))
-        // },
+        handleGameIDChange: (Event) =>{
+            dispatch(GameData.handleGameIDChange(dispatch, Event.target.value))
+        },
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

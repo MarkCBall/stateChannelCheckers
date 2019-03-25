@@ -1,6 +1,6 @@
 import { POST_SIGNED_MOVE } from "../constants/InteractDatabase";
 // import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
-
+import { DATABASE_GAME_UPDATE } from "../constants/GameData";
 import {ethers} from "ethers";
 
 //can this be done with ethers ????????
@@ -11,7 +11,7 @@ export default {
     signAndPostMove: (dispatch, boardBNStr) => {
         return async (dispatch, getState) => {
             //calculate the sig of the board state with the logged in private key
-            let boardHash = ethers.utils.solidityKeccak256(['uint'],[boardBNStr]);
+            let boardHash = ethers.utils.solidityKeccak256(['uint'],[boardBNStr]);// get gameID too!
             let arrayifiedBoardHash = ethers.utils.arrayify(boardHash)
             let wallet = new ethers.Wallet(getState().LoginRedux.privKey)
             let flatSig = await wallet.signMessage(arrayifiedBoardHash)
@@ -102,7 +102,37 @@ export default {
             
     
         }
+    },
+
+    getGame: (dispatch, gameID, timestamp) => {
+        return async (dispatch,getState) => {
+            let gameData = {//await call the blockchain for this
+                1:1,
+                2:2,
+                timestamp:timestamp
+            }
+            dispatch({
+                type: DATABASE_GAME_UPDATE,
+                payload: gameData
+            })
+        }
     }
+
+
+
+
+                //dispatch (interact blockchain GET_BC_GAME)
+                        //set all but state
+                        //if nonce >= nonce
+                            //set state and blockNum
+                        //dispatch back to gameData
+
+                    //dispatch (interact database GET_DB_GAME)
+                        //if addresses are empty according to reducer
+                            //store data + gamesigs
+                        //else if nonce> nonce && movesigs valid
+                            //set state+ movesigs
+                        //dispatch back to gameData
 }
 
 

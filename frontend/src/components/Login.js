@@ -6,14 +6,8 @@ import LoginRedux from "../redux/actions/LoginRedux";
 import {isValidAddress} from "ethereumjs-util";
 
 
-//mport { Button } from 'react-bootstrap';
 
 class Login extends Component {
-  
-    // componentDidMount(){
-    //     this.props.updateChButtons(this.props.address);
-    // }
-
     render() {
         return (
             <div>
@@ -52,15 +46,7 @@ class Login extends Component {
                         onChange={this.props.handlePrivKeyChange}
                         value={this.props.privKey}
                     />
-                } &nbsp;
-                
-                
-            
-
-                {/* <br/><br/><br/>
-                <button className="btn btn-info btn-sm">Toggle Display</button>
-                <button className="btn btn-danger btn-sm">Interact with blockchain</button>
-                <button className="btn btn-success btn-sm">Interact with statechannel</button> */}
+                }
                 <hr/>
             </div>
         );

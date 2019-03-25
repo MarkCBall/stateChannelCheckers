@@ -3,6 +3,7 @@
 // import { ONGOING_CHANNELS } from "../constants/InteractBlockchain";
 // import { CONTRACT_ADDRESS } from "../constants/Other";
 // import {ethers} from "ethers";
+import { BLOCKCHAIN_GAME_UPDATE } from "../constants/GameData";
 
 //let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 // let provider = ethers.getDefaultProvider('ropsten');
@@ -17,6 +18,20 @@
 
 
 export default {
+
+    getGame: (dispatch, gameID, timestamp) => {
+        return async (dispatch,getState) => {
+            let gameData = {//await call the blockchain for this
+                1:10,
+                2:20,
+                timestamp:timestamp
+            }
+            dispatch({
+                type: BLOCKCHAIN_GAME_UPDATE,
+                payload: gameData
+            })
+        }
+    }
 
     // countersignChannel:(dispatch) => {
     //     return async (dispatch,getState) => {

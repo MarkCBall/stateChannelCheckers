@@ -6,13 +6,15 @@ import InteractBlockchain from "./reducers/InteractBlockchain";
 import InteractDatabase from "./reducers/InteractDatabase";
 import LoginRedux from "./reducers/LoginRedux";
 import BoardRedux from "./reducers/BoardRedux";
+import GameData from "./reducers/GameData";
 
 
 const rootReducer = combineReducers({
     InteractBlockchain,
     InteractDatabase,
     LoginRedux,
-    BoardRedux
+    BoardRedux,
+    GameData
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk));
