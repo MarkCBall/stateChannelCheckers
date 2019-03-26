@@ -8,7 +8,6 @@ import { RESET_GAME_DATA } from "../constants/GameData";
 
 
 const initialState = {
-    initiated:false,
     gameID:"",
     addr1:"default 0xa1",
     addr2:"default 0xa2",
@@ -71,20 +70,20 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 ...action.payload,
-                initiated:true,
+                // initiated:true,
             }
         }
-        return {
-            ...state,
-            //overwrite data as bc is always correct
-            addr1:"0xa1",
-            addr2:"0xa2",
-            payout:200,
-            VCAddr:"0x123456",
-            ERC20Addr:"0x654321",
-            blocksPerTurn:100,
-            initiated:true
-        }
+        return state//{
+        //     ...state,
+        //     //overwrite data as bc is always correct
+        //     addr1:"0xa1",
+        //     addr2:"0xa2",
+        //     payout:200,
+        //     VCAddr:"0x123456",
+        //     ERC20Addr:"0x654321",
+        //     blocksPerTurn:100,
+        //     // initiated:true
+        // }
             
 
         case DATABASE_GAME_UPDATE:
@@ -94,7 +93,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 ...action.payload,
-                initiated:true
+                // initiated:true
             }
         }
         return state

@@ -15,7 +15,6 @@ class GameInfo extends Component {
         }
     }
 
-
      render() {
         return (
             <div>

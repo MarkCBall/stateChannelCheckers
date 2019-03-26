@@ -32,6 +32,8 @@ class Login extends Component {
                         textWidthClass={"col-md-10"}
                         isGreen={this.props.pubPrivKeypairValid}
                     />
+                    p1: 0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901<br/>
+                    p2: 0x5ea9296aaa2bd9fa6089aa96f3b98b29b631180000f829f5979b9c472e286020
                 </div>
             
                 <hr/>

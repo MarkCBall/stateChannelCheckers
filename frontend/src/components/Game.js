@@ -28,6 +28,7 @@ class Game extends Component {
                         />
                     </div>
                 </div>
+                
                 {this.props.initiated ? <GameActive/> : <GameCreate/>}
             
             </div>
@@ -38,7 +39,7 @@ class Game extends Component {
 function mapStateToProps(state) {
     return {
         address: state.LoginRedux.addressSignedIn,
-        initiated: state.GameData.initiated,
+        initiated: ((state.GameData.latestBCTimestamp+state.GameData.latestDBTimestamp)>0),
         gameID: state.GameData.gameID,
         addr1:state.GameData.addr1,
         addr2:state.GameData.addr2,
