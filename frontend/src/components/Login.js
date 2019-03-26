@@ -4,49 +4,36 @@ import LoginRedux from "../redux/actions/LoginRedux";
 // import InteractDatabase from "../redux/actions/InteractDatabase";
 // import InteractBlockchain from "../redux/actions/InteractBlockchain";
 import {isValidAddress} from "ethereumjs-util";
-
+import LabelAndInput from "./LabelAndInput";
 
 
 class Login extends Component {
     render() {
         return (
             <div>
-                Public ethereum address to interact on:
-               
-                    {isValidAddress(this.props.address) ?
-                        <input 
-                            className="form-control is-valid"
-                            type="text" 
-                            onChange={this.props.handleAddressChange}
-                            value={this.props.address}
-                        />
-                    :
-                        <input 
-                            className="form-control is-invalid"
-                            type="text" 
-                            onChange={this.props.handleAddressChange}
-                            value={this.props.address}
-                        />
-                    }
-                    
-                
-                Private key:
 
-                {this.props.pubPrivKeypairValid ? 
-                    <input 
-                        className="form-control is-valid"
-                        type="text" 
-                        onChange={this.props.handlePrivKeyChange}
-                        value={this.props.privKey}
+                <div className="form-group row">
+                    <LabelAndInput
+                        label="Public ethereum address to interact on:"
+                        value={this.props.address}
+                        onChange={this.props.handleAddressChange}
+                        labelWidthClass={"col-md-5"}
+                        textWidthClass={"col-md-7"}
+                        isGreen={isValidAddress(this.props.address)}
                     />
-                : 
-                    <input 
-                        className="form-control is-invalid"
-                        type="text" 
-                        onChange={this.props.handlePrivKeyChange}
+                </div>
+
+                <div className="form-group row">
+                    <LabelAndInput
+                        label="Private key:"
                         value={this.props.privKey}
+                        onChange={this.props.handlePrivKeyChange}
+                        labelWidthClass={"col-sm-2"}
+                        textWidthClass={"col-md-10"}
+                        isGreen={this.props.pubPrivKeypairValid}
                     />
-                }
+                </div>
+            
                 <hr/>
             </div>
         );
