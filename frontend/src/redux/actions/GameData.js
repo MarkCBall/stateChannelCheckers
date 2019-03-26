@@ -1,18 +1,10 @@
-// import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
-// import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
-// import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
-import { CHANGE_GAMEID_TEXT } from "../constants/GameData";
-// import { isValidAddress } from "ethereumjs-util";
+// import { CHANGE_GAMEID_TEXT } from "../constants/GameData";
+import { RESET_GAME_DATA } from "../constants/GameData";
 
 import GameData from "./GameData";
 import InteractBlockchain from "./InteractBlockchain";
 import InteractDatabase from "./InteractDatabase";
-// import InteractBlockchain from "./InteractBlockchain";
 
-// //what does it mean to import itself??????? whoaaaa
-// import LoginRedux from "./LoginRedux";
-
-// import { ethers } from "ethers";
 
 export default {
 
@@ -20,8 +12,12 @@ export default {
     handleGameIDChange: (dispatch, gameID) => {
         return (dispatch) => {
             if ( gameID === "" || parseInt(gameID,10) === Number(gameID)){
+                // dispatch({
+                //     type: CHANGE_GAMEID_TEXT,
+                //     payload: gameID
+                // })
                 dispatch({
-                    type: CHANGE_GAMEID_TEXT,
+                    type: RESET_GAME_DATA,
                     payload: gameID
                 })
                 dispatch(GameData.updateGameData(dispatch, gameID))

@@ -1,5 +1,6 @@
 import {ethers} from "ethers";
 import { BLOCKCHAIN_GAME_UPDATE } from "../constants/GameData";
+// import { RESET_GAME_DATA } from "../constants/GameData";
 
 let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 // let provider = ethers.getDefaultProvider('ropsten');
@@ -7,25 +8,28 @@ let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 //get contract info
 let StateChGamingJson = require('../../SolidityJSON/StateChGaming.json')
 let StateChGamingAbi = StateChGamingJson.abi;
-// let deployedaddress = "0x15bb365BB9b6478c3234181FA6051354EaA3CB0C"
-let StateChGamingBytecode = StateChGamingJson.bytecode
+// let StateChGamingBytecode = StateChGamingJson.bytecode
 // let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
-let activeWallet = new ethers.Wallet("0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901").connect(provider)
-let deployedContract
-(async ()=>{
-    let ContractFactory = await new ethers.ContractFactory(StateChGamingAbi, StateChGamingBytecode).connect(activeWallet);
-    deployedContract = await ContractFactory.deploy()
-})()
+// let activeWallet = new ethers.Wallet("0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901").connect(provider)
 
 
+let deployedaddress = "0x9e64aa3c10d0e6f14c384b0e5d72fa1a77ca3f79"
+let deployedContract = new ethers.Contract(deployedaddress,StateChGamingAbi, provider)
+
+// let deployedContract
+// (async ()=>{
+//     let ContractFactory = await new ethers.ContractFactory(StateChGamingAbi, StateChGamingBytecode).connect(activeWallet);
+//     deployedContract = await ContractFactory.deploy()
+// })()
 
 export default {
                  
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch,getState) => {
-            let game = await deployedContract.allGames(1)
+            let game = await deployedContract.allGames(gameID)
             let gameData
-            // console.log(game)
+            // console.log("allGames retuened",game)
+
             // if the game is initialized
             if(game.state.toString().length!==1){
                 gameData = {
@@ -40,21 +44,16 @@ export default {
                     blocksPerTurn:game.blocksPerTurn.toString(),
                     latestBCTimestamp:Date.now()
                 }
-                console.log(gameData)
                 dispatch({
                     type: BLOCKCHAIN_GAME_UPDATE,
                     payload: gameData
                 })
-
-            }  
+            } 
         }
     },
     initGame: () =>{
         console.log("build the functionality to call initGame here")
     }
-
-    // countersignChannel:(dispatch) => {
-    //     return async (dispatch,getState) => {
 
 
 

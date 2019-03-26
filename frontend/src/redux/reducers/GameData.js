@@ -1,18 +1,20 @@
 
-import { CHANGE_GAMEID_TEXT } from "../constants/GameData";
+// import { CHANGE_GAMEID_TEXT } from "../constants/GameData";
 import { BLOCKCHAIN_GAME_UPDATE } from "../constants/GameData";
 import { DATABASE_GAME_UPDATE } from "../constants/GameData";
+import { RESET_GAME_DATA } from "../constants/GameData";
+
 
 
 
 const initialState = {
     initiated:false,
-    gameID:1,
+    gameID:"",
     addr1:"default 0xa1",
     addr2:"default 0xa2",
     payout:200,
     state:"default0x0000000000080828486",
-    turnNum: 2,//get from state
+    turnNum: 2,
     blockNum:6376,
     VCAddr:"default 0x123456",
     ERC20Addr:"default 0x654321",
@@ -56,8 +58,15 @@ let DBActionIsValid = (data, currentState) => {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+
+        case RESET_GAME_DATA:
+        return {
+            ...initialState,
+            gameID:action.payload
+        }
+
         case BLOCKCHAIN_GAME_UPDATE:
-        console.log("blockchain update w",action.payload)
+        // console.log("blockchain update w",action.payload)
         if (BCActionIsValid(action.payload, state)){
             return {
                 ...state,
@@ -92,13 +101,13 @@ export default function (state = initialState, action) {
 
 
 
-        case CHANGE_GAMEID_TEXT:
-        return {
-            ...state,
-            gameID:action.payload,
-            initiated:false
-            //what if this is triggered on gameid = 12 after gameID=1's async comes back with a hit later?
-        }
+        // case CHANGE_GAMEID_TEXT:
+        // return {
+        //     ...state,
+        //     gameID:action.payload,
+        //     initiated:false
+        //     //what if this is triggered on gameid = 12 after gameID=1's async comes back with a hit later?
+        // }
         default:
             return state;
     }

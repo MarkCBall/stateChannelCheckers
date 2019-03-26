@@ -8,6 +8,30 @@ import {ethers} from "ethers";
 
 export default {
 
+
+    signAndSubmitGame: (dispatch, ERC20Amount, ERC20Addr,gameID,p1Addr,p2Addr,VCAddr,turnLength) => {
+        return async (dispatch, getState) => {
+
+            let gameHash = ethers.utils.solidityKeccak256(
+                ['uint','address','uint','address','address','address','uint'],
+                [ERC20Amount, ERC20Addr,gameID, p1Addr, p2Addr, VCAddr, turnLength]
+            );
+            let arrayifiedGameHash = ethers.utils.arrayify(gameHash)
+            let wallet = new ethers.Wallet(getState().LoginRedux.privKey)
+            let flatSig = await wallet.signMessage(arrayifiedGameHash)
+            let sig = ethers.utils.splitSignature(flatSig);
+            console.log("DB sign game called",sig)
+
+      
+
+        } 
+    },
+
+
+
+
+
+
     signAndPostMove: (dispatch, boardBNStr) => {
         return async (dispatch, getState) => {
             //calculate the sig of the board state with the logged in private key
