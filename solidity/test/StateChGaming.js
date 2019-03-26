@@ -2,7 +2,7 @@ const StateChGaming = artifacts.require("StateChGaming");
 const ValidatingContract = artifacts.require("ValidatingContract");
 const ERC20 = artifacts.require("ERC20");
 const ethers = require("ethers/utils");
-// ganache-cli -m "smart fun man hind sea joke split cherry force season once pair"
+// ganache-cli -m "smart fun man behind sea joke split cherry force season once pair"
 const validGames = require("./Data/ValidGameData")
 const truffleAssert = require('truffle-assertions');
 const SigLib = require("../Library/SigLib")

@@ -1,7 +1,7 @@
 const ethers = require('ethers');
 
 
-// ganache-cli -m "smart fun man hind sea joke split cherry force season once pair"
+// ganache-cli -m "smart fun man behind sea joke split cherry force season once pair"
 let getPrivKey = (accountNum) => {
     let phrase = "smart fun man behind sea joke split cherry force season once pair"
     let path = "m/44'/60'/0'/0/"

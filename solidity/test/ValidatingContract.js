@@ -1,6 +1,6 @@
 const ValidatingContract = artifacts.require("ValidatingContract");
 const ethers = require("ethers/utils");
-// ganache-cli -m "smart fun man hind sea joke split cherry force season once pair"
+// ganache-cli -m "smart fun man behind sea joke split cherry force season once pair"
 const validGames = require("./Data/ValidGameData")
 const truffleAssert = require('truffle-assertions');
 
