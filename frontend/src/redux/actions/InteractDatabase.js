@@ -103,14 +103,23 @@ export default {
     
         }
     },
-
+                
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch,getState) => {
-            let gameData = {//await call the blockchain for this
-                1:1,
-                2:2,
-                timestamp:timestamp
+            let gameData = {//await call the database for this
+                addr1:"0xa11",
+                addr2:"0xa22",
+                payout:100,
+                state:"0xaa00000000080828486",
+                turnNum: 1 ,//get from state
+                blockNum:100000000000000000000000000000,
+                VCAddr:"0x00123456",
+                ERC20Addr:"0x00654321",
+                blocksPerTurn:10,
+                latestDBTimestamp:timestamp,
+                sig:"vrs",//is the sig for move
             }
+            //if valid call then
             dispatch({
                 type: DATABASE_GAME_UPDATE,
                 payload: gameData
@@ -121,18 +130,7 @@ export default {
 
 
 
-                //dispatch (interact blockchain GET_BC_GAME)
-                        //set all but state
-                        //if nonce >= nonce
-                            //set state and blockNum
-                        //dispatch back to gameData
-
-                    //dispatch (interact database GET_DB_GAME)
-                        //if addresses are empty according to reducer
-                            //store data + gamesigs
-                        //else if nonce> nonce && movesigs valid
-                            //set state+ movesigs
-                        //dispatch back to gameData
+         
 }
 
 

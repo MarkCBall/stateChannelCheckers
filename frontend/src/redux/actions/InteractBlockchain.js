@@ -18,14 +18,22 @@ import { BLOCKCHAIN_GAME_UPDATE } from "../constants/GameData";
 
 
 export default {
-
+                 
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch,getState) => {
             let gameData = {//await call the blockchain for this
-                1:10,
-                2:20,
-                timestamp:timestamp
+                addr1:"0xa1",
+                addr2:"0xa2",
+                payout:200,
+                state:"0x0000000000080828486",
+                turnNum: 2,//get from state
+                blockNum:6376,
+                VCAddr:"0x123456",
+                ERC20Addr:"0x654321",
+                blocksPerTurn:100,
+                latestBCTimestamp:timestamp
             }
+            //if valid call then
             dispatch({
                 type: BLOCKCHAIN_GAME_UPDATE,
                 payload: gameData
