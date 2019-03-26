@@ -6,10 +6,10 @@ import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
 
 
 const initialState = {
-    addressSignedIn: "0xb8d851486d1c953e31a44374aca11151d49b8bb3",//default must start with 0x
+    addressSignedIn: "0x04d05a4923af4569792cffa8024061a0340a3923",//default must start with 0x
     addressIsValid: false,
     //   activeChannel:-1,
-    privKey: "0xf942d5d524ec07158df4354402bfba8d928c99d0ab34d0799a6158d56156d986",
+    privKey: "0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901",
     pubPrivKeypairValid: true,
     //   showNewChannelForm: false
     gameID:1

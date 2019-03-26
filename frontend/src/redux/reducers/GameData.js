@@ -21,7 +21,6 @@ const initialState = {
     latestDBTimestamp:0,
     gameSig:{},
     moveSig:{},        
-    userColor:"NA"
 };
 
 
@@ -80,7 +79,7 @@ export default function (state = initialState, action) {
             
 
         case DATABASE_GAME_UPDATE:
-        console.log("database update w",action.payload)
+        // console.log("database update w",action.payload)
         //do stuff
         if (DBActionIsValid(action.payload)){
             return {

@@ -68,16 +68,16 @@ export default {
 
 
             //query the server-- temp testing data given here
-            let opponentMove = {
-                board:"0x0e0a00000000000480828486898b8d8f99009496a992adafb0b2b4b6b9bbbdbf",
-                turnNum:"00000004",
-                sig:{
-                    r:"0x216d8680becd8d87c6bab9c3e2e7a07bac0ac9ffe079a531f3271b8fce1c858b",
-                    recoveryParam:0,
-                    s:"0x4395fdaa489b3023bfc4855385276c903b4147bffba92efdfcc4c5f579974c02",
-                    v:27
-                }
-            }
+            // let opponentMove = {
+            //     board:"0x0e0a00000000000480828486898b8d8f99009496a992adafb0b2b4b6b9bbbdbf",
+            //     turnNum:"00000004",
+            //     sig:{
+            //         r:"0x216d8680becd8d87c6bab9c3e2e7a07bac0ac9ffe079a531f3271b8fce1c858b",
+            //         recoveryParam:0,
+            //         s:"0x4395fdaa489b3023bfc4855385276c903b4147bffba92efdfcc4c5f579974c02",
+            //         v:27
+            //     }
+            // }
 
 
             //verify the given move is valid
