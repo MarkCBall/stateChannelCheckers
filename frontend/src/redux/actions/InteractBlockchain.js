@@ -1,44 +1,56 @@
-
-
-// import { ONGOING_CHANNELS } from "../constants/InteractBlockchain";
-// import { CONTRACT_ADDRESS } from "../constants/Other";
-// import {ethers} from "ethers";
+import {ethers} from "ethers";
 import { BLOCKCHAIN_GAME_UPDATE } from "../constants/GameData";
 
-//let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 // let provider = ethers.getDefaultProvider('ropsten');
 
 //get contract info
-// let StateChannelJson = require('../../SolidityJSON/StateChannels.json')
-// let StateChannelAbi = StateChannelJson.abi;
-//let StateChannelBytecode = StateChannelJson.bytecode
+let StateChGamingJson = require('../../SolidityJSON/StateChGaming.json')
+let StateChGamingAbi = StateChGamingJson.abi;
+// let deployedaddress = "0x15bb365BB9b6478c3234181FA6051354EaA3CB0C"
+let StateChGamingBytecode = StateChGamingJson.bytecode
+// let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
+let activeWallet = new ethers.Wallet("0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901").connect(provider)
+let deployedContract
+(async ()=>{
+    let ContractFactory = await new ethers.ContractFactory(StateChGamingAbi, StateChGamingBytecode).connect(activeWallet);
+    deployedContract = await ContractFactory.deploy()
+})()
 
-
-    
 
 
 export default {
                  
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch,getState) => {
-            let gameData = {//await call the blockchain for this
-                addr1:"0xa1",
-                addr2:"0xa2",
-                payout:200,
-                state:"0x0000000000080828486",
-                turnNum: 2,//get from state
-                blockNum:6376,
-                VCAddr:"0x123456",
-                ERC20Addr:"0x654321",
-                blocksPerTurn:100,
-                latestBCTimestamp:timestamp
-            }
-            //if valid call then
-            dispatch({
-                type: BLOCKCHAIN_GAME_UPDATE,
-                payload: gameData
-            })
+            let game = await deployedContract.allGames(1)
+            let gameData
+            // console.log(game)
+            // if the game is initialized
+            if(game.state.toString().length!==1){
+                gameData = {
+                    addr1:game.p1,
+                    addr2:game.p2,
+                    payout:game.gamePayout.toString(),
+                    state:game.state.toString(),
+                    turnNum: 2,///game.state.toString().slice... 
+                    blockNum:game.blockNum.toString(),
+                    VCAddr:game.vcAddr,
+                    ERC20Addr:game.tokenAddr,
+                    blocksPerTurn:game.blocksPerTurn.toString(),
+                    latestBCTimestamp:Date.now()
+                }
+                console.log(gameData)
+                dispatch({
+                    type: BLOCKCHAIN_GAME_UPDATE,
+                    payload: gameData
+                })
+
+            }  
         }
+    },
+    initGame: () =>{
+        console.log("build the functionality to call initGame here")
     }
 
     // countersignChannel:(dispatch) => {
@@ -50,8 +62,7 @@ export default {
 
 
     //         //get wallets --> do this through metamask later?
-    //         let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
-
+            
 
     //         //can deployedcontract be done out of function and connect be done inside?
 
@@ -59,7 +70,7 @@ export default {
     //         // let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(activeWallet);
     //         // let deployedContract = await ContractFactory.deploy()
     //         let deployedaddress = CONTRACT_ADDRESS
-    //         let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(activeWallet);
+            
     //         //console.log("deployed contract is ", deployedContract)
 
 
@@ -96,10 +107,7 @@ export default {
 
 
 
-    //             deployedContract.CreateChannel(
-    //                 v1, r1, s1, CID, u1Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal
-    //             ).then((x) => console.log("\n\nthen", x))
-    //             .catch((err) => console.log("\n\ncatch", err))
+    //             
 
 
     //             //remove requested and proposed from database
