@@ -1,6 +1,6 @@
 // import { POST_SIGNED_MOVE } from "../constants/InteractDatabase";
 // import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
-import { DATABASE_GAME_UPDATE } from "../constants/GameData";
+import { MERGE_DATABASE_GETGAME } from "../constants/GameData";
 import { ethers } from "ethers";
 
 //can this be done with ethers ????????
@@ -74,7 +74,7 @@ export default {
                 }
                 console.log("DB reponse:",resJSON)
                 dispatch({
-                    type: DATABASE_GAME_UPDATE,
+                    type: MERGE_DATABASE_GETGAME,
                     payload: resJSON
                 })
             }

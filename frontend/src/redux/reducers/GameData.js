@@ -1,7 +1,7 @@
 
 // import { CHANGE_GAMEID_TEXT } from "../constants/GameData";
-import { BLOCKCHAIN_GAME_UPDATE } from "../constants/GameData";
-import { DATABASE_GAME_UPDATE } from "../constants/GameData";
+import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/GameData";
+import { MERGE_DATABASE_GETGAME } from "../constants/GameData";
 import { RESET_GAME_DATA } from "../constants/GameData";
 
 
@@ -58,7 +58,7 @@ export default function (state = initialState, action) {
             gameID:action.payload
         }
 
-        case BLOCKCHAIN_GAME_UPDATE:
+        case MERGE_BLOCKCHAIN_GETGAME:
         if (BCTimestampIsHigher(action.payload, state)){
             if (nonceIsSameOrHigher(action.payload, state)){
                 return {
@@ -71,7 +71,7 @@ export default function (state = initialState, action) {
         return state
             
 
-        case DATABASE_GAME_UPDATE:
+        case MERGE_DATABASE_GETGAME:
         //set turnNum to zero if no game data is given
         let newData ={
             ...action.payload,

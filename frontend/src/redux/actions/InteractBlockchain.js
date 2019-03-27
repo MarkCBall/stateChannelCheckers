@@ -1,5 +1,5 @@
 import {ethers} from "ethers";
-import { BLOCKCHAIN_GAME_UPDATE } from "../constants/GameData";
+import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/GameData";
 // import { RESET_GAME_DATA } from "../constants/GameData";
 
 // let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
@@ -48,7 +48,7 @@ export default {
                 }
                 console.log("BC response:",gameData)
                 dispatch({
-                    type: BLOCKCHAIN_GAME_UPDATE,
+                    type: MERGE_BLOCKCHAIN_GETGAME,
                     payload: gameData
                 })
             } 
