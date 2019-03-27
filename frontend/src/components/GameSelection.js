@@ -7,7 +7,7 @@ import GameCreate from "./GameCreate";
 import GameSpecs from "./GameDetails/GameSpecs";
 import LabelAndInput from "./LabelAndInput";
 
-class Game extends Component {
+class GameSelection extends Component {
 
        render() {
         return (
@@ -20,7 +20,10 @@ class Game extends Component {
                         onChange={this.props.handleGameIDChange}
                         labelWidthClass={"col-sm-3"}
                         textWidthClass={"col-md-2"}
-                        isGreen={(!this.props.initiated) || this.props.iAmP1Red || this.props.iAmP2Black}
+                        isGreen={
+                            (this.props.gameID !== "") 
+                                &&
+                            ((!this.props.initiated) || this.props.iAmP1Red || this.props.iAmP2Black)}
                     />
 
     
@@ -58,8 +61,4 @@ function mapDispatchToProps(dispatch) {
         },
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
-
-// youAreRed =() =>{
-//     return (this.props.address === this.props.addr1)
-// }
+export default connect(mapStateToProps, mapDispatchToProps)(GameSelection);
