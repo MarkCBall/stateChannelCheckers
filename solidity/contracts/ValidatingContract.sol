@@ -13,10 +13,10 @@ contract ValidatingContract{
     function p1MovedLast(uint data) public pure returns (bool){
         return red(getPieceNumMoved(data));
     }
-    function gameTied(uint) public pure returns(bool){
-        //NOT IMPLIMENTED
-        return false;
-    }
+    // function gameTied(uint) public pure returns(bool){
+    //     //NOT IMPLIMENTED
+    //     return false;
+    // }
     // function validStateUpdate(uint256 oldData, uint256 newData) public pure returns(uint){
     function validStateUpdate(uint256 oldData, uint256 newData) public pure returns(bool){
         uint pieceNumMoved = getPieceNumMoved(newData);
