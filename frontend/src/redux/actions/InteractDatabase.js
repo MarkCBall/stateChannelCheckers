@@ -20,6 +20,7 @@ export default {
             let wallet = new ethers.Wallet(getState().LoginRedux.privKey)
             let flatSig = await wallet.signMessage(arrayifiedGameHash)
             let sig = ethers.utils.splitSignature(flatSig);
+            console.log("parameters are", [ERC20Amount, ERC20Addr,gameID, p1Addr, p2Addr, VCAddr, turnLength])
             console.log("DB sign game called",sig)
 
       

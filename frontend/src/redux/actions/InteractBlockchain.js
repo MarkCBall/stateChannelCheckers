@@ -2,8 +2,8 @@ import {ethers} from "ethers";
 import { BLOCKCHAIN_GAME_UPDATE } from "../constants/GameData";
 // import { RESET_GAME_DATA } from "../constants/GameData";
 
-let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
-// let provider = ethers.getDefaultProvider('ropsten');
+// let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+let provider = ethers.getDefaultProvider('ropsten');
 
 //get contract info
 let StateChGamingJson = require('../../SolidityJSON/StateChGaming.json')
@@ -13,7 +13,7 @@ let StateChGamingAbi = StateChGamingJson.abi;
 // let activeWallet = new ethers.Wallet("0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901").connect(provider)
 
 
-let deployedaddress = "0x9e64aa3c10d0e6f14c384b0e5d72fa1a77ca3f79"
+let deployedaddress = "0x90b8d184c1d4179e59b9d21fce1201704cac255c"
 let deployedContract = new ethers.Contract(deployedaddress,StateChGamingAbi, provider)
 
 // let deployedContract

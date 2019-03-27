@@ -9,9 +9,9 @@ class GameCreate extends Component {
         super(props);
         this.state = {
             p2Addr: "0x074349cbaa42a33749589695b0c2ed6d933d2323",
-            ERC20Addr: "0x0000000000000000000000000000000000000002",
+            ERC20Addr: "0x9e64aa3c10d0e6f14c384b0e5d72fa1a77ca3f79",
             ERC20Amount: 10000,
-            VCAddr: "0x0000000000000000000000000000000000000003",
+            VCAddr: "0x6d3346c4832fa3c6c4e52d1fcd4f91c5ff773fb8",
             turnLength: 100,
         }
     }
