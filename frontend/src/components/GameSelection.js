@@ -2,12 +2,22 @@ import React, { Component } from "react";
 import GameData from "../redux/actions/GameData";
 import { connect } from "react-redux";
 
-import GameActive from "./GameActive";
+import Board from "./Board";
+import GamePlayArea from "./GamePlayArea";
+import InitGameSequence from "./GameDetails/InitGameSequence";
 import GameCreate from "./GameCreate";
 import GameSpecs from "./GameDetails/GameSpecs";
 import LabelAndInput from "./LabelAndInput";
 
 class GameSelection extends Component {
+
+    renderCreateInitializeOrPlay = () => {
+        if (this.props.hasBCData > 0) 
+            return <GamePlayArea />
+        if (this.props.hasDBData)
+            return <InitGameSequence/>  //rename to GameProposed
+        return <GameCreate/>
+    }
 
        render() {
         return (
@@ -23,19 +33,19 @@ class GameSelection extends Component {
                         isGreen={
                             (this.props.gameID !== "") 
                                 &&
-                            ((!this.props.initiated) || this.props.iAmP1Red || this.props.iAmP2Black)}
+                            ((!this.props.hasData) || this.props.iAmP1Red || this.props.iAmP2Black)}
                     />
-
-    
-                    {this.props.initiated &&
+                    {this.props.hasData &&
                         <div className="col-sm-7">
                             <GameSpecs/>
                         </div>
                     }
                 </div>
                 <hr/>
+
+
                 
-                {this.props.initiated ? <GameActive/> : <GameCreate/>}
+                {this.renderCreateInitializeOrPlay()}
             
             </div>
         )
@@ -45,7 +55,9 @@ class GameSelection extends Component {
 function mapStateToProps(state) {
     return {
         address: state.LoginRedux.addressSignedIn,
-        initiated: ((state.GameData.latestBCTimestamp+state.GameData.latestDBTimestamp)>0),
+        hasData:((state.GameData.latestDBTimestamp+state.GameData.latestBCTimestamp)>0),
+        hasDBData: (state.GameData.latestDBTimestamp>0),
+        hasBCData:(state.GameData.latestBCTimestamp>0),
         gameID: state.GameData.gameID,
         addr1:state.GameData.addr1,
         addr2:state.GameData.addr2,
