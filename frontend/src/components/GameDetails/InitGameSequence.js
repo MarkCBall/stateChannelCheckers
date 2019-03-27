@@ -4,6 +4,23 @@ import InteractBlockchain from "../../redux/actions/InteractBlockchain";
 
 
 class InitGameSequence extends Component {
+    constructor(props) {
+        super(props);
+        this.WindowInterval = 0;
+    }
+    
+    //does state have an on-update trigger?
+    //better to link this to BCtimestamp directly?
+    componentDidMount = () =>{
+        this.WindowInterval = window.setInterval(this.periodiclyDo, 10000);  
+    }
+    componentWillUnmount = () =>{
+        window.clearInterval(this.WindowInterval)
+    }
+    periodiclyDo = () => {
+        this.props.updateApprovals()
+        // console.log("check ERC20 balances")
+    } 
 
     startingSequence = () =>{
         if (this.props.iAmP1Red){
@@ -34,6 +51,9 @@ function mapDispatchToProps(dispatch) {
         initGame: () => {
             dispatch(InteractBlockchain.initGame())
         },
+        updateApprovals: () => {
+            dispatch(InteractBlockchain.updateApprovals())
+        }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(InitGameSequence);

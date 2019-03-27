@@ -1,5 +1,6 @@
 import {ethers} from "ethers";
 import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/GameData";
+import { UPDATE_APPROVALS } from "../constants/InteractBlockchain";
 // import { RESET_GAME_DATA } from "../constants/GameData";
 
 // let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
@@ -13,20 +14,23 @@ let StateChGamingAbi = StateChGamingJson.abi;
 // let activeWallet = new ethers.Wallet("0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901").connect(provider)
 
 
-let deployedaddress = "0x90b8d184c1d4179e59b9d21fce1201704cac255c"
-let deployedContract = new ethers.Contract(deployedaddress,StateChGamingAbi, provider)
+let ERC20Json = require('../../SolidityJSON/ERC20.json')
+let ERC20Abi = ERC20Json.abi;
 
-// let deployedContract
+let StateChGamingAddr = "0x90b8d184c1d4179e59b9d21fce1201704cac255c"
+let deployedStateChGaming = new ethers.Contract(StateChGamingAddr,StateChGamingAbi, provider)
+
+// let deployedStateChGaming
 // (async ()=>{
 //     let ContractFactory = await new ethers.ContractFactory(StateChGamingAbi, StateChGamingBytecode).connect(activeWallet);
-//     deployedContract = await ContractFactory.deploy()
+//     deployedStateChGaming = await ContractFactory.deploy()
 // })()
 
 export default {
                  
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch,getState) => {
-            let game = await deployedContract.allGames(gameID)
+            let game = await deployedStateChGaming.allGames(gameID)
             let gameData
             // console.log("allGames retuened",game)
 
@@ -57,7 +61,7 @@ export default {
     initGame: () =>{
         return async (dispatch,getState) => {
             let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
-            let callableContract = new ethers.Contract(deployedaddress,StateChGamingAbi, activeWallet)
+            let callableContract = new ethers.Contract(StateChGamingAddr,StateChGamingAbi, activeWallet)
             let GD = getState().GameData
             console.log( GD.ERC20Amount,
                 GD.ERC20Addr,
@@ -94,7 +98,32 @@ export default {
             //dispatch a state update to re-render
         }
         
-    }
+    },
+
+    updateApprovals: () =>{
+        return async (dispatch,getState) => {
+            let GD = getState().GameData
+            // console.log(GD)
+            let minStake = GD.ERC20Amount
+            let ERC20Addr = GD.ERC20Addr
+            let p1Addr = GD.p1Addr
+            let p2Addr = GD.p2Addr
+            let ERC20Contract = new ethers.Contract(ERC20Addr,ERC20Abi, provider)
+            let p1Apprv = (await ERC20Contract.allowance(p1Addr,StateChGamingAddr)).toString()
+            let p2Apprv = (await ERC20Contract.allowance(p2Addr,StateChGamingAddr)).toString()
+            dispatch({
+                type: UPDATE_APPROVALS,
+                payload: {
+                    p1ApprovedAmnt:p1Apprv,
+                    p2ApprovedAmnt:p2Apprv,
+                    p1ApprovedEnough:(p1Apprv>=minStake),
+                    p2ApprovedEnough:(p2Apprv>=minStake),
+                }
+            })
+        }
+    },
+
+
 
 
 
@@ -104,14 +133,14 @@ export default {
     //         //get wallets --> do this through metamask later?
             
 
-    //         //can deployedcontract be done out of function and connect be done inside?
+    //         //can deployedStateChGaming be done out of function and connect be done inside?
 
     //         //get a contract --> change this to existing contract later
     //         // let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(activeWallet);
-    //         // let deployedContract = await ContractFactory.deploy()
-    //         let deployedaddress = CONTRACT_ADDRESS
+    //         // let deployedStateChGaming = await ContractFactory.deploy()
+    //         let StateChGamingAddr = CONTRACT_ADDRESS
             
-    //         //console.log("deployed contract is ", deployedContract)
+    //         //console.log("deployed contract is ", deployedStateChGaming)
 
 
 
@@ -143,7 +172,7 @@ export default {
     //             //console.log(u1Address)
     //             //console.log(activeWallet.signingKey.address)
     //             //console.log(ACD)
-    //             //console.log("deployedcontract ")
+    //             //console.log("deployedStateChGaming ")
 
 
 
@@ -161,8 +190,8 @@ export default {
     //     return async (dispatch, getState) => {
             
     //         let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
-    //         let deployedaddress = CONTRACT_ADDRESS
-    //         let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(activeWallet);
+    //         let StateChGamingAddr = CONTRACT_ADDRESS
+    //         let deployedStateChGaming = new ethers.Contract(StateChGamingAddr,StateChannelAbi,provider).connect(activeWallet);
                 
     //         var DBData = getState().InteractDatabase;
     //         console.log(getState())
@@ -199,7 +228,7 @@ export default {
                 
     //             //function InitChannelTermination(uint8 v, bytes32 r, bytes32 s, uint CID, uint proposedTerminatingBlockNumber, uint u1BalRetained, uint u2BalRetained, uint nonce) public{
 
-    //             deployedContract.InitChannelTermination(
+    //             deployedStateChGaming.InitChannelTermination(
     //                 v, r, s, CID, propTermBlockNum, u1Bal, u2Bal, nonce
     //             ).then((x) => console.log("\n\nthen", x))
     //             .catch((err) => console.log("\n\ncatch", err))
@@ -213,13 +242,13 @@ export default {
     //     return async (dispatch) => {
 
     //         //move this outside function?
-    //         let deployedaddress = CONTRACT_ADDRESS
-    //         let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider);
-    //         //console.log("deployed contract is ", deployedContract)
+    //         let StateChGamingAddr = CONTRACT_ADDRESS
+    //         let deployedStateChGaming = new ethers.Contract(StateChGamingAddr,StateChannelAbi,provider);
+    //         //console.log("deployed contract is ", deployedStateChGaming)
 
 
     //         let OngoingChannels = {}
-    //         deployedContract.GetChannelsAtAddress(address)
+    //         deployedStateChGaming.GetChannelsAtAddress(address)
     //         .then((BN) => {
     //             //console.log("\n\nthen", x)
     //             BN.forEach(  val => {
