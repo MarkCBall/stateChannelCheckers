@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import GameActive from "./GameActive";
 import GameCreate from "./GameCreate";
 import GameSpecs from "./GameDetails/GameSpecs";
-
+import LabelAndInput from "./LabelAndInput";
 
 class Game extends Component {
 
@@ -13,17 +13,17 @@ class Game extends Component {
         return (
             <div>
                 <div className="form-group row">
-                    <div className="col-sm-3">
-                        <label className="float-right">Enter GameID:</label>
-                    </div>
-                    <div className="col-sm-2">
-                        <input
-                            type="text"
-                            className="form-control float-left"
-                            onChange={this.props.handleGameIDChange}
-                            value={this.props.gameID}
-                        />
-                    </div>
+
+                    <LabelAndInput
+                        label="Enter GameID:"
+                        value={this.props.gameID}
+                        onChange={this.props.handleGameIDChange}
+                        labelWidthClass={"col-sm-3"}
+                        textWidthClass={"col-md-2"}
+                        isGreen={(!this.props.initiated) || this.props.iAmP1Red || this.props.iAmP2Black}
+                    />
+
+    
                     {this.props.initiated &&
                         <div className="col-sm-7">
                             <GameSpecs/>
@@ -46,6 +46,8 @@ function mapStateToProps(state) {
         gameID: state.GameData.gameID,
         addr1:state.GameData.addr1,
         addr2:state.GameData.addr2,
+        iAmP1Red:state.GameData.iAmP1Red,
+        iAmP2Black:state.GameData.iAmP2Black,
     }
 }
 
