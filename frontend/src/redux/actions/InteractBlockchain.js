@@ -55,7 +55,45 @@ export default {
         }
     },
     initGame: () =>{
-        console.log("build the functionality to call initGame here")
+        return async (dispatch,getState) => {
+            let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
+            let callableContract = new ethers.Contract(deployedaddress,StateChGamingAbi, activeWallet)
+            let GD = getState().GameData
+            console.log( GD.ERC20Amount,
+                GD.ERC20Addr,
+                GD.gameID,
+                GD.p1Addr,
+                GD.p2Addr,
+                GD.VCAddr,
+                GD.turnLength,
+                GD.gameSig.v,
+                GD.gameSig.r,
+                GD.gameSig.s)
+                //is the amount too high - thats why failing?
+
+
+
+
+
+            await callableContract.initGame(
+                GD.ERC20Amount,
+                GD.ERC20Addr,
+                GD.gameID,
+                GD.p1Addr,
+                GD.p2Addr,
+                GD.VCAddr,
+                GD.turnLength,
+                GD.gameSig.v,
+                GD.gameSig.r,
+                GD.gameSig.s
+            )
+            
+
+            //unconnect wallet?
+
+            //dispatch a state update to re-render
+        }
+        
     }
 
 
