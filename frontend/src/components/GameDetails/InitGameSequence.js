@@ -6,26 +6,31 @@ import InteractBlockchain from "../../redux/actions/InteractBlockchain";
 class InitGameSequence extends Component {
     constructor(props) {
         super(props);
-        this.WindowInterval = 0;
+        this.state =
+        {
+            WindowInterval: 0,
+            allowanceAmnt: 0
+        }
+        
     }
     
     componentDidMount = () =>{
         this.props.updateApprovals()
-        this.WindowInterval = window.setInterval(this.props.updateApprovals, 10000);  
+        this.state.WindowInterval = window.setInterval(this.props.updateApprovals, 10000);  
     }
     componentWillUnmount = () =>{
-        window.clearInterval(this.WindowInterval)
+        window.clearInterval(this.state.WindowInterval)
     }
 
 
-    tokensAllowed = (given, required) => {
+    tokensAllowed = (given, required, owned) => {
         if (given>required){
-            return <> has allowed {given} tokens which is {given-required} in excess </>
+            return <> has allowed {given} tokens which is {given-required} in excess. They own {owned} tokens. </>
         }
         if (required>given){
-            return <>has allowed {given} tokens and <strong> needs to allow {required-given} more</strong></>
+            return <>has allowed {given} tokens and <strong> needs to allow {required-given} more</strong> They own {owned} tokens.</>
         }
-        return <>has allowed {given} tokens as required</>
+        return <>has allowed {given} tokens as required. They own {owned} tokens.</>
     }
 
 
@@ -44,17 +49,46 @@ class InitGameSequence extends Component {
              ||
             (this.props.iAmP2Black && (this.props.p2ApprovedAmnt < this.props.ERC20Amount))
         ){
-            return <button onClick="">Increase allowance byWith amount selector ect</button>
+            return this.increaseAllowanceBtn()
         }
         return <>Awaiting more funding before the game can start</>
     }
+
+    handleAllowanceAmntChange = (event) =>{
+        let allowanceAmnt = event.target.value
+        if ((allowanceAmnt) === "" || parseInt(allowanceAmnt, 10) === Number(allowanceAmnt)) {
+            this.setState({
+                ...this.state,
+                allowanceAmnt: allowanceAmnt
+            })
+        }
+    }
+
+
+
+    
+    increaseAllowanceBtn = () => {
+        return <>
+            <button 
+                onClick={()=>this.props.ERC20Approve(this.state.allowanceAmnt)}
+            >
+                Modify your allowance
+            </button>
+            <input
+                type="text"
+                onChange={this.handleAllowanceAmntChange}
+                value={this.state.allowanceAmnt}
+            />
+            </>
+    }
+
 
 
     render() {
         return (
             <div>
-                P1{this.tokensAllowed(this.props.p1ApprovedAmnt,this.props.ERC20Amount)}<br/>
-                P2{this.tokensAllowed(this.props.p2ApprovedAmnt,this.props.ERC20Amount)}<br/>
+                P1{this.tokensAllowed(this.props.p1ApprovedAmnt,this.props.ERC20Amount,this.props.p1Bal)}<br/>
+                P2{this.tokensAllowed(this.props.p2ApprovedAmnt,this.props.ERC20Amount,this.props.p2Bal)}<br/>
                 {this.props.enoughAllowances ? 
                     this.startingSequence()
                 :
@@ -74,6 +108,8 @@ function mapStateToProps(state) {
         enoughAllowances:state.InteractBlockchain.enoughAllowances,
         p1ApprovedAmnt:state.InteractBlockchain.p1ApprovedAmnt,
         p2ApprovedAmnt:state.InteractBlockchain.p2ApprovedAmnt,
+        p1Bal:state.InteractBlockchain.p1Bal,
+        p2Bal:state.InteractBlockchain.p2Bal,
         ERC20Amount:state.GameData.ERC20Amount
     }
 }
@@ -84,7 +120,10 @@ function mapDispatchToProps(dispatch) {
         },
         updateApprovals: () => {
             dispatch(InteractBlockchain.updateApprovals())
-        }
+        },
+        ERC20Approve: (allowanceAmnt) => {
+            dispatch(InteractBlockchain.ERC20Approve(allowanceAmnt))
+        },
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(InitGameSequence);
