@@ -9,51 +9,44 @@ import { RESET_GAME_DATA } from "../constants/GameData";
 
 const initialState = {
     gameID:"",
-    addr1:"default",
-    addr2:"default",
-    payout:11,
+    p1Addr:"default",
+    p2Addr:"default",
+    ERC20Amount:0,
     state:"default",
-    turnNum: 11,
-    blockNum:11,
+    turnNum: 0,
+    blockNum:0,
     VCAddr:"default",
     ERC20Addr:"default",
-    blocksPerTurn:11,
+    turnLength:0,
     latestBCTimestamp:0,
     latestDBTimestamp:0,
     gameSig:{},
-    moveSig:{},        
+    moveSig:{},
+    iAmP1Red:true        
 };
 
-
-let BCActionIsValid = (data) => {
-    //nonce = fn(state)
-    //if timestamp
-    //if nonce >=
-    return true//debugging temp forced output
+let BCTimestampIsHigher = (newData, oldData) => {
+    return (newData.latestBCTimestamp > oldData.latestBCTimestamp)
+}
+let DBTimestampIsHigher = (newData, oldData) => {
+    return (newData.latestDBTimestamp > oldData.latestDBTimestamp)
+}
+let nonceIsHigher = (newData, oldData) => {
+    return ((newData.turnNum > oldData.turnNum) || (oldData.turnNum === 0))
+}
+let nonceIsSameOrHigher = (newData, oldData) => {
+    return (newData.turnNum >= oldData.turnNum)
+}
+let sigIsValid = (newData) => {
+    //MIGHT NEED iAmP1Red
+    // if (newData.turnNum > 0){
+    //     return validateMoveSig(newData)//make new functions
+    // }else{
+    //     return validateGameSig(newData)
+    // }
+    return true
 }
 
-// let invalidStatechange = (defaultState, oldState, newState) => {
-//     return ((newState !== oldState) && (defaultState !== oldState))
-// }
-
-let DBActionIsValid = (data, currentState) => {
-    //check that the data given doesn't override any BC given data - (put this at bottom of checks)
-    //if invalidStatechange(initialState.addr1, currentState.addr1, data.addr1) ||
-     //  invalidStatechange(addr2, ect ect)
-        // return false
-
-    //if !isDefaultOrUnchanged(action.payload.addr1,  !=default & payload.addr1!=state.addr1
-
-    //nonce = fn(state)
-        //if nonce>1, then the sig is for a move
-
-    //check sig for newmove or sig for newgame
-        // opponentAddr = 
-    //if timestamp
-
-    //if moveSig is valid
-    //if nonce >
-}
 
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -65,38 +58,41 @@ export default function (state = initialState, action) {
         }
 
         case BLOCKCHAIN_GAME_UPDATE:
-        // console.log("blockchain update w",action.payload)
-        if (BCActionIsValid(action.payload, state)){
-            return {
-                ...state,
-                ...action.payload,
-                // initiated:true,
-            }
-        }
-        return state//{
-        //     ...state,
-        //     //overwrite data as bc is always correct
-        //     addr1:"0xa1",
-        //     addr2:"0xa2",
-        //     payout:200,
-        //     VCAddr:"0x123456",
-        //     ERC20Addr:"0x654321",
-        //     blocksPerTurn:100,
-        //     // initiated:true
-        // }
-            
-
-        case DATABASE_GAME_UPDATE:
-        // console.log("database update w",action.payload)
-        //do stuff
-        if (DBActionIsValid(action.payload)){
-            return {
-                ...state,
-                ...action.payload,
-                // initiated:true
+        if (BCTimestampIsHigher(action.payload, state)){
+            if (nonceIsSameOrHigher(action.payload, state)){
+                return {
+                    ...state,
+                    ...action.payload,
+                    // spell these out
+                }
             }
         }
         return state
+            
+
+        case DATABASE_GAME_UPDATE:
+        //set turnNum to zero if no game data is given
+        let newData ={
+            ...action.payload,
+            turnNum: (action.payload.state ? action.payload.state.slice(10,18) : 0),
+            //confirm turnNum slice!
+            
+        }
+        if (DBTimestampIsHigher(newData, state)){
+            if (nonceIsHigher(newData, state)){
+                if (sigIsValid(newData)){
+                    // console.log("setting DB state")
+                    return {
+                        ...state,
+                        ...action.payload,
+                        blockNum:100000000000000000000000000000,
+                        //spell these items out
+                    }
+                }
+            }
+        }
+        return state
+
 
 
 

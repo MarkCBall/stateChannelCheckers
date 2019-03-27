@@ -1,6 +1,6 @@
 // import { POST_SIGNED_MOVE } from "../constants/InteractDatabase";
 // import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
-// import { DATABASE_GAME_UPDATE } from "../constants/GameData";
+import { DATABASE_GAME_UPDATE } from "../constants/GameData";
 import { ethers } from "ethers";
 
 //can this be done with ethers ????????
@@ -27,23 +27,26 @@ export default {
                 p2Addr: p2Addr,
                 VCAddr: VCAddr,
                 turnLength: turnLength,
-                ...sig
+                gameSig:{
+                    ...sig
+                }
             }
-            // await fetch("http://127.0.0.1:3001/NewGame", {
-            //     method: "POST",
-            //     mode: "cors",
-            //     headers: {
-            //         "Content-Type": "application/json; charset=utf-8",
-            //         "gameID":gameID,
-            //     },
-            //     body: JSON.stringify(body)
-            // })
+            console.log("posting ", body)
+            await fetch("http://127.0.0.1:3001/Game/New", {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    "gameID":gameID,
+                },
+                body: JSON.stringify(body)
+            })
 
             // dispatch something to indicate waiting for signature
             //set a timestamp to 1 maybe as long as there is a query every five seconds to get new game data
 
 
-            console.log(body)
+            // console.log(body)
 
             // console.log("parameters are", [ERC20Amount, ERC20Addr,gameID, p1Addr, p2Addr, VCAddr, turnLength])
             // console.log("DB sign game called",sig)
@@ -53,23 +56,29 @@ export default {
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch, getState) => {
 
-            // let response = await fetch("http://127.0.0.1:3001/", {
-            //     method: "GET",
-            //     mode: "cors",
-            //     headers: {
-            //         "gameID": gameID
-            //     }
-            // })
-            // let responseJSON = await response.json()
-            // responseJSON = {
-            //     ...responseJSON,
-            //     latestDBTimestamp: timestamp,
-            //     turnNum: state.substr(10, 8)?
-            // }
-            // dispatch({
-            //     type: DATABASE_GAME_UPDATE,
-            //     payload: responseJSON
-            // })
+            let response = await fetch("http://127.0.0.1:3001/Game", {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "gameID": gameID
+                }
+            })
+            let resJSON = await response.json()
+            //if there is a valid response, add a timestamp and dispatch it
+            if (Object.keys(resJSON).length !== 0){
+                resJSON = {
+                    ...resJSON,
+                    latestDBTimestamp: timestamp,
+                    iAmP1Red:(getState().LoginRedux.addressSignedIn === resJSON.addr1),
+                    iAmP2Black:(getState().LoginRedux.addressSignedIn === resJSON.addr2)   
+                }
+                console.log("DB reponse:",resJSON)
+                dispatch({
+                    type: DATABASE_GAME_UPDATE,
+                    payload: resJSON
+                })
+            }
+            
         }
     },
 

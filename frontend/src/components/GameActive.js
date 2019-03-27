@@ -21,15 +21,15 @@ class GameInfo extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="column">
-                            player1:{this.props.addr1}<br/>
-                            player2:{this.props.addr2}<br/>
-                            turn length:{this.props.blocksPerTurn} blocks
+                            player1:{this.props.p1Addr}<br/>
+                            player2:{this.props.p2Addr}<br/>
+                            turn length:{this.props.turnLength} blocks
                             
                         </div>
                         <div className="column">
                             VCAddr:{this.props.VCAddr}<br/>
                             ERC20Addr:{this.props.ERC20Addr}<br/>
-                            Winner's Payout:{this.props.payout}
+                            Winner's ERC20Amount:{this.props.ERC20Amount}
                         </div>
                     </div>
                     
@@ -55,14 +55,14 @@ class GameInfo extends Component {
 function mapStateToProps(state) {
     return {
         getCurrentBlockNum:500,//THIS IS A PLACEHOLDER ONLY
-        addr1:state.GameData.addr1,
-        addr2:state.GameData.addr2,
-        payout:state.GameData.payout,
+        p1Addr:state.GameData.p1Addr,
+        p2Addr:state.GameData.p2Addr,
+        ERC20Amount:state.GameData.ERC20Amount,
         turnNum: state.GameData.turnNum,
         blockNum:state.GameData.blockNum,
         VCAddr:state.GameData.VCAddr,
         ERC20Addr:state.GameData.ERC20Addr,
-        blocksPerTurn:state.GameData.blocksPerTurn,
+        turnLength:state.GameData.turnLength,
     }
 }
 // function mapDispatchToProps(dispatch) {

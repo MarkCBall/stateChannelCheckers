@@ -20,14 +20,14 @@ export default {
                     type: RESET_GAME_DATA,
                     payload: gameID
                 })
-                dispatch(GameData.updateGameData(dispatch, gameID))
+                dispatch(GameData.updateGameData(dispatch, gameID,Date.now()))
             }
         }
     },
-    updateGameData: (dispatch, gameID) => {
+    updateGameData: (dispatch, gameID,timestamp) => {
         return (dispatch) =>{
-            dispatch(InteractBlockchain.getGame(dispatch,gameID,Date.now()))
-            dispatch(InteractDatabase.getGame(dispatch,gameID,Date.now()))
+            dispatch(InteractBlockchain.getGame(dispatch,gameID,timestamp))
+            dispatch(InteractDatabase.getGame(dispatch,gameID,timestamp))
             // console.log("updateGameData used")
         }
     },

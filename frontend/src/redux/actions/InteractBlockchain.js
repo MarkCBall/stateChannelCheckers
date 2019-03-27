@@ -33,17 +33,21 @@ export default {
             // if the game is initialized
             if(game.state.toString().length!==1){
                 gameData = {
-                    addr1:game.p1,
-                    addr2:game.p2,
-                    payout:game.gamePayout.toString(),
+                    p1Addr:game.p1,
+                    p2Addr:game.p2,
+                    ERC20Amount:game.gamePayout.toString(),
                     state:game.state.toString(),
-                    turnNum: 2,///game.state.toString().slice... 
+                    turnNum: game.state.toString(16).slice(10,8), 
                     blockNum:game.blockNum.toString(),
                     VCAddr:game.vcAddr,
                     ERC20Addr:game.tokenAddr,
-                    blocksPerTurn:game.blocksPerTurn.toString(),
-                    latestBCTimestamp:Date.now()
+                    turnLength:game.blocksPerTurn.toString(),
+                    latestBCTimestamp:timestamp,
+                    iAmP1Red:(getState().LoginRedux.addressSignedIn === game.p1),
+                    iAmP2Black:(getState().LoginRedux.addressSignedIn === game.p2)
                 }
+                console.log("BC response:",gameData)
+                console.log(game.state.toHexString().substring(2).padStart(64,"0").slice(8,16))
                 dispatch({
                     type: BLOCKCHAIN_GAME_UPDATE,
                     payload: gameData
