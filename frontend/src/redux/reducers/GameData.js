@@ -22,7 +22,8 @@ const initialState = {
     latestDBTimestamp:0,
     gameSig:{},
     moveSig:{},
-    iAmP1Red:true        
+    iAmP1Red:false,
+    iAmP2Black:false        
 };
 
 let BCTimestampIsHigher = (newData, oldData) => {

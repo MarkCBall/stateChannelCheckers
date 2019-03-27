@@ -69,8 +69,8 @@ export default {
                 resJSON = {
                     ...resJSON,
                     latestDBTimestamp: timestamp,
-                    iAmP1Red:(getState().LoginRedux.addressSignedIn === resJSON.addr1),
-                    iAmP2Black:(getState().LoginRedux.addressSignedIn === resJSON.addr2)   
+                    iAmP1Red:(getState().LoginRedux.addressSignedIn === resJSON.p1Addr),
+                    iAmP2Black:(getState().LoginRedux.addressSignedIn === resJSON.p2Addr)   
                 }
                 console.log("DB reponse:",resJSON)
                 dispatch({

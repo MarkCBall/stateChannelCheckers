@@ -34,19 +34,21 @@ class GameInfo extends Component {
                     </div>
                     
                     
-                    Turn#: {this.props.turnNum}<br/>
+                    Turn#: {parseInt(this.props.turnNum)+1}<br/>
                     {this.renderTurnInfo()}
                 
                 </div>
                
                 <hr/>
-
-                <div className="container">
+       
+                    <div className="container">
                         <div className="row">
-                            <Board />
-                            <GameStats />
+                        <Board />
+                        <GameStats />
                         </div>
-                </div>
+                    </div>
+             
+                
                 
             </div>
         )
@@ -54,6 +56,8 @@ class GameInfo extends Component {
 }
 function mapStateToProps(state) {
     return {
+        iAmP1Red:state.GameData.iAmP1Red,
+        iAmP2Black:state.GameData.iAmP2Black,
         getCurrentBlockNum:500,//THIS IS A PLACEHOLDER ONLY
         p1Addr:state.GameData.p1Addr,
         p2Addr:state.GameData.p2Addr,
