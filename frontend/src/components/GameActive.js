@@ -48,26 +48,35 @@ class GameInfo extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
+                        {/* PlayersStake */}
                             player1:{this.props.p1Addr}<br/>
                             player2:{this.props.p2Addr}<br/>
-                            turn length:{this.props.turnLength} blocks
+                                p1 and p2 staked coin amnt here
+                            
                             
                         </div>
                         <div className="col-md-6">
+                            {/* GameSpecs */}
+
                             VCAddr:{this.props.VCAddr}<br/>
                             ERC20Addr:{this.props.ERC20Addr}<br/>
-                            Winner's ERC20Amount:{this.props.ERC20Amount}
+                            #token buy-in:{this.props.ERC20Amount}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            turn length:{this.props.turnLength} blocks
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-sm-2">
+                            {/* WhatColorAmI */}
                             {this.renderPlayerColor()}
                         </div>
                         <div className="col-sm-4">
+                            {/* TurnExpiry */}
                             Turn#: {parseInt(this.props.turnNum)+1}<br/>
                             {this.renderTurnInfo()}
                         </div>
                         <div className="col-sm-4">
+                            {/* InitGameSequence */}
                             {this.startingSequence()}
                         </div>
                     </div>

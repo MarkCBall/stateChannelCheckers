@@ -8,11 +8,7 @@ import GameCreate from "./GameCreate";
 
 class Game extends Component {
 
-     youArePlaying = () =>{
-        return ((this.props.address === this.props.addr1) || (this.props.address === this.props.addr2))
-    }
-
-     render() {
+       render() {
         return (
             <div>
                 <div className="form-group row">
