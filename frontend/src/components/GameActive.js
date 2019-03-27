@@ -8,8 +8,8 @@ import GameStats from "./GameStats";
 
 
 
-import PlayersStake from "./GameDetails/PlayersStake";
-import GameSpecs from "./GameDetails/GameSpecs";
+// import PlayersStake from "./GameDetails/PlayersStake";
+// import GameSpecs from "./GameDetails/GameSpecs";
 import ColorIndicator from "./GameDetails/ColorIndicator";
 import TurnExpiry from "./GameDetails/TurnExpiry";
 import InitGameSequence from "./GameDetails/InitGameSequence";
@@ -31,27 +31,20 @@ class GameInfo extends Component {
         return (
             <div>
                 <div className="container">
+                    
                     <div className="row">
-                        <div className="col-md-6">
-                            <PlayersStake/>
-                        </div>
-                        <div className="col-md-6">
-                            <GameSpecs/>                          
-                        </div>
+                        {this.isOnChain() ?
+                            <>
+                                <div className="col-sm-2"><ColorIndicator/></div>
+                                <div className="col-sm-4"><TurnExpiry/></div>
+                            </>
+                        :
+                            <div className="col-sm-6"><InitGameSequence/></div>
+                        }
+
+                            
                     </div>
-                    <div className="row">
-                        <div className="col-sm-2">
-                            <ColorIndicator/>
-                        </div>
-                        <div className="col-sm-4">
-                            <TurnExpiry/>
-                        </div>
-                        <div className="col-sm-4">
-                            {(!this.isOnChain()) &&
-                                <InitGameSequence/>
-                            }
-                        </div>
-                    </div>
+                   
                 </div>
                
                 <hr/>

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import GameActive from "./GameActive";
 import GameCreate from "./GameCreate";
+import GameSpecs from "./GameDetails/GameSpecs";
 
 
 class Game extends Component {
@@ -23,7 +24,13 @@ class Game extends Component {
                             value={this.props.gameID}
                         />
                     </div>
+                    {this.props.initiated &&
+                        <div className="col-sm-7">
+                            <GameSpecs/>
+                        </div>
+                    }
                 </div>
+                <hr/>
                 
                 {this.props.initiated ? <GameActive/> : <GameCreate/>}
             

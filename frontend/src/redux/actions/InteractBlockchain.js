@@ -116,8 +116,7 @@ export default {
                 payload: {
                     p1ApprovedAmnt:p1Apprv,
                     p2ApprovedAmnt:p2Apprv,
-                    p1ApprovedEnough:(p1Apprv>=minStake),
-                    p2ApprovedEnough:(p2Apprv>=minStake),
+                    enoughAllowances:( (p1Apprv>=minStake) && (p2Apprv>=minStake) ),
                 }
             })
         }
