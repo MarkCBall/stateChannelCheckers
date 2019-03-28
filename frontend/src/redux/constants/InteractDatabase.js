@@ -1,2 +1,0 @@
-export const POST_SIGNED_MOVE = "POST_SIGNED_MOVE";
-export const GET_LATEST_MOVE = "GET_LATEST_MOVE";
