@@ -36,7 +36,7 @@ export default {
     ERC20Approve: (allowanceAmnt) => {
         return async (dispatch, getState) => {
             console.log("approve called")
-            let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
+            let activeWallet = new ethers.Wallet(getState().LoginDetails.privKey).connect(provider)
             let ERC20Addr = getState().GameData.ERC20Addr
             let ERC20Contract = new ethers.Contract(ERC20Addr, ERC20Abi, activeWallet)
             await ERC20Contract.approve(StateChGamingAddr, allowanceAmnt)

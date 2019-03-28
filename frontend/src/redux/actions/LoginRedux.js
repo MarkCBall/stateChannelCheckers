@@ -11,7 +11,7 @@ export default {
             //set pubPrivKeypairValid according to logic
             if (/^0[xX][0-9a-fA-F]*$/.test(addressSignedIn)) {
 
-                let privKey = getState().LoginRedux.privKey
+                let privKey = getState().LoginDetails.privKey
                 let pubPrivKeypairValid = (addressSignedIn === ethers.utils.computeAddress(privKey).toLowerCase())
                 dispatch({
                     type: CHANGE_ADDRESS_TEXT,
