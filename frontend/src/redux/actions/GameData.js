@@ -30,7 +30,4 @@ export default {
             dispatch(InteractDatabase.getGame(dispatch,gameID,timestamp))
         }
     },
-
-   
-
 }

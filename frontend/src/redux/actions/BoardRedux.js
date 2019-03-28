@@ -1,15 +1,15 @@
 import { HANDLE_PIECE_CLICK } from "../constants/ActionTypes";
-import { SET_BOARD_MATRIX } from "../constants/ActionTypes";
+// import { SET_BOARD_MATRIX } from "../constants/ActionTypes";
 import ValidMoves from "../../Library/ValidMoves"
 import BoardTranslations from "../../Library/BoardTranslations"
 import CalcBoardChanges from "../../Library/CalcBoardChanges"
-import InteractDatabase from "./InteractDatabase"
+// import InteractDatabase from "./InteractDatabase"
 import API_StateChGaming from "./API_StateChGaming"
 
-import { HANDLE_MOVE } from "../constants/ActionTypes";
+// import { HANDLE_MOVE } from "../constants/ActionTypes";
 // import { NEXT_TURN } from "../constants/ActionTypes";
 import { CLEAR_SELECTION } from "../constants/ActionTypes";
-import { PREV_MOVE_STATS } from "../constants/ActionTypes";
+// import { PREV_MOVE_STATS } from "../constants/ActionTypes";
 
 
 
@@ -27,14 +27,14 @@ export default {
             }
         }
     },
-    calcBoardMatrix: (dispatch, piecesBN) => {
-        return (dispatch) => {
-            dispatch({
-                type: SET_BOARD_MATRIX,
-                payload: BoardTranslations.BNtoMatrix(piecesBN)
-            })
-        }
-    },
+    // calcBoardMatrix: (dispatch, piecesBN) => {
+    //     return (dispatch) => {
+    //         dispatch({
+    //             type: SET_BOARD_MATRIX,
+    //             payload: BoardTranslations.BNtoMatrix(piecesBN)
+    //         })
+    //     }
+    // },
     handleMove: (dispatch, board, validSpot, activeSquare) => {
         return (dispatch, getState) => {
             // if (window.confirm("Sign this move?")){//put back in after debugging
@@ -53,7 +53,13 @@ export default {
                 
                 
                 dispatch(API_StateChGaming.unenforcedBCMove(dispatch,newBNStr))
-            
+                dispatch({
+                    type: CLEAR_SELECTION,
+                    payload: {
+                        validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
+                        activeSquare: {},
+                    }
+                })
             
             
             
@@ -68,13 +74,7 @@ export default {
                 //         pieceNumJumped: CalcBoardChanges.calcPieceNumJumped(board,validSpot, activeSquare)
                 //     }
                 // })
-                // dispatch({
-                //     type: CLEAR_SELECTION,
-                //     payload: {
-                //         validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
-                //         activeSquare: {},
-                //     }
-                // })
+                
                 // let boardMatrix = CalcBoardChanges.calcNewBoardMatrix(board,validSpot,activeSquare)
                 // dispatch({
                 //     type: HANDLE_MOVE,
