@@ -24,7 +24,7 @@ export default {
             pieceNumJumped = board[killedRow][killedCol].id
         }
 
-        let boardMatrix = board;
+        let boardMatrix = JSON.parse(JSON.stringify(board))
         let dataToUpdate = { row: validSpot.row, col: validSpot.col }
         //if you get to the end of the board, make the piece a queen
         if (validSpot.row === 7 || validSpot.row === 0) {
