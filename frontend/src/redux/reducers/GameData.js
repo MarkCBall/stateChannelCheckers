@@ -12,7 +12,7 @@ const initialState = {
     p1Addr: "default",
     p2Addr: "default",
     ERC20Amount: 0,
-    state: "default",
+    state: "default",//boardEncoded, boardDecoded, moveDecoded
     turnNum: 0,
     blockNum: 0,
     VCAddr: "default",
@@ -58,9 +58,21 @@ export default function (state = initialState, action) {
                 gameID: action.payload
             }
 
-        case MERGE_BLOCKCHAIN_GETGAME:
+            
 
-            let returnState = state
+
+
+
+
+        case MERGE_BLOCKCHAIN_GETGAME:
+            //decode the BigNumber
+            let returnState = {
+                ...state,
+                turnNum:(action.payload.state ? action.payload.state._hex.slice(10, 18) : 0),
+                // boardDecoded =
+                // moveDecoded =
+
+            }
             if (BCTimestampIsHigher(action.payload, state)) {
                 returnState ={
                     ...returnState,

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InteractBlockchain from "../../redux/actions/InteractBlockchain";
+import API_ERC20 from "../../redux/actions/API_ERC20";
 
 
 class InitGameSequence extends Component {
@@ -119,10 +120,10 @@ function mapDispatchToProps(dispatch) {
             dispatch(InteractBlockchain.initGame())
         },
         updateApprovals: () => {
-            dispatch(InteractBlockchain.updateApprovals())
+            dispatch(API_ERC20.updateApprovals())
         },
         ERC20Approve: (allowanceAmnt) => {
-            dispatch(InteractBlockchain.ERC20Approve(allowanceAmnt))
+            dispatch(API_ERC20.ERC20Approve(allowanceAmnt))
         },
     }
 }
