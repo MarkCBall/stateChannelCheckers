@@ -4,6 +4,7 @@ import ValidMoves from "../../Library/ValidMoves"
 import BoardTranslations from "../../Library/BoardTranslations"
 import CalcBoardChanges from "../../Library/CalcBoardChanges"
 import InteractDatabase from "./InteractDatabase"
+import API_StateChGaming from "./API_StateChGaming"
 
 import { HANDLE_MOVE } from "../constants/ActionTypes";
 // import { NEXT_TURN } from "../constants/ActionTypes";
@@ -37,33 +38,52 @@ export default {
     handleMove: (dispatch, board, validSpot, activeSquare) => {
         return (dispatch, getState) => {
             // if (window.confirm("Sign this move?")){//put back in after debugging
-                dispatch({
-                    type: PREV_MOVE_STATS,
-                    payload: {
-                        rowFrom: activeSquare.row,
-                        rowTo: validSpot.row,
-                        colFrom: activeSquare.col,
-                        colTo: validSpot.col,
-                        pieceNumMoved: board[activeSquare.row][activeSquare.col].id,
-                        pieceNumJumped: CalcBoardChanges.calcPieceNumJumped(board,validSpot, activeSquare)
-                    }
-                })
-                dispatch({
-                    type: CLEAR_SELECTION,
-                    payload: {
-                        validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
-                        activeSquare: {},
-                    }
-                })
-                let boardMatrix = CalcBoardChanges.calcNewBoardMatrix(board,validSpot,activeSquare)
-                dispatch({
-                    type: HANDLE_MOVE,
-                    payload: boardMatrix
-                })
-                let BoardState = getState().BoardRedux
-                let boardStr = BoardTranslations.MatrixAndMoveToBNStr(boardMatrix,BoardState.prevMove,BoardState.turnNum)
+                
+                let prevMove = {
+                            rowFrom: activeSquare.row,
+                            rowTo: validSpot.row,
+                            colFrom: activeSquare.col,
+                            colTo: validSpot.col,
+                            pieceNumMoved: board[activeSquare.row][activeSquare.col].id,
+                            pieceNumJumped: CalcBoardChanges.calcPieceNumJumped(board,validSpot, activeSquare)
+                        }
+                let turnNum = getState().GameData.turnNum+1
+                let newBoardMatrix = CalcBoardChanges.calcNewBoardMatrix(board,validSpot,activeSquare)
+                let newBNStr = BoardTranslations.MatrixAndMoveToBNStr(newBoardMatrix,prevMove,turnNum)
+                
+                
+                dispatch(API_StateChGaming.unenforcedBCMove(dispatch,newBNStr))
+            
+            
+            
+            
+                // dispatch({
+                //     type: PREV_MOVE_STATS,
+                //     payload: {
+                //         rowFrom: activeSquare.row,
+                //         rowTo: validSpot.row,
+                //         colFrom: activeSquare.col,
+                //         colTo: validSpot.col,
+                //         pieceNumMoved: board[activeSquare.row][activeSquare.col].id,
+                //         pieceNumJumped: CalcBoardChanges.calcPieceNumJumped(board,validSpot, activeSquare)
+                //     }
+                // })
+                // dispatch({
+                //     type: CLEAR_SELECTION,
+                //     payload: {
+                //         validMovesMatrix: ValidMoves.createEmptyValidMovesMatrix(),
+                //         activeSquare: {},
+                //     }
+                // })
+                // let boardMatrix = CalcBoardChanges.calcNewBoardMatrix(board,validSpot,activeSquare)
+                // dispatch({
+                //     type: HANDLE_MOVE,
+                //     payload: boardMatrix
+                // })
+                // let BoardState = getState().BoardRedux
+                // let boardStr = BoardTranslations.MatrixAndMoveToBNStr(boardMatrix,BoardState.prevMove,BoardState.turnNum)
 
-                dispatch(InteractDatabase.signAndPostMove(dispatch,boardStr))
+                // dispatch(InteractDatabase.signAndPostMove(dispatch,boardStr))
     
 
             // }

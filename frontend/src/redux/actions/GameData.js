@@ -3,7 +3,7 @@ import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
 import GameData from "./GameData";
 import API_StateChGaming from "./API_StateChGaming";
-// import InteractDatabase from "./InteractDatabase";
+import InteractDatabase from "./InteractDatabase";
 
 
 export default {
@@ -27,7 +27,7 @@ export default {
     updateGameData: (dispatch, gameID,timestamp) => {
         return (dispatch) =>{
             dispatch(API_StateChGaming.getGame(dispatch,gameID,timestamp))
-            // dispatch(InteractDatabase.getGame(dispatch,gameID,timestamp))
+            dispatch(InteractDatabase.getGame(dispatch,gameID,timestamp))
         }
     },
 

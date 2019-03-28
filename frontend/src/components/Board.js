@@ -41,9 +41,9 @@ class Board extends Component {
 
 function mapStateToProps(state) {
     return {
-        boardMatrix: state.BoardRedux.boardMatrix,
-        prevMove: state.BoardRedux.prevMove,
-        turnNum: state.BoardRedux.turnNum
+        boardMatrix: state.GameData.boardMatrix,
+        prevMove: state.GameData.prevMove,
+        turnNum: state.GameData.turnNum
     }
 }
 function mapDispatchToProps(dispatch) {

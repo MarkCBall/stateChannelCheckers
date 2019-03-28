@@ -1,6 +1,6 @@
 import {ethers} from "ethers";
 import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/ActionTypes";
-
+import { BigNumber } from "ethers/utils";
 import { provider } from "../constants/Other";
 import { StateChGamingAddr } from "../constants/Other";
 import { StateChGamingAbi } from "../constants/Other";
@@ -29,9 +29,24 @@ export default {
             //dispatch a state update to re-render
         }
     },
-    // makeMove:() =>{
+    unenforcedBCMove:(dispatch, newBNStr) => {
+        return async (dispatch,getState) => {
 
-    // },
+            let gameID = getState().GameData.gameID
+            let activeWallet = new ethers.Wallet(getState().LoginDetails.privKey).connect(provider)
+            let callableContract = new ethers.Contract(StateChGamingAddr,StateChGamingAbi, activeWallet)
+            let BN = new BigNumber(newBNStr);
+            console.log(gameID)
+            console.log(BN)
+
+            console.log(
+                await callableContract.unenforcedBCMove(gameID,BN)
+            )
+
+            //old                    80828486898B8D8F90929496A9ABADAFB0B2B4B6B9BBBDBF
+            //new  0x0c0000000000000180828486898b8d8f9092949fa9abadafb0b2b4b6b9bbbdbf
+        }
+    },
                  
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch,getState) => {

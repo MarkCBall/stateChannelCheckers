@@ -67,11 +67,11 @@ class Piece extends Component {
 
 function mapStateToProps(state) {
     return {
-        boardMatrix: state.BoardRedux.boardMatrix,
+        boardMatrix: state.GameData.boardMatrix,
         validMovesMatrix: state.BoardRedux.validMovesMatrix,
         activeSquare: state.BoardRedux.activeSquare,
-        prevMove: state.BoardRedux.prevMove,
-        turnNum: state.BoardRedux.turnNum
+        prevMove: state.GameData.prevMove,
+        turnNum: state.GameData.turnNum
     }
 }
 
