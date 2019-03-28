@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 
 
 import Board from "./Board";
-import Board2 from "./Board";
-// import GameStats from "./GameStats";
+import GameStats from "./GameStats";
 
-import ColorIndicator from "./GameDetails/ColorIndicator";
-import TurnExpiry from "./GameDetails/TurnExpiry";
+// import ColorIndicator from "./GameDetails/ColorIndicator";
+// import TurnExpiry from "./GameDetails/TurnExpiry";
 
 // import BoardRedux from "../redux/actions/BoardRedux";
 // import ColorIndicator from "./GameDetails/ColorIndicator";
@@ -23,15 +22,15 @@ class GamePlayArea extends Component {
                 <div className="row">
                     <div className="col-sm-6">
                         <div className="row">
-                            <div className="col-sm-2"><ColorIndicator/></div>
-                            <div className="col-sm-4"><TurnExpiry/></div>
+                            {/* <div className="col-sm-2"><ColorIndicator/></div> */}
+                            {/* <div className="col-sm-4"><TurnExpiry/></div> */}
                         </div>
                         <div className="row">
                             <Board />
                         </div>
                     </div>
                     <div className="col-sm-6">
-                        <Board2/>
+                        <GameStats/>
                     </div>
                 </div>
             </div>   
