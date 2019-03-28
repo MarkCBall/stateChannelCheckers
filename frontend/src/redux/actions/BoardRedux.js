@@ -16,7 +16,7 @@ import { PREV_MOVE_STATS } from "../constants/ActionTypes";
 export default {
     handlePieceClick: (dispatch, boardMatrix, piece) => {
         return (dispatch, getState) => {
-            if (piece.red === getState().BoardRedux.p1Turn) {
+            if (piece.red === ((getState().GameData.turnNum % 2) === 0)  ) {
                 dispatch({
                     type: HANDLE_PIECE_CLICK,
                     payload: {
@@ -38,7 +38,7 @@ export default {
     handleMove: (dispatch, board, validSpot, activeSquare) => {
         return (dispatch, getState) => {
             // if (window.confirm("Sign this move?")){//put back in after debugging
-                
+                // console.log(activeSquare)
                 let prevMove = {
                             rowFrom: activeSquare.row,
                             rowTo: validSpot.row,

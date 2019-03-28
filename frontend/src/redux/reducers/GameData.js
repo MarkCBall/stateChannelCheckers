@@ -22,7 +22,7 @@ const initialState = {
     latestBCTimestamp: 0,
     latestDBTimestamp: 0,
 
-    prevMove:{rowTo:0, colTo:0},
+    prevMove:{rowTo:8, colTo:8},
     boardMatrix:{},
     turnNum: 0,
 
@@ -79,8 +79,8 @@ let calcPrevMove = (BNStr, oldRow, oldCol) => {
         pieceNumJumped:pieceNumJumped,
         rowTo:getLoc(BNStr, pieceNumMoved).row,
         colTo:getLoc(BNStr, pieceNumMoved).col,
-        rowFrom:oldRow,
-        colFrom:oldCol,
+        rowFrom:oldRow,//where does previous state come from?
+        colFrom:oldCol,//it is only stored in the client
     }
 }
 
@@ -110,6 +110,7 @@ export default function (state = initialState, action) {
             }
 
         case MERGE_BLOCKCHAIN_GETGAME:
+        // console.log(state.state)
             if (BCTimestampIsHigher(action.payload, state)) {
                 let nonceMoveAndMatrix = decodeBN(
                     action.payload.state, 
