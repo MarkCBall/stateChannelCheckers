@@ -27,8 +27,7 @@ export default {
     updateGameData: (dispatch, gameID,timestamp) => {
         return (dispatch) =>{
             dispatch(InteractBlockchain.getGame(dispatch,gameID,timestamp))
-            dispatch(InteractDatabase.getGame(dispatch,gameID,timestamp))
-            // console.log("updateGameData used")
+            // dispatch(InteractDatabase.getGame(dispatch,gameID,timestamp))
         }
     },
 
