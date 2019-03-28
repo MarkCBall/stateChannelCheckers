@@ -1,14 +1,14 @@
-import { HANDLE_PIECE_CLICK } from "../constants/BoardRedux";
-import { SET_BOARD_MATRIX } from "../constants/BoardRedux";
+import { HANDLE_PIECE_CLICK } from "../constants/ActionTypes";
+import { SET_BOARD_MATRIX } from "../constants/ActionTypes";
 import ValidMoves from "../../Library/ValidMoves"
 import BoardTranslations from "../../Library/BoardTranslations"
 import CalcBoardChanges from "../../Library/CalcBoardChanges"
 import InteractDatabase from "./InteractDatabase"
 
-import { HANDLE_MOVE } from "../constants/BoardRedux";
-// import { NEXT_TURN } from "../constants/BoardRedux";
-import { CLEAR_SELECTION } from "../constants/BoardRedux";
-import { PREV_MOVE_STATS } from "../constants/BoardRedux";
+import { HANDLE_MOVE } from "../constants/ActionTypes";
+// import { NEXT_TURN } from "../constants/ActionTypes";
+import { CLEAR_SELECTION } from "../constants/ActionTypes";
+import { PREV_MOVE_STATS } from "../constants/ActionTypes";
 
 
 

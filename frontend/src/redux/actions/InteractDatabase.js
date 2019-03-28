@@ -1,6 +1,6 @@
-// import { POST_SIGNED_MOVE } from "../constants/InteractDatabase";
-// import { GET_LATEST_MOVE } from "../constants/InteractDatabase";
-import { MERGE_DATABASE_GETGAME } from "../constants/GameData";
+// import { POST_SIGNED_MOVE } from "../constants/ActionTypes";
+// import { GET_LATEST_MOVE } from "../constants/ActionTypes";
+import { MERGE_DATABASE_GETGAME } from "../constants/ActionTypes";
 import { ethers } from "ethers";
 
 //can this be done with ethers ????????

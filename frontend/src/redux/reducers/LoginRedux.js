@@ -1,7 +1,7 @@
-import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
-// import { SET_ACTIVE_CHANNEL } from "../constants/LoginRedux";
-import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
-// import { CHANGE_GAMEID_TEXT } from "../constants/LoginRedux";
+import { CHANGE_ADDRESS_TEXT } from "../constants/ActionTypes";
+// import { SET_ACTIVE_CHANNEL } from "../constants/ActionTypes";
+import { HANDLE_PRIVKEY_CHANGE } from "../constants/ActionTypes";
+// import { CHANGE_GAMEID_TEXT } from "../constants/ActionTypes";
 
 
 

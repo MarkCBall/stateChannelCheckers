@@ -1,5 +1,5 @@
-// import { CHANGE_GAMEID_TEXT } from "../constants/GameData";
-import { RESET_GAME_DATA } from "../constants/GameData";
+// import { CHANGE_GAMEID_TEXT } from "../constants/ActionTypes";
+import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
 import GameData from "./GameData";
 import InteractBlockchain from "./InteractBlockchain";

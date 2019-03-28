@@ -1,8 +1,8 @@
 
-// import { CHANGE_GAMEID_TEXT } from "../constants/GameData";
-import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/GameData";
-import { MERGE_DATABASE_GETGAME } from "../constants/GameData";
-import { RESET_GAME_DATA } from "../constants/GameData";
+// import { CHANGE_GAMEID_TEXT } from "../constants/ActionTypes";
+import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/ActionTypes";
+import { MERGE_DATABASE_GETGAME } from "../constants/ActionTypes";
+import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
 
 

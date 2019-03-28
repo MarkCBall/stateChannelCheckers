@@ -1,7 +1,7 @@
 import {ethers} from "ethers";
-import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/GameData";
-import { UPDATE_APPROVALS } from "../constants/InteractBlockchain";
-// import { RESET_GAME_DATA } from "../constants/GameData";
+import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/ActionTypes";
+import { UPDATE_APPROVALS } from "../constants/ActionTypes";
+// import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
 // let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 let provider = ethers.getDefaultProvider('ropsten');

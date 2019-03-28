@@ -1,5 +1,5 @@
-import { CHANGE_ADDRESS_TEXT } from "../constants/LoginRedux";
-import { HANDLE_PRIVKEY_CHANGE } from "../constants/LoginRedux";
+import { CHANGE_ADDRESS_TEXT } from "../constants/ActionTypes";
+import { HANDLE_PRIVKEY_CHANGE } from "../constants/ActionTypes";
 import { isValidAddress } from "ethereumjs-util";
 
 import { ethers } from "ethers";

@@ -1,7 +1,7 @@
-// import { COUNTERSIGN_CHANNEL } from "../constants/InteractBlockchain";
-// import { TERMINATE_CHANNEL } from "../constants/InteractBlockchain";
-// import { WITHDRAW_FROM_CHANNEL } from "../constants/InteractBlockchain";
-import { UPDATE_APPROVALS } from "../constants/InteractBlockchain";
+// import { COUNTERSIGN_CHANNEL } from "../constants/ActionTypes";
+// import { TERMINATE_CHANNEL } from "../constants/ActionTypes";
+// import { WITHDRAW_FROM_CHANNEL } from "../constants/ActionTypes";
+import { UPDATE_APPROVALS } from "../constants/ActionTypes";
 
 
 const initialState = {
