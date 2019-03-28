@@ -58,45 +58,10 @@ let sigIsValid = (newData) => {
 
 
 
-let getPieceBin = (BNStr, pieceNum) =>{
-    let pos = pieceNum*2 + 16
-    let pieceHex = BNStr.slice(pos,pos+2)
-        return (parseInt(pieceHex, 16)).toString(2).padStart(8,"0")
-}
-let getLoc = (BNStr, pieceNum) => {
-    let pieceBinary = getPieceBin(BNStr, pieceNum)
-    return {
-        row: parseInt(pieceBinary.substr(2,3),2),
-        col: parseInt(pieceBinary.substr(5,3),2),
-    }
-}
-//move this into BoardTranslations
-let calcPrevMove = (BNStr, oldRow, oldCol) => {
-    let pieceNumMoved = parseInt(BNStr.slice(2,4),16)
-    let pieceNumJumped = parseInt(BNStr.slice(4,6),16)
-    return {
-        pieceNumMoved:pieceNumMoved,
-        pieceNumJumped:pieceNumJumped,
-        rowTo:getLoc(BNStr, pieceNumMoved).row,
-        colTo:getLoc(BNStr, pieceNumMoved).col,
-        rowFrom:oldRow,//where does previous state come from?
-        colFrom:oldCol,//it is only stored in the client
-    }
-}
 
 
-let decodeBN = (BN, oldRow, oldCol) => {
-    let BNStr = "0x" + BN.toHexString().slice(2).padStart(64, "0")
-    //bytes 5-8 converted from hex to decimal
-    let turnNum = parseInt(BNStr.slice(10, 18), 16)
-    let boardMatrix = BoardTranslations.BNtoMatrix(BN)
-    let prevMove = calcPrevMove(BNStr, oldRow, oldCol)
-    return {
-        turnNum: turnNum,
-        boardMatrix: boardMatrix,
-        prevMove:prevMove
-    }
-}
+
+
 
 
 
@@ -112,7 +77,7 @@ export default function (state = initialState, action) {
         case MERGE_BLOCKCHAIN_GETGAME:
         // console.log(state.state)
             if (BCTimestampIsHigher(action.payload, state)) {
-                let nonceMoveAndMatrix = decodeBN(
+                let nonceMoveAndMatrix = BoardTranslations.decodeBN(
                     action.payload.state, 
                     state.prevMove.rowTo,
                     state.prevMove.colTo
