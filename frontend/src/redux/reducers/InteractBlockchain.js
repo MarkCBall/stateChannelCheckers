@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
 
 
         case UPDATE_APPROVALS:
-        console.log("approvals updated from", state)
+        // console.log("approvals updated from", state)
             return {
                 ...state,
                 p1ApprovedAmnt:action.payload.p1ApprovedAmnt,

@@ -8,22 +8,22 @@ import { RESET_GAME_DATA } from "../constants/GameData";
 
 
 const initialState = {
-    gameID:"",
-    p1Addr:"default",
-    p2Addr:"default",
-    ERC20Amount:0,
-    state:"default",
+    gameID: "",
+    p1Addr: "default",
+    p2Addr: "default",
+    ERC20Amount: 0,
+    state: "default",
     turnNum: 0,
-    blockNum:0,
-    VCAddr:"default",
-    ERC20Addr:"default",
-    turnLength:0,
-    latestBCTimestamp:0,
-    latestDBTimestamp:0,
-    gameSig:{},
-    moveSig:{},
-    iAmP1Red:false,
-    iAmP2Black:false        
+    blockNum: 0,
+    VCAddr: "default",
+    ERC20Addr: "default",
+    turnLength: 0,
+    latestBCTimestamp: 0,
+    latestDBTimestamp: 0,
+    gameSig: {},
+    moveSig: {},
+    iAmP1Red: false,
+    iAmP2Black: false
 };
 
 let BCTimestampIsHigher = (newData, oldData) => {
@@ -53,46 +53,76 @@ export default function (state = initialState, action) {
     switch (action.type) {
 
         case RESET_GAME_DATA:
-        return {
-            ...initialState,
-            gameID:action.payload
-        }
+            return {
+                ...initialState,
+                gameID: action.payload
+            }
 
         case MERGE_BLOCKCHAIN_GETGAME:
-        if (BCTimestampIsHigher(action.payload, state)){
-            if (nonceIsSameOrHigher(action.payload, state)){
-                return {
-                    ...state,
-                    ...action.payload,
-                    // spell these out
+
+            let returnState = state
+            if (BCTimestampIsHigher(action.payload, state)) {
+                returnState ={
+                    ...returnState,
+                    latestBCTimestamp: action.payload.latestBCTimestamp
                 }
             }
-        }
-        return state
+            if (nonceIsSameOrHigher(action.payload, state)) {
+                returnState ={
+                    ...returnState,
+                    ...action.payload
+                }
+            }
+            return returnState
+
+
+
+
+
+            // if (BCTimestampIsHigher(action.payload, state)) {
+            //     if (nonceIsSameOrHigher(action.payload, state)) {
+
+            //         return {
+            //             ...state,
+            //             ...action.payload,
+            //             // spell these out
+            //         }
+            //     }
+
+            //     return {
+            //         ...state,
+            //         latestBCTimestamp: action.payload.latestBCTimestamp,
+            //     }
+            // }
+            // return state
+
             
 
+
         case MERGE_DATABASE_GETGAME:
-        //set turnNum to zero if no game data is given
-        let newData ={
-            ...action.payload,
-            turnNum: (action.payload.state ? action.payload.state.slice(10,18) : 0),
-            //confirm turnNum slice!
-            
-        }
-        if (DBTimestampIsHigher(newData, state)){
-            if (nonceIsHigher(newData, state)){
-                if (sigIsValid(newData)){
-                    // console.log("setting DB state")
-                    return {
-                        ...state,
-                        ...action.payload,
-                        blockNum:100000000000000000000000000000,
-                        //spell these items out
+            let turnNum = (action.payload.state ? action.payload.state._hex.slice(10, 18) : 0)
+            console.log(turnNum)
+            //set turnNum to zero if no game data is given
+            let newData = {
+                ...action.payload,
+                turnNum: turnNum,
+                //confirm turnNum slice!
+            }
+            if (DBTimestampIsHigher(newData, state)) {
+                if (nonceIsHigher(newData, state)) {
+                    if (sigIsValid(newData)) {
+                        // console.log("setting DB state")
+                        return {
+                            ...state,
+                            ...newData,
+                            blockNum: 100000000000000000000000000000,
+                            //spell these items out
+                        }
                     }
                 }
+                //return state with timestamp
             }
-        }
-        return state
+            return state
 
 
 

@@ -50,7 +50,7 @@ export default {
                     iAmP1Red:(getState().LoginRedux.addressSignedIn === game.p1.toLowerCase()),
                     iAmP2Black:(getState().LoginRedux.addressSignedIn === game.p2.toLowerCase())
                 }
-                console.log("BC response:",gameData)
+                // console.log("BC response:",gameData)
                 dispatch({
                     type: MERGE_BLOCKCHAIN_GETGAME,
                     payload: gameData

@@ -12,7 +12,7 @@ import LabelAndInput from "./LabelAndInput";
 class GameSelection extends Component {
 
     renderCreateInitializeOrPlay = () => {
-        if (this.props.hasBCData > 0) 
+        if (this.props.hasBCData) 
             return <GamePlayArea />
         if (this.props.hasDBData)
             return <InitGameSequence/>  //rename to GameProposed
