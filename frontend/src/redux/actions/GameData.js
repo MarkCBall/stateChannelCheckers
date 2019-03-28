@@ -2,8 +2,8 @@
 import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
 import GameData from "./GameData";
-import InteractBlockchain from "./InteractBlockchain";
-import InteractDatabase from "./InteractDatabase";
+import API_StateChGaming from "./API_StateChGaming";
+// import InteractDatabase from "./InteractDatabase";
 
 
 export default {
@@ -26,7 +26,7 @@ export default {
     },
     updateGameData: (dispatch, gameID,timestamp) => {
         return (dispatch) =>{
-            dispatch(InteractBlockchain.getGame(dispatch,gameID,timestamp))
+            dispatch(API_StateChGaming.getGame(dispatch,gameID,timestamp))
             // dispatch(InteractDatabase.getGame(dispatch,gameID,timestamp))
         }
     },

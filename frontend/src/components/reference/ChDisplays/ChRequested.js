@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Initial from "./SubChDisplays/Initial";
-import InteractBlockchain from "../../redux/actions/InteractBlockchain";
+import API_StateChGaming from "../../redux/actions/API_StateChGaming";
 
 
 class ChRequested extends Component {
@@ -24,8 +24,8 @@ class ChRequested extends Component {
 
 function mapStateToProps(state) {
     return {
-        // address: state.LoginRedux.addressSignedIn,
-        // addressIsValid: state.LoginRedux.addressIsValid,
+        // address: state.LoginDetails.addressSignedIn,
+        // addressIsValid: state.LoginDetails.addressIsValid,
         // pendingChannels: state.InteractDatabase.PendingChannels
     }
 }
@@ -33,7 +33,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         countersignChannel: () => {
-            dispatch(InteractBlockchain.countersignChannel(dispatch))
+            dispatch(API_StateChGaming.countersignChannel(dispatch))
             
         }
     }

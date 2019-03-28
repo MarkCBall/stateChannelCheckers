@@ -4,7 +4,7 @@ import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/ActionTypes";
 import { MERGE_DATABASE_GETGAME } from "../constants/ActionTypes";
 import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
-
+import BoardTranslations from "../../Library/BoardTranslations"
 
 
 const initialState = {
@@ -12,14 +12,20 @@ const initialState = {
     p1Addr: "default",
     p2Addr: "default",
     ERC20Amount: 0,
-    state: "default",//boardEncoded, boardDecoded, moveDecoded
-    turnNum: 0,
+    state: "",//boardEncoded, boardDecoded, moveDecoded
+    
     blockNum: 0,
     VCAddr: "default",
     ERC20Addr: "default",
     turnLength: 0,
+
     latestBCTimestamp: 0,
     latestDBTimestamp: 0,
+
+    prevMove:{rowTo:0, colTo:0},
+    boardMatrix:{},
+    turnNum: 0,
+
     gameSig: {},
     moveSig: {},
     iAmP1Red: false,
@@ -35,8 +41,8 @@ let DBTimestampIsHigher = (newData, oldData) => {
 let nonceIsHigher = (newData, oldData) => {
     return ((newData.turnNum > oldData.turnNum) || (oldData.turnNum === 0))
 }
-let nonceIsSameOrHigher = (newData, oldData) => {
-    return (newData.turnNum >= oldData.turnNum)
+let nonceIsSameOrHigher = (turnNum, oldData) => {
+    return (turnNum >= oldData.turnNum)
 }
 let sigIsValid = (newData) => {
     //MIGHT NEED iAmP1Red
@@ -49,6 +55,51 @@ let sigIsValid = (newData) => {
 }
 
 
+
+
+
+let getPieceBin = (BNStr, pieceNum) =>{
+    let pos = pieceNum*2 + 16
+    let pieceHex = BNStr.slice(pos,pos+2)
+        return (parseInt(pieceHex, 16)).toString(2).padStart(8,"0")
+}
+let getLoc = (BNStr, pieceNum) => {
+    let pieceBinary = getPieceBin(BNStr, pieceNum)
+    return {
+        row: parseInt(pieceBinary.substr(2,3),2),
+        col: parseInt(pieceBinary.substr(5,3),2),
+    }
+}
+//move this into BoardTranslations
+let calcPrevMove = (BNStr, oldRow, oldCol) => {
+    let pieceNumMoved = parseInt(BNStr.slice(2,4),16)
+    let pieceNumJumped = parseInt(BNStr.slice(4,6),16)
+    return {
+        pieceNumMoved:pieceNumMoved,
+        pieceNumJumped:pieceNumJumped,
+        rowTo:getLoc(BNStr, pieceNumMoved).row,
+        colTo:getLoc(BNStr, pieceNumMoved).col,
+        rowFrom:oldRow,
+        colFrom:oldCol,
+    }
+}
+
+
+let decodeBN = (BN, oldRow, oldCol) => {
+    let BNStr = "0x" + BN.toHexString().slice(2).padStart(64, "0")
+    //bytes 5-8 converted from hex to decimal
+    let turnNum = parseInt(BNStr.slice(10, 18), 16)
+    let boardMatrix = BoardTranslations.BNtoMatrix(BN)
+    let prevMove = calcPrevMove(BNStr, oldRow, oldCol)
+    return {
+        turnNum: turnNum,
+        boardMatrix: boardMatrix,
+        prevMove:prevMove
+    }
+}
+
+
+
 export default function (state = initialState, action) {
     switch (action.type) {
 
@@ -58,62 +109,33 @@ export default function (state = initialState, action) {
                 gameID: action.payload
             }
 
-            
-
-
-
-
-
         case MERGE_BLOCKCHAIN_GETGAME:
-            //decode the BigNumber
-            let returnState = {
-                ...state,
-                turnNum:(action.payload.state ? action.payload.state._hex.slice(10, 18) : 0),
-                // boardDecoded =
-                // moveDecoded =
-
-            }
             if (BCTimestampIsHigher(action.payload, state)) {
-                returnState ={
-                    ...returnState,
-                    latestBCTimestamp: action.payload.latestBCTimestamp
-                }
-            }
-            if (nonceIsSameOrHigher(action.payload, state)) {
-                returnState ={
-                    ...returnState,
-                    ...action.payload
-                }
-            }
-            return returnState
-
-
-
-
-
-            // if (BCTimestampIsHigher(action.payload, state)) {
-            //     if (nonceIsSameOrHigher(action.payload, state)) {
-
-            //         return {
-            //             ...state,
-            //             ...action.payload,
-            //             // spell these out
-            //         }
-            //     }
-
-            //     return {
-            //         ...state,
-            //         latestBCTimestamp: action.payload.latestBCTimestamp,
-            //     }
-            // }
-            // return state
-
+                let nonceMoveAndMatrix = decodeBN(
+                    action.payload.state, 
+                    state.prevMove.rowTo,
+                    state.prevMove.colTo
+                )
+                if (nonceIsSameOrHigher(nonceMoveAndMatrix.turnNum, state)) {
             
+                    return {
+                        ...state,
+                        ...action.payload,
+                        ...nonceMoveAndMatrix,
+                        latestBCTimestamp: action.payload.latestBCTimestamp
+                    }
+                }
+            }
+            return state
+
+
+
+
 
 
         case MERGE_DATABASE_GETGAME:
             let turnNum = (action.payload.state ? action.payload.state._hex.slice(10, 18) : 0)
-            console.log(turnNum)
+            // console.log(getLoc())
             //set turnNum to zero if no game data is given
             let newData = {
                 ...action.payload,

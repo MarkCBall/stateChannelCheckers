@@ -166,16 +166,16 @@ class GameCreate extends Component {
 
 function mapStateToProps(state) {
     return {
-        pubPrivKeypairValid: state.LoginRedux.pubPrivKeypairValid,
+        pubPrivKeypairValid: state.LoginDetails.pubPrivKeypairValid,
         gameID: state.GameData.gameID,
-        addressSignedIn: state.LoginRedux.addressSignedIn,
+        addressSignedIn: state.LoginDetails.addressSignedIn,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         //    signAndSubmitGame: (dispatch, ERC20Amount, ERC20Addr,gameID,p1Addr,p2Addr,VCAddr,turnLength) => {
-        // make new sign and submit in InteractBlockchain
+        // make new sign and submit in API_StateChGaming
         signAndSubmitGame: (ERC20Amount,ERC20Addr,gameID,addressSignedIn,p2Addr,VCAddr,turnLength) => {
             dispatch(InteractDatabase.signAndSubmitGame(dispatch,ERC20Amount,ERC20Addr,gameID,addressSignedIn,p2Addr,VCAddr,turnLength))
         },

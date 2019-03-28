@@ -38,7 +38,7 @@ class SelectChDisplay extends Component {
 
 function mapStateToProps(state) {
     return {
-        isOngoing: state.LoginRedux.activeChannel.isOngoing,
+        isOngoing: state.LoginDetails.activeChannel.isOngoing,
         ChDetails: state.InteractDatabase.ActiveChannelDetails
     }
 }

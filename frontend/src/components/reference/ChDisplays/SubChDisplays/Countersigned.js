@@ -59,7 +59,7 @@ function mapStateToProps(state) {
 // function mapDispatchToProps(dispatch) {
 //     return {
 //         initChannelTermination: () => {
-//             dispatch(InteractBlockchain.initChannelTermination(dispatch))     
+//             dispatch(API_StateChGaming.initChannelTermination(dispatch))     
 //         }
 //     }
 // }

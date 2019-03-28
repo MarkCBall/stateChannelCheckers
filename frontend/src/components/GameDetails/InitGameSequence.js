@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import InteractBlockchain from "../../redux/actions/InteractBlockchain";
+import API_StateChGaming from "../../redux/actions/API_StateChGaming";
 import API_ERC20 from "../../redux/actions/API_ERC20";
 
 
@@ -12,12 +12,14 @@ class InitGameSequence extends Component {
             WindowInterval: 0,
             allowanceAmnt: 0
         }
-        
     }
     
     componentDidMount = () =>{
         this.props.updateApprovals()
-        this.state.WindowInterval = window.setInterval(this.props.updateApprovals, 10000);  
+        this.setState({
+            ...this.state,
+            WindowInterval: window.setInterval(this.props.updateApprovals, 10000)
+        })
     }
     componentWillUnmount = () =>{
         window.clearInterval(this.state.WindowInterval)
@@ -106,18 +108,18 @@ function mapStateToProps(state) {
     return {
         iAmP1Red:state.GameData.iAmP1Red,
         iAmP2Black:state.GameData.iAmP2Black,
-        enoughAllowances:state.InteractBlockchain.enoughAllowances,
-        p1ApprovedAmnt:state.InteractBlockchain.p1ApprovedAmnt,
-        p2ApprovedAmnt:state.InteractBlockchain.p2ApprovedAmnt,
-        p1Bal:state.InteractBlockchain.p1Bal,
-        p2Bal:state.InteractBlockchain.p2Bal,
+        enoughAllowances:state.API_StateChGaming.enoughAllowances,
+        p1ApprovedAmnt:state.API_StateChGaming.p1ApprovedAmnt,
+        p2ApprovedAmnt:state.API_StateChGaming.p2ApprovedAmnt,
+        p1Bal:state.API_StateChGaming.p1Bal,
+        p2Bal:state.API_StateChGaming.p2Bal,
         ERC20Amount:state.GameData.ERC20Amount
     }
 }
 function mapDispatchToProps(dispatch) {
     return {
         initGame: () => {
-            dispatch(InteractBlockchain.initGame())
+            dispatch(API_StateChGaming.initGame())
         },
         updateApprovals: () => {
             dispatch(API_ERC20.updateApprovals())

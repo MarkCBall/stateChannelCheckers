@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import InteractBlockchain from "../../redux/actions/InteractBlockchain";
+import API_StateChGaming from "../../redux/actions/API_StateChGaming";
 import Initial from "./SubChDisplays/Initial";
 import Countersigned from "./SubChDisplays/Countersigned";
 import HalfSigned from "./SubChDisplays/HalfSigned";
@@ -58,7 +58,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         initChannelTermination: () => {
-            dispatch(InteractBlockchain.initChannelTermination(dispatch))     
+            dispatch(API_StateChGaming.initChannelTermination(dispatch))     
         }
     }
 }

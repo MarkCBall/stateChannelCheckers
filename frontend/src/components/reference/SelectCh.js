@@ -70,11 +70,11 @@ class SelectCh extends Component {
 
 function mapStateToProps(state) {
     return {
-        OngoingChannels: state.InteractBlockchain.OngoingChannels,
+        OngoingChannels: state.API_StateChGaming.OngoingChannels,
         PendingChannels: state.InteractDatabase.PendingChannels,
         RequestedChannels: state.InteractDatabase.RequestedChannels,
-        activeChannel: state.LoginRedux.activeChannel,
-        showNewChannelForm: state.LoginRedux.showNewChannelForm
+        activeChannel: state.LoginDetails.activeChannel,
+        showNewChannelForm: state.LoginDetails.showNewChannelForm
     }
 }
 export default connect(mapStateToProps)(SelectCh);

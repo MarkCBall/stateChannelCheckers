@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import GameData from "../redux/actions/GameData";
 import { connect } from "react-redux";
 
-import Board from "./Board";
+// import Board from "./Board";
 import GamePlayArea from "./GamePlayArea";
 import InitGameSequence from "./GameDetails/InitGameSequence";
 import GameCreate from "./GameCreate";
@@ -54,7 +54,7 @@ class GameSelection extends Component {
 
 function mapStateToProps(state) {
     return {
-        address: state.LoginRedux.addressSignedIn,
+        address: state.LoginDetails.addressSignedIn,
         hasData:((state.GameData.latestDBTimestamp+state.GameData.latestBCTimestamp)>0),
         hasDBData: (state.GameData.latestDBTimestamp>0),
         hasBCData:(state.GameData.latestBCTimestamp>0),

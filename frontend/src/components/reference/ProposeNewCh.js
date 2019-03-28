@@ -271,8 +271,8 @@ class ProposeNewCh extends Component {
 
 function mapStateToProps(state) {
     return {
-        u1Address: state.LoginRedux.addressSignedIn,
-        privateKey : state.LoginRedux.privKey,
+        u1Address: state.LoginDetails.addressSignedIn,
+        privateKey : state.LoginDetails.privKey,
         
     }
 }

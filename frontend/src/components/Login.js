@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import LoginRedux from "../redux/actions/LoginRedux";
 // import InteractDatabase from "../redux/actions/InteractDatabase";
-// import InteractBlockchain from "../redux/actions/InteractBlockchain";
+// import API_StateChGaming from "../redux/actions/API_StateChGaming";
 import {isValidAddress} from "ethereumjs-util";
 import LabelAndInput from "./LabelAndInput";
 
@@ -45,10 +45,10 @@ class Login extends Component {
 
 function mapStateToProps(state) {
     return {
-        privKey : state.LoginRedux.privKey,
-        pubPrivKeypairValid : state.LoginRedux.pubPrivKeypairValid,
-        address: state.LoginRedux.addressSignedIn,
-        addressIsValid: state.LoginRedux.addressIsValid,
+        privKey : state.LoginDetails.privKey,
+        pubPrivKeypairValid : state.LoginDetails.pubPrivKeypairValid,
+        address: state.LoginDetails.addressSignedIn,
+        addressIsValid: state.LoginDetails.addressIsValid,
         //pendingChannels: state.InteractDatabase.PendingChannels
     }
 }

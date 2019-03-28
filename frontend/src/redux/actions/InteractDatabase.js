@@ -16,7 +16,7 @@ export default {
             let sigValues = [ERC20Amount, ERC20Addr, gameID, p1Addr, p2Addr, VCAddr, turnLength]
             let gameHash = ethers.utils.solidityKeccak256(sigTypes, sigValues);
             let arrayifiedGameHash = ethers.utils.arrayify(gameHash)
-            let wallet = new ethers.Wallet(getState().LoginRedux.privKey)
+            let wallet = new ethers.Wallet(getState().LoginDetails.privKey)
             let flatSig = await wallet.signMessage(arrayifiedGameHash)
             let sig = ethers.utils.splitSignature(flatSig);
             //post the data and sig to the database
@@ -60,8 +60,8 @@ export default {
                 resJSON = {
                     ...resJSON,
                     latestDBTimestamp: timestamp,
-                    iAmP1Red:(getState().LoginRedux.addressSignedIn === resJSON.p1Addr),
-                    iAmP2Black:(getState().LoginRedux.addressSignedIn === resJSON.p2Addr)   
+                    iAmP1Red:(getState().LoginDetails.addressSignedIn === resJSON.p1Addr),
+                    iAmP2Black:(getState().LoginDetails.addressSignedIn === resJSON.p2Addr)   
                 }
                 // console.log("DB reponse:",resJSON)
                 dispatch({
@@ -82,7 +82,7 @@ export default {
             let sigValues = [gameID, boardBN]
             let gameHash = ethers.utils.solidityKeccak256(sigTypes, sigValues);
             let arrayifiedGameHash = ethers.utils.arrayify(gameHash)
-            let wallet = new ethers.Wallet(getState().LoginRedux.privKey)
+            let wallet = new ethers.Wallet(getState().LoginDetails.privKey)
             let flatSig = await wallet.signMessage(arrayifiedGameHash)
             let sig = ethers.utils.splitSignature(flatSig);
             //post the data and sig to the database
@@ -111,7 +111,7 @@ export default {
 
     //         let boardHash = ethers.utils.solidityKeccak256(['uint'], [boardBNStr]);// get gameID too!
     //         let arrayifiedBoardHash = ethers.utils.arrayify(boardHash)
-    //         let wallet = new ethers.Wallet(getState().LoginRedux.privKey)
+    //         let wallet = new ethers.Wallet(getState().LoginDetails.privKey)
     //         let flatSig = await wallet.signMessage(arrayifiedBoardHash)
     //         let sig = ethers.utils.splitSignature(flatSig);
 

@@ -33,7 +33,7 @@ class ChButton extends Component {
 
 function mapStateToProps(state) {
     return {
-        activeChannel: state.LoginRedux.activeChannel.channel
+        activeChannel: state.LoginDetails.activeChannel.channel
     }
 }
 function mapDispatchToProps(dispatch) {
