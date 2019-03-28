@@ -1,18 +1,16 @@
 import { ethers } from "ethers";
 import { UPDATE_APPROVALS } from "../constants/ActionTypes";
 
-//move these to 
-let provider = ethers.getDefaultProvider('ropsten');
-let ERC20Json = require('../../SolidityJSON/ERC20.json')
-let ERC20Abi = ERC20Json.abi;
-let StateChGamingAddr = "0x90b8d184c1d4179e59b9d21fce1201704cac255c"
+import { provider } from "../constants/Other";
+import { ERC20Abi } from "../constants/Other";
+import { StateChGamingAddr} from "../constants/Other";
+
 
 export default {
 
     updateApprovals: () => {
         return async (dispatch, getState) => {
             let GD = getState().GameData
-            // console.log(GD)
             let minStake = GD.ERC20Amount
             let ERC20Addr = GD.ERC20Addr
             let p1Addr = GD.p1Addr

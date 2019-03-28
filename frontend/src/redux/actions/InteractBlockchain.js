@@ -1,38 +1,17 @@
 import {ethers} from "ethers";
 import { MERGE_BLOCKCHAIN_GETGAME } from "../constants/ActionTypes";
-import { UPDATE_APPROVALS } from "../constants/ActionTypes";
-// import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
-// let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
-let provider = ethers.getDefaultProvider('ropsten');
-
-//get contract info
-let StateChGamingJson = require('../../SolidityJSON/StateChGaming.json')
-let StateChGamingAbi = StateChGamingJson.abi;
-// let StateChGamingBytecode = StateChGamingJson.bytecode
-// let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
-// let activeWallet = new ethers.Wallet("0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901").connect(provider)
-
-
-let ERC20Json = require('../../SolidityJSON/ERC20.json')
-let ERC20Abi = ERC20Json.abi;
-
-let StateChGamingAddr = "0x90b8d184c1d4179e59b9d21fce1201704cac255c"
-let deployedStateChGaming = new ethers.Contract(StateChGamingAddr,StateChGamingAbi, provider)
-
-// let deployedStateChGaming
-// (async ()=>{
-//     let ContractFactory = await new ethers.ContractFactory(StateChGamingAbi, StateChGamingBytecode).connect(activeWallet);
-//     deployedStateChGaming = await ContractFactory.deploy()
-// })()
+import { provider } from "../constants/Other";
+import { StateChGamingAddr } from "../constants/Other";
+import { StateChGamingAbi } from "../constants/Other";
+import { StateChGamingContract } from "../constants/Other";
 
 export default {
                  
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch,getState) => {
-            let game = await deployedStateChGaming.allGames(gameID)
+            let game = await StateChGamingContract.allGames(gameID)
             let gameData
-            // console.log("allGames retuened",game)
 
             // if the game is initialized
             if(game.state.toString().length!==1){
@@ -50,7 +29,6 @@ export default {
                     iAmP1Red:(getState().LoginRedux.addressSignedIn === game.p1.toLowerCase()),
                     iAmP2Black:(getState().LoginRedux.addressSignedIn === game.p2.toLowerCase())
                 }
-                // console.log("BC response:",gameData)
                 dispatch({
                     type: MERGE_BLOCKCHAIN_GETGAME,
                     payload: gameData
@@ -110,14 +88,14 @@ export default {
     //         //get wallets --> do this through metamask later?
             
 
-    //         //can deployedStateChGaming be done out of function and connect be done inside?
+    //         //can StateChGamingContract be done out of function and connect be done inside?
 
     //         //get a contract --> change this to existing contract later
     //         // let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(activeWallet);
-    //         // let deployedStateChGaming = await ContractFactory.deploy()
+    //         // let StateChGamingContract = await ContractFactory.deploy()
     //         let StateChGamingAddr = CONTRACT_ADDRESS
             
-    //         //console.log("deployed contract is ", deployedStateChGaming)
+    //         //console.log("deployed contract is ", StateChGamingContract)
 
 
 
@@ -149,7 +127,7 @@ export default {
     //             //console.log(u1Address)
     //             //console.log(activeWallet.signingKey.address)
     //             //console.log(ACD)
-    //             //console.log("deployedStateChGaming ")
+    //             //console.log("StateChGamingContract ")
 
 
 
@@ -168,7 +146,7 @@ export default {
             
     //         let activeWallet = new ethers.Wallet(getState().LoginRedux.privKey).connect(provider)
     //         let StateChGamingAddr = CONTRACT_ADDRESS
-    //         let deployedStateChGaming = new ethers.Contract(StateChGamingAddr,StateChannelAbi,provider).connect(activeWallet);
+    //         let StateChGamingContract = new ethers.Contract(StateChGamingAddr,StateChannelAbi,provider).connect(activeWallet);
                 
     //         var DBData = getState().InteractDatabase;
     //         console.log(getState())
@@ -205,7 +183,7 @@ export default {
                 
     //             //function InitChannelTermination(uint8 v, bytes32 r, bytes32 s, uint CID, uint proposedTerminatingBlockNumber, uint u1BalRetained, uint u2BalRetained, uint nonce) public{
 
-    //             deployedStateChGaming.InitChannelTermination(
+    //             StateChGamingContract.InitChannelTermination(
     //                 v, r, s, CID, propTermBlockNum, u1Bal, u2Bal, nonce
     //             ).then((x) => console.log("\n\nthen", x))
     //             .catch((err) => console.log("\n\ncatch", err))
@@ -220,12 +198,12 @@ export default {
 
     //         //move this outside function?
     //         let StateChGamingAddr = CONTRACT_ADDRESS
-    //         let deployedStateChGaming = new ethers.Contract(StateChGamingAddr,StateChannelAbi,provider);
-    //         //console.log("deployed contract is ", deployedStateChGaming)
+    //         let StateChGamingContract = new ethers.Contract(StateChGamingAddr,StateChannelAbi,provider);
+    //         //console.log("deployed contract is ", StateChGamingContract)
 
 
     //         let OngoingChannels = {}
-    //         deployedStateChGaming.GetChannelsAtAddress(address)
+    //         StateChGamingContract.GetChannelsAtAddress(address)
     //         .then((BN) => {
     //             //console.log("\n\nthen", x)
     //             BN.forEach(  val => {
