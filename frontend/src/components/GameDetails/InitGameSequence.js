@@ -108,11 +108,11 @@ function mapStateToProps(state) {
     return {
         iAmP1Red:state.GameData.iAmP1Red,
         iAmP2Black:state.GameData.iAmP2Black,
-        enoughAllowances:state.API_StateChGaming.enoughAllowances,
-        p1ApprovedAmnt:state.API_StateChGaming.p1ApprovedAmnt,
-        p2ApprovedAmnt:state.API_StateChGaming.p2ApprovedAmnt,
-        p1Bal:state.API_StateChGaming.p1Bal,
-        p2Bal:state.API_StateChGaming.p2Bal,
+        enoughAllowances:state.TempUserInputs.enoughAllowances,
+        p1ApprovedAmnt:state.TempUserInputs.p1ApprovedAmnt,
+        p2ApprovedAmnt:state.TempUserInputs.p2ApprovedAmnt,
+        p1Bal:state.TempUserInputs.p1Bal,
+        p2Bal:state.TempUserInputs.p2Bal,
         ERC20Amount:state.GameData.ERC20Amount
     }
 }
