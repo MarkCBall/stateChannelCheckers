@@ -48,7 +48,7 @@ export default {
             }
         }
         //parse the bignumber into pieces data
-        let str = BN.toHexString()
+        let str = "0x" + BN.toHexString().slice(2).padStart(64, "0")
         for (let i=9;i<33;i++){
             let pieceHex = str.substr(i*2,2)
             let pieceBinary =  (parseInt(pieceHex, 16)).toString(2).padStart(8,"0")
