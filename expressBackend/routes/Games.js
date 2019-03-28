@@ -29,21 +29,37 @@ router.post('/New', async function(req, res, next) {
     //     recoveryParam: 1,
     //     v: 28 }
     
+    //require addr1!= addr2
     //require the entry doesn't exist on the BC
     //require the sig is valid
     db.put(req.headers.gameid,req.body)
     //error handling?
 
-    console.log("post got")
+    // console.log("post got")
     // console.log(req.headers.gameid)
     // console.log(req.body)
 
     res.send();
 })
 
-//router.post('/Move')
-//require sig is good
-//require db.get nonce < 
+router.post('/Move', async function(req, res, next) {
+    //EXAMPLE 
+    // header = {gameID:3}
+    // req.body={ 
+    //     state: "0x0c0000000000000180828486898b8d8f9092949fa9abadafb0b2b4b6b9bbbdbf",
+    // }   
+    //require sig is good
+    //require db.get nonce < 
+    let oldData = await db.get(req.headers.gameid)
+    console.log("old stuff is ", oldData)
+    let newData = {
+        ...oldData,
+        state:req.body.state
+    }
+    console.log("turning into ", newData)
+    db.put(req.headers.gameid,newData)
+    res.send();
+})
 
 
 
