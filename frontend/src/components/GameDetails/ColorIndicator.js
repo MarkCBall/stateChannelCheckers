@@ -5,13 +5,11 @@ import { connect } from "react-redux";
 class ColorIndicator extends Component {
 
     renderPlayerColor =  () => {
-        if (this.props.iAmP1Red){
-            return <><div className="red"></div>Player 1</>
+        if ((this.props.turnNum % 2) === 0){
+            return <div className="Red"></div>
         }
-        if (this.props.iAmP2Black){
-            return <><div className="black"></div>Player 2</>
-        }
-        return <><div className="valid"></div>Observer</>
+        return <div className="Black"></div>
+
     }
     render() {
         return (
@@ -24,8 +22,8 @@ class ColorIndicator extends Component {
 
 function mapStateToProps(state) {
     return {
-        iAmP1Red:state.GameData.iAmP1Red,
-        iAmP2Black:state.GameData.iAmP2Black,
+        turnNum:state.GameData.turnNum,
+        // iAmP2Black:state.GameData.iAmP2Black,
     }
 }
 
