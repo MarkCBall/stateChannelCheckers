@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Piece from "./Piece";
+import Piece from "../Piece";
 
 // import BoardRedux from "../redux/actions/BoardRedux";
 // import { BigNumber } from "ethers/utils";
@@ -15,9 +15,18 @@ class Board extends Component {
     // }
 
     renderSquare = (rowIndex, colIndex, piece) => {
-        return <div key={colIndex} className={"color" + ((rowIndex + colIndex) % 2)}>
-            <Piece piece={piece} />
-        </div>
+        let className
+        if ((rowIndex + colIndex) % 2)
+            className = "color1"
+        else
+            className = "color0"
+        return  <div 
+                    key={colIndex} 
+                    className={className}
+                    onClick={1}
+                >
+                    <Piece piece={piece}/>
+                </div>
     }
 
 

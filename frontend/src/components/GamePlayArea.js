@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 
-import Board from "./Board";
+import Board from "./Board/Board";
 import GameStats from "./GameStats";
 
 import ColorIndicator from "./GameDetails/ColorIndicator";
@@ -13,7 +13,7 @@ import TurnExpiry from "./GameDetails/TurnExpiry";
 // import TurnExpiry from "./GameDetails/TurnExpiry";
 // import { BigNumber } from "ethers/utils";
 
-import './Board.css';
+import './Board/Board.css';
 
 class GamePlayArea extends Component {
     render() {

@@ -13,12 +13,14 @@
     height:40px;
     background: rgba(255, 0, 0, 0.479);
     border-radius: 50%;
+    pointer-events: none;
 }
 .black{
     width:40px;
     height:40px;
     background: rgba(0, 0, 0, 0.479);
     border-radius: 50%;
+    pointer-events: none;
 
 }
 .Red{
@@ -26,35 +28,43 @@
     height:40px;
     background: red;
     border-radius: 50%;
+    pointer-events: none;
 }
 .Black{
     width:40px;
     height:40px;
     background: black;
     border-radius: 50%;
+    pointer-events: none;
 
 }
 .queen{
+    pointer-events: none;
     border-style: double;
     border-width: 10px;
 }
 .selected{
+    pointer-events: none;
     box-shadow: inset -4px 0 0 yellow, inset 0 -4px 0 yellow, inset 4px 0 0 yellow, inset 0 4px 0 yellow;
 }
 .last-moved-highlight{
+    pointer-events: none;
     box-shadow: inset -4px 0 0 blue, inset 0 -4px 0 blue, inset 4px 0 0 blue, inset 0 4px 0 blue;
 }
 .last-moved-from{
+    pointer-events: none;
     width:40px;
     height:40px;
     background: rgba(0, 0, 255, 0.5);
     border-radius: 50%;
 }
 .blank{
+    pointer-events: none;
     width:40px;
     height:40px;
 }
 .valid{
+    pointer-events: none;
     width:40px;
     height:40px;
     background: green;

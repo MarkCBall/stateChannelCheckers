@@ -81,6 +81,11 @@ function mapDispatchToProps(dispatch) {
             dispatch(BoardRedux.handlePieceClick(dispatch, boardMatrix, piece))
         },
         handleMove: (board,validSpot,activeSquare) =>{
+            //dispatch a MOVE_SELECTOR
+            //if sign is slected dispatch sign
+            //if enforce
+            //if unenforced
+            //this logic in another action?
             dispatch(BoardRedux.handleMove(dispatch, board,validSpot,activeSquare))
         }
     }
