@@ -1,29 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Highlight from "./Highlight";
+import Piece from "./Piece";
 
 
 class Square extends Component {
-    className = () => {
-        if ((this.props.rowIndex + this.props.colIndex) % 2)
-            return "color1"
-        return "color0"
+    isPreviousLocation = (piece) => {
+        return (piece.row === this.props.prevMove.rowFrom && piece.col === this.props.prevMove.colFrom)
+    }
+    isMoved = (piece) => {
+        return (piece.row === this.props.prevMove.rowTo && piece.col === this.props.prevMove.colTo)
+    }
+    isSelected = (piece) => {
+        return (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
     }
 
+    className = (piece) => {
+        if (this.isPreviousLocation(piece) || this.isMoved(piece))
+            return "last-moved-highlight"
+        if (this.isSelected(piece))
+            return "selected"
+        return ""
+    }
 
-    // hasPiece = (piece) => {
-    //     return (piece.active)
-    // }
-    // isValidMove = (piece) => {
-    //     return ((this.props.validMovesMatrix[piece.row]!==undefined) && this.props.validMovesMatrix[piece.row][piece.col])
-    // }
+    hasPiece = (piece) => {
+        return (piece.active)
+    }
+    isValidMove = (piece) => {
+        return ((this.props.validMovesMatrix[piece.row]!==undefined) && this.props.validMovesMatrix[piece.row][piece.col])
+    }
 
-    // isPreviousLocation = (piece) => {
-    //     return (piece.row === this.props.prevMove.rowFrom && piece.col === this.props.prevMove.colFrom)
-    // }
-    // isSelected = (piece) => {
-    //     return (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
-    // }
+  
+    
 
     // highlightBeforePutPiece = (piece) => {
     //     if (this.isPreviousLocation()){
@@ -33,12 +40,7 @@ class Square extends Component {
     //         return <div className="selected"> {this.putPiece(piece)} </div>
     //     return this.putPiece(piece)
     // }
-    // putPieceorValidMove = (piece) => {
-    //     if (this.isValidMove())
-    //         return <div className="valid"></div>
-    //     return <Piece piece={piece}/>
 
-    // }
 
 
     // highlightSquareOrRenderPiece = (piece) => {
@@ -52,17 +54,20 @@ class Square extends Component {
     // renderPiece = (piece) => {
     //     return <Piece piece={piece} />
     // }
+    renderNext = (piece) => {
+        if (this.hasPiece(piece))
+            return <Piece piece={this.props.piece}/>
+        if (this.isValidMove(piece))
+            return <div className="valid"></div>
+        return <div className="blank"></div>
+    }
 
     
 
     render() {
         return (
-            <div
-                className={this.className()}
-                onClick={() => console.log("you clicked DO ALL LOGIC HERE", this.props.piece)}
-            >
-                {/* {this.highlightSquareOrRenderPiece(this.props.piece)} */}
-                <Highlight piece={this.props.piece}/>
+            <div className={this.className(this.props.piece)}>
+                {this.renderNext(this.props.piece)}
             </div>
         )
     }
@@ -71,9 +76,9 @@ class Square extends Component {
 function mapStateToProps(state) {
     return {
         // boardMatrix: state.GameData.boardMatrix,
-        // validMovesMatrix: state.BoardRedux.validMovesMatrix,
-        // activeSquare: state.BoardRedux.activeSquare,
-        // prevMove: state.GameData.prevMove,
+        validMovesMatrix: state.BoardRedux.validMovesMatrix,
+        activeSquare: state.BoardRedux.activeSquare,
+        prevMove: state.GameData.prevMove,
         // turnNum: state.GameData.turnNum
     }
 }
@@ -89,4 +94,5 @@ function mapStateToProps(state) {
 //     }
 // }
 export default connect(mapStateToProps)(Square);
+
 
