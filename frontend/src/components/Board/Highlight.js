@@ -5,10 +5,18 @@ import Piece from "./Piece";
 
 class Square extends Component {
     isPreviousLocation = (piece) => {
-        return (piece.row === this.props.prevMove.rowFrom && piece.col === this.props.prevMove.colFrom)
+        return (
+            piece.row === this.props.prevMove.rowFrom && 
+            piece.col === this.props.prevMove.colFrom &&
+            this.props.turnNum != 0
+            )
     }
     isMoved = (piece) => {
-        return (piece.row === this.props.prevMove.rowTo && piece.col === this.props.prevMove.colTo)
+        return (
+            piece.row === this.props.prevMove.rowTo &&
+            piece.col === this.props.prevMove.colTo &&
+            this.props.turnNum != 0
+            )
     }
     isSelected = (piece) => {
         return (piece.row === this.props.activeSquare.row && piece.col === this.props.activeSquare.col)
@@ -79,7 +87,7 @@ function mapStateToProps(state) {
         validMovesMatrix: state.BoardRedux.validMovesMatrix,
         activeSquare: state.BoardRedux.activeSquare,
         prevMove: state.GameData.prevMove,
-        // turnNum: state.GameData.turnNum
+        turnNum: state.GameData.turnNum
     }
 }
 
