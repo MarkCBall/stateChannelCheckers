@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import BoardRedux from "../redux/actions/BoardRedux";
-// import InteractDatabase from "../redux/actions/InteractDatabase";
+// import API_Database from "../redux/actions/API_Database";
 import { connect } from "react-redux";
 
 // import BoardTranslations from "../Library/BoardTranslations"

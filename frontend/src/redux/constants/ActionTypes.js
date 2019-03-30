@@ -3,7 +3,7 @@ export const HANDLE_PIECE_CLICK = "HANDLE_PIECE_CLICK";
 export const CLEAR_SELECTION = "CLEAR_SELECTION";
 //API_StateChGaming --> GameData
 export const MERGE_BLOCKCHAIN_GETGAME = "MERGE_BLOCKCHAIN_GETGAME";
-//InteractDatabase --> GameData
+//API_Database --> GameData
 export const MERGE_DATABASE_GETGAME = "MERGE_DATABASE_GETGAME";
 //GameData --> GameData
 export const RESET_GAME_DATA = "RESET_GAME_DATA";

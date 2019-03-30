@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import GameData from "../redux/actions/GameData";
 import { connect } from "react-redux";
 import LabelAndInput from "./LabelAndInput";
-import InteractDatabase from "../redux/actions/InteractDatabase";
+import API_Database from "../redux/actions/API_Database";
 
 class GameCreate extends Component {
     constructor(props) {
@@ -177,7 +177,7 @@ function mapDispatchToProps(dispatch) {
         //    signAndSubmitGame: (dispatch, ERC20Amount, ERC20Addr,gameID,p1Addr,p2Addr,VCAddr,turnLength) => {
         // make new sign and submit in API_StateChGaming
         signAndSubmitGame: (ERC20Amount,ERC20Addr,gameID,addressSignedIn,p2Addr,VCAddr,turnLength) => {
-            dispatch(InteractDatabase.signAndSubmitGame(dispatch,ERC20Amount,ERC20Addr,gameID,addressSignedIn,p2Addr,VCAddr,turnLength))
+            dispatch(API_Database.signAndSubmitGame(dispatch,ERC20Amount,ERC20Addr,gameID,addressSignedIn,p2Addr,VCAddr,turnLength))
         },
     }
 }

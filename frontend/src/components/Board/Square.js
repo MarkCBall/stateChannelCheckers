@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import Highlight from "./Highlight";
 
 
+import BoardRedux from "../../redux/actions/BoardRedux";
+
 class Square extends Component {
     className = () => {
         if ((this.props.rowIndex + this.props.colIndex) % 2)
@@ -59,7 +61,7 @@ class Square extends Component {
         return (
             <div
                 className={this.className()}
-                onClick={() => console.log("you clicked DO ALL LOGIC HERE", this.props.piece)}
+                onClick={() => this.props.handleSquareClick(this.props.piece, this.props.boardMatrix)}
             >
                 {/* {this.highlightSquareOrRenderPiece(this.props.piece)} */}
                 <Highlight piece={this.props.piece}/>
@@ -70,7 +72,7 @@ class Square extends Component {
 
 function mapStateToProps(state) {
     return {
-        // boardMatrix: state.GameData.boardMatrix,
+        boardMatrix: state.GameData.boardMatrix,
         // validMovesMatrix: state.BoardRedux.validMovesMatrix,
         // activeSquare: state.BoardRedux.activeSquare,
         // prevMove: state.GameData.prevMove,
@@ -78,15 +80,18 @@ function mapStateToProps(state) {
     }
 }
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         handlePieceClick: (boardMatrix, piece) => {
-//             dispatch(BoardRedux.handlePieceClick(dispatch, boardMatrix, piece))
-//         },
-//         handleMove: (board, validSpot, activeSquare) => {
-//             dispatch(BoardRedux.handleMove(dispatch, board, validSpot, activeSquare))
-//         }
-//     }
-// }
-export default connect(mapStateToProps)(Square);
+function mapDispatchToProps(dispatch) {
+    return {
+        handleSquareClick: (piece, boardMatrix) => {
+            dispatch(BoardRedux.handleSquareClick(dispatch, piece, boardMatrix))
+        },
+        // handlePieceClick: (boardMatrix, piece) => {
+        //     dispatch(BoardRedux.handlePieceClick(dispatch, boardMatrix, piece))
+        // },
+        // handleMove: (board, validSpot, activeSquare) => {
+        //     dispatch(BoardRedux.handleMove(dispatch, board, validSpot, activeSquare))
+        // }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Square);
 
