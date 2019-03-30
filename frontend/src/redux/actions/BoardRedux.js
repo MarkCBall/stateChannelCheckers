@@ -19,14 +19,27 @@ export default {
         return (dispatch, getState) => {
             // console.log(piece)
             // console.log(getState())
-            if (piece.red === ((getState().GameData.turnNum % 2) === 0)) {
+
+            let validMovesMatrix = getState().BoardRedux.validMovesMatrix
+            //if you click on a green circle to make a move
+            if (validMovesMatrix[piece.row][piece.col]){
+                // let moveType = getState().TempUserInputs.moveType
+                // if moveType === "SET_MOVETYPE_DB" 
+                    // if (window.confirm("Sign this move?")){
+                        //dispatch DB post
+                    // }
+                // if movetypestate === "enforcedBC" 
+                    // if (window.confirm("call enformedBCMove?")){
+                        //dispatch BCenforced
+                    // }
+                // if movetypestate === "unenforcedBC" 
+                    // if (window.confirm("call unenformedBCMove?")){
+                        //dispatch BCunenforced
+                    // }
+                
+            } else if (piece.red === ((getState().GameData.turnNum % 2) === 0)) {
                 dispatch(BoardRedux.setActiveAndValid(dispatch, piece, boardMatrix))
             }
-            let validMovesMatrix = getState().BoardRedux.validMovesMatrix
-            // console.log(activeSquare)
-            console.log(validMovesMatrix[piece.row][piece.col])
-            
-
         }
     },
     setActiveAndValid: (dispatch, piece, boardMatrix) => {
@@ -41,14 +54,20 @@ export default {
             })
         }
     },
-    // calcBoardMatrix: (dispatch, piecesBN) => {
-    //     return (dispatch) => {
-    //         dispatch({
-    //             type: SET_BOARD_MATRIX,
-    //             payload: BoardTranslations.BNtoMatrix(piecesBN)
-    //         })
-    //     }
+
+    // setMoveTypeDB: (dispatch) => {
+
     // },
+    // setMoveTypeBCEnforced: (dispatch) => {
+
+    // },
+    // setMoveTypeDBUnenforced: (dispatch) => {
+
+    // },
+
+
+
+ 
     handleMove: (dispatch, board, validSpot, activeSquare) => {
         return (dispatch, getState) => {
             // if (window.confirm("Sign this move?")){//put back in after debugging

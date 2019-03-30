@@ -3,29 +3,50 @@ import React, { Component } from "react";
 // import API_Database from "../redux/actions/API_Database";
 import { connect } from "react-redux";
 
-// import BoardTranslations from "../Library/BoardTranslations"
-// import { BigNumber } from "ethers/utils";
+import { SET_MOVETYPE_DB } from "../redux/constants/ActionTypes";
+import { SET_MOVETYPE_BCENFORCED } from "../redux/constants/ActionTypes";
+import { SET_MOVETYPE_BCUNENFORCED } from "../redux/constants/ActionTypes";
 
 class GameStats extends Component {
 
-
+    renderBtn = (btnStr, btnFunc, highlight) => {
+        let className = "btn-default"
+        if (highlight)
+            className = "btn-primary"
+        return <button
+                className={className}
+                onClick={btnFunc}
+            >
+            {btnStr}
+            </button>
+    }
   
 
      render() {
         return (
             <div>
-                <button onClick={()=>1}>
-                    Sign move and send to Database
-                </button>
-                <br/><button onClick={()=>1}>
-                    Enforce move on blockchain
-                </button>
-                <button onClick={()=>1}>
-                    Post to blockchain
-                <br/></button>
+                <strong>Your next move should be:</strong>
+                {this.renderBtn(
+                    "signed to database for speed/efficiency", 
+                    this.props.setMoveTypeDB,
+                    (this.props.moveType === SET_MOVETYPE_DB)
+                )}
+                <br/>
+                {this.renderBtn(
+                    "enforced on blockchain", 
+                    this.props.setMoveTypeBCEnforced,
+                    (this.props.moveType === SET_MOVETYPE_BCENFORCED)
+                )}
+                <br/>
+                {this.renderBtn(
+                    "respond on blockchain to allow offchain play", 
+                    this.props.setMoveTypeDBUnenforced,
+                    (this.props.moveType === SET_MOVETYPE_BCUNENFORCED)
+                )}
+                <br/>
+               
                 <br/>Toggle enforced/unenforced to be added
-
-                <br/><br/><button onClick={()=>{this.props.getLatestMove()}}>Refresh - Get Data</button>
+                <br/>
 
             </div>
         )
@@ -34,20 +55,21 @@ class GameStats extends Component {
 
 function mapStateToProps(state) {
     return {
-        // readyToPost:
-        // lastMoveIsTimed:blocknum < 1000..
-
-
+        moveType: state.TempUserInputs.moveType
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        // calcBoardMatrix: (boardBN) =>{
-        //     dispatch(BoardRedux.calcBoardMatrix(dispatch, boardBN))
-        // },
-        
-
+        setMoveTypeDB: () =>{
+            dispatch({type: SET_MOVETYPE_DB})
+        },
+        setMoveTypeBCEnforced: () =>{
+            dispatch({type: SET_MOVETYPE_BCENFORCED})
+        },
+        setMoveTypeDBUnenforced: () =>{
+            dispatch({type: SET_MOVETYPE_BCUNENFORCED})
+        },
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GameStats);

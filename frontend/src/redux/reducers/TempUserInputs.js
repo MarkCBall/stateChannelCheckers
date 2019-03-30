@@ -2,6 +2,9 @@
 // import { TERMINATE_CHANNEL } from "../constants/ActionTypes";
 // import { WITHDRAW_FROM_CHANNEL } from "../constants/ActionTypes";
 import { UPDATE_APPROVALS } from "../constants/ActionTypes";
+import { SET_MOVETYPE_DB } from "../constants/ActionTypes";
+import { SET_MOVETYPE_BCENFORCED } from "../constants/ActionTypes";
+import { SET_MOVETYPE_BCUNENFORCED } from "../constants/ActionTypes";
 
 
 const initialState = {
@@ -10,11 +13,28 @@ const initialState = {
     enoughAllowances:false,
     p1Bal:0,
     p2Bal:0,
+    moveType: SET_MOVETYPE_DB,
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
 
+        case SET_MOVETYPE_DB:
+            return {
+                ...state,
+                moveType: SET_MOVETYPE_DB,
+            }
+        case SET_MOVETYPE_BCENFORCED:
+            return {
+                ...state,
+                moveType: SET_MOVETYPE_BCENFORCED,
+            }
+
+        case SET_MOVETYPE_BCUNENFORCED:
+            return {
+                ...state,
+                moveType: SET_MOVETYPE_BCUNENFORCED,
+            }
 
 
         case UPDATE_APPROVALS:
