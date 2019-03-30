@@ -32,14 +32,17 @@ class GameStats extends Component {
                     (this.props.moveType === SET_MOVETYPE_DB)
                 )}
                 <br/>
+
+                new button here for init move onto blockchain
+                <br/>
                 {this.renderBtn(
-                    "enforced on blockchain", 
+                    "respond on blockchain and continue on blockchain", 
                     this.props.setMoveTypeBCEnforced,
                     (this.props.moveType === SET_MOVETYPE_BCENFORCED)
                 )}
                 <br/>
                 {this.renderBtn(
-                    "respond on blockchain to allow offchain play", 
+                    "respond on blockchain but continue offchain", 
                     this.props.setMoveTypeDBUnenforced,
                     (this.props.moveType === SET_MOVETYPE_BCUNENFORCED)
                 )}

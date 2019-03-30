@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 
 import Board from "./Board/Board";
-import GameStats from "./GameStats";
+import MoveTypes from "./MoveTypes";
 
 import ColorIndicator from "./GameDetails/ColorIndicator";
 import TurnExpiry from "./GameDetails/TurnExpiry";
@@ -30,7 +30,7 @@ class GamePlayArea extends Component {
                         </div>
                     </div>
                     <div className="col-sm-6">
-                        <GameStats/>
+                        <MoveTypes/>
                     </div>
                 </div>
             </div>   
