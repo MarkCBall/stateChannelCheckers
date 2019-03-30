@@ -8,14 +8,14 @@ class Square extends Component {
         return (
             piece.row === this.props.prevMove.rowFrom && 
             piece.col === this.props.prevMove.colFrom &&
-            this.props.turnNum != 0
+            this.props.turnNum !== 0
             )
     }
     isMoved = (piece) => {
         return (
             piece.row === this.props.prevMove.rowTo &&
             piece.col === this.props.prevMove.colTo &&
-            this.props.turnNum != 0
+            this.props.turnNum !== 0
             )
     }
     isSelected = (piece) => {

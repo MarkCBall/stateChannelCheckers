@@ -27,7 +27,7 @@ export default {
                 p2Addr: p2Addr,
                 VCAddr: VCAddr,
                 turnLength: turnLength,
-                gameSig:{
+                gameSig: {
                     ...sig
                 }
             }
@@ -37,7 +37,7 @@ export default {
                 mode: "cors",
                 headers: {
                     "Content-Type": "application/json; charset=utf-8",
-                    "gameID":gameID,
+                    "gameID": gameID,
                 },
                 body: JSON.stringify(body)
             })
@@ -56,12 +56,12 @@ export default {
             })
             let resJSON = await response.json()
             //if there is a valid response, add a timestamp and dispatch it
-            if (Object.keys(resJSON).length !== 0){
+            if (Object.keys(resJSON).length !== 0) {
                 resJSON = {
                     ...resJSON,
                     latestDBTimestamp: timestamp,
-                    iAmP1Red:(getState().LoginDetails.addressSignedIn === resJSON.p1Addr),
-                    iAmP2Black:(getState().LoginDetails.addressSignedIn === resJSON.p2Addr)   
+                    iAmP1Red: (getState().LoginDetails.addressSignedIn === resJSON.p1Addr),
+                    iAmP2Black: (getState().LoginDetails.addressSignedIn === resJSON.p2Addr)
                 }
                 // console.log("DB reponse:",resJSON)
                 dispatch({
@@ -69,39 +69,41 @@ export default {
                     payload: resJSON
                 })
             }
-            
+
         }
     },
 
     signAndPostMove: (dispatch, boardStr) => {
         return async (dispatch, getState) => {
-            let boardBN = new BigNumber(boardStr)
-            let gameID = getState().GameData.gameID
-            //calculate the signature
-            let sigTypes = ['uint', 'uint']
-            let sigValues = [gameID, boardBN]
-            let gameHash = ethers.utils.solidityKeccak256(sigTypes, sigValues);
-            let arrayifiedGameHash = ethers.utils.arrayify(gameHash)
-            let wallet = new ethers.Wallet(getState().LoginDetails.privKey)
-            let flatSig = await wallet.signMessage(arrayifiedGameHash)
-            let sig = ethers.utils.splitSignature(flatSig);
-            //post the data and sig to the database
-            let body = {
-                state: boardBN,
-                moveSig:{
-                    ...sig
+            if (window.confirm("Sign this move?")) {
+                let boardBN = new BigNumber(boardStr)
+                let gameID = getState().GameData.gameID
+                //calculate the signature
+                let sigTypes = ['uint', 'uint']
+                let sigValues = [gameID, boardBN]
+                let gameHash = ethers.utils.solidityKeccak256(sigTypes, sigValues);
+                let arrayifiedGameHash = ethers.utils.arrayify(gameHash)
+                let wallet = new ethers.Wallet(getState().LoginDetails.privKey)
+                let flatSig = await wallet.signMessage(arrayifiedGameHash)
+                let sig = ethers.utils.splitSignature(flatSig);
+                //post the data and sig to the database
+                let body = {
+                    state: boardBN,
+                    moveSig: {
+                        ...sig
+                    }
                 }
+                //console.log("posting ", body)
+                await fetch("http://127.0.0.1:3001/Game/Move", {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "gameID": gameID,
+                    },
+                    body: JSON.stringify(body)
+                })
             }
-            //console.log("posting ", body)
-            await fetch("http://127.0.0.1:3001/Game/Move", {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    "gameID":gameID,
-                },
-                body: JSON.stringify(body)
-            })
         }
     },
 

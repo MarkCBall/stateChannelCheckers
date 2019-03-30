@@ -3,14 +3,16 @@ import { HANDLE_PIECE_CLICK } from "../constants/ActionTypes";
 import ValidMoves from "../../Library/ValidMoves"
 import BoardTranslations from "../../Library/BoardTranslations"
 import CalcBoardChanges from "../../Library/CalcBoardChanges"
-// import API_Database from "./API_Database"
+import API_Database from "./API_Database"
 import API_StateChGaming from "./API_StateChGaming"
 import BoardRedux from "./BoardRedux"
 // import { HANDLE_MOVE } from "../constants/ActionTypes";
 // import { NEXT_TURN } from "../constants/ActionTypes";
 import { CLEAR_SELECTION } from "../constants/ActionTypes";
 // import { PREV_MOVE_STATS } from "../constants/ActionTypes";
-
+import { SET_MOVETYPE_DB } from "../constants/ActionTypes";
+import { SET_MOVETYPE_BCENFORCED } from "../constants/ActionTypes";
+import { SET_MOVETYPE_BCUNENFORCED } from "../constants/ActionTypes";
 
 
 export default {
@@ -22,20 +24,18 @@ export default {
 
             let validMovesMatrix = getState().BoardRedux.validMovesMatrix
             //if you click on a green circle to make a move
-            if (validMovesMatrix[piece.row][piece.col]){
-                // let moveType = getState().TempUserInputs.moveType
-                // if moveType === "SET_MOVETYPE_DB" 
-                    // if (window.confirm("Sign this move?")){
-                        //dispatch DB post
-                    // }
-                // if movetypestate === "enforcedBC" 
-                    // if (window.confirm("call enformedBCMove?")){
-                        //dispatch BCenforced
-                    // }
-                // if movetypestate === "unenforcedBC" 
-                    // if (window.confirm("call unenformedBCMove?")){
-                        //dispatch BCunenforced
-                    // }
+            if (validMovesMatrix.length  && validMovesMatrix[piece.row][piece.col]){
+                let moveType = getState().TempUserInputs.moveType
+                let test = getState().GameData.state
+                if (moveType === SET_MOVETYPE_DB){
+                    dispatch(API_Database.signAndPostMove(dispatch, getState().GameData.state))
+                // if (moveType === SET_MOVETYPE_BCENFORCED)
+                //     if (window.confirm("call enformedBCMove?"))//move these ifs into the next dispatch
+                //         dispatch(API_StateChGaming)
+                // if (moveType === SET_MOVETYPE_BCUNENFORCED)
+                //     if (window.confirm("call unenformedBCMove?"))//move these ifs into the next dispatch
+                //         dispatch(API_StateChGaming)
+                }
                 
             } else if (piece.red === ((getState().GameData.turnNum % 2) === 0)) {
                 dispatch(BoardRedux.setActiveAndValid(dispatch, piece, boardMatrix))
