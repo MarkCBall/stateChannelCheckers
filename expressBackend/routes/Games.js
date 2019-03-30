@@ -47,17 +47,37 @@ router.post('/Move', async function(req, res, next) {
     // header = {gameID:3}
     // req.body={ 
     //     state: "0x0c0000000000000180828486898b8d8f9092949fa9abadafb0b2b4b6b9bbbdbf",
+    //     movesig{v:, r:, s:}
     // }   
     //require sig is good
-    //require db.get nonce < 
-    let oldData = await db.get(req.headers.gameid)
-    console.log("old stuff is ", oldData)
-    let newData = {
-        ...oldData,
-        state:req.body.state
+    //require db.get nonce <
+
+    addDataFunc = () => {
+
     }
-    console.log("turning into ", newData)
-    db.put(req.headers.gameid,newData)
+
+    console.log("xx")
+    let oldData
+    db.get(req.headers.gameid)
+    .then(oldData => {
+        console.log("old stuff is ", oldData)
+        let newData = {
+            ...oldData,
+            state:req.body.state
+        }
+        console.log("turning into ", newData)
+        db.put(req.headers.gameid,newData)
+
+    })
+    .catch(() => {
+        console.log("creating move on uninitiated game")
+        db.put(req.headers.gameid,req.body)
+    })
+    
+    
+    // 
+
+
     res.send();
 })
 
@@ -66,12 +86,14 @@ router.post('/Move', async function(req, res, next) {
 router.get('/', async function(req, res, next) {
     //EXAMPLE 
     // header = {gameID:3}
-    console.log("get got hit")
     db.get(req.headers.gameid)
-    .then((dbres) => res.send(dbres))
+    .then((dbres) => {
+        console.log("sending ",dbres)
+        res.send(dbres)
+    })
     .catch((err) => {
         res.send({});
-        console.log(err)
+        // console.log(err)
     })
     //good error handling?
 })

@@ -31,22 +31,29 @@ export default {
     },
     unenforcedBCMove:(dispatch, newBNStr) => {
         return async (dispatch,getState) => {
-
-            let gameID = getState().GameData.gameID
-            let activeWallet = new ethers.Wallet(getState().LoginDetails.privKey).connect(provider)
-            let callableContract = new ethers.Contract(StateChGamingAddr,StateChGamingAbi, activeWallet)
-            let BN = new BigNumber(newBNStr);
-            console.log(gameID)
-            console.log(BN)
-
-            console.log(
-                await callableContract.unenforcedBCMove(gameID,BN)
-            )
-
-            //old                    80828486898B8D8F90929496A9ABADAFB0B2B4B6B9BBBDBF
-            //new  0x0c0000000000000180828486898b8d8f9092949fa9abadafb0b2b4b6b9bbbdbf
+            if (window.confirm("call unenformedBCMove?")){
+                let gameID = getState().GameData.gameID
+                let activeWallet = new ethers.Wallet(getState().LoginDetails.privKey).connect(provider)
+                let callableContract = new ethers.Contract(StateChGamingAddr,StateChGamingAbi, activeWallet)
+                let BN = new BigNumber(newBNStr);
+                console.log(gameID)
+                console.log(BN)
+                console.log(
+                    await callableContract.unenforcedBCMove(gameID,BN)
+                )
+            }
         }
     },
+    // unenforcedBCMove:(dispatch, newBNStr) => {
+    //     return async (dispatch,getState) => {
+    //     if (window.confirm("call enformedBCMove?")){
+
+    //     }
+
+    //     }
+    // },
+
+
                  
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch,getState) => {
@@ -68,6 +75,7 @@ export default {
                     iAmP1Red:(getState().LoginDetails.addressSignedIn === game.p1.toLowerCase()),
                     iAmP2Black:(getState().LoginDetails.addressSignedIn === game.p2.toLowerCase())
                 }
+                console.log("BC response", gameData)
                 dispatch({
                     type: MERGE_BLOCKCHAIN_GETGAME,
                     payload: gameData

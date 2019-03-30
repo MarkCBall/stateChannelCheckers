@@ -5,19 +5,24 @@ import { MERGE_DATABASE_GETGAME } from "../constants/ActionTypes";
 import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
 import BoardTranslations from "../../Library/BoardTranslations"
-
+import { BigNumber } from "ethers/utils";
 
 const initialState = {
     gameID: "",
     p1Addr: "default",
     p2Addr: "default",
     ERC20Amount: 0,
-    state: "",//boardEncoded, boardDecoded, moveDecoded
-    
     blockNum: 0,
     VCAddr: "default",
     ERC20Addr: "default",
     turnLength: 0,
+
+    state: "",
+
+    gameSig: {},
+    moveSig: {},
+    iAmP1Red: false,
+    iAmP2Black: false,
 
     latestBCTimestamp: 0,
     latestDBTimestamp: 0,
@@ -26,10 +31,7 @@ const initialState = {
     boardMatrix:{},
     turnNum: 0,
 
-    gameSig: {},
-    moveSig: {},
-    iAmP1Red: false,
-    iAmP2Black: false
+    
 };
 
 let BCTimestampIsHigher = (newData, oldData) => {
@@ -53,17 +55,6 @@ let sigIsValid = (newData) => {
     // }
     return true
 }
-
-
-
-
-
-
-
-
-
-
-
 
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -92,29 +83,41 @@ export default function (state = initialState, action) {
                     }
                 }
             }
-            return state
-
-
-
-
-
+            return {
+                ...state,
+                p1Addr: action.payload.p1Addr,
+                p2Addr: action.payload.p2Addr,
+                ERC20Amount: action.payload.ERC20Amount,
+                blockNum: action.payload.blockNum,
+                VCAddr: action.payload.VCAddr,
+                ERC20Addr: action.payload.ERC20Addr,
+                turnLength: action.payload.turnLength,
+            }
 
         case MERGE_DATABASE_GETGAME:
-            let turnNum = (action.payload.state ? action.payload.state._hex.slice(10, 18) : 0)
             // console.log(getLoc())
             //set turnNum to zero if no game data is given
             let newData = {
                 ...action.payload,
-                turnNum: turnNum,
+                //turnNum: action.payload.state ? action.payload.state._hex.slice(10, 18) : 0
                 //confirm turnNum slice!
             }
             if (DBTimestampIsHigher(newData, state)) {
                 if (nonceIsHigher(newData, state)) {
                     if (sigIsValid(newData)) {
+                        console.log("before",action.payload.state, state.prevMove.rowTo )
+                        let nonceMoveAndMatrix = BoardTranslations.decodeBN(
+                            new BigNumber(action.payload.state), 
+                            state.prevMove.rowTo,
+                            state.prevMove.colTo
+                        )
+
+                        console.log("after", nonceMoveAndMatrix)
                         // console.log("setting DB state")
                         return {
                             ...state,
-                            ...newData,
+                            ...nonceMoveAndMatrix,
+                            ...action.payload,
                             blockNum: 100000000000000000000000000000,
                             //spell these items out
                         }
@@ -124,16 +127,6 @@ export default function (state = initialState, action) {
             }
             return state
 
-
-
-
-        // case CHANGE_GAMEID_TEXT:
-        // return {
-        //     ...state,
-        //     gameID:action.payload,
-        //     initiated:false
-        //     //what if this is triggered on gameid = 12 after gameID=1's async comes back with a hit later?
-        // }
         default:
             return state;
     }

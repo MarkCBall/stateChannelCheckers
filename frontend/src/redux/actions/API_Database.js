@@ -55,10 +55,12 @@ export default {
                 }
             })
             let resJSON = await response.json()
+            // console.log("DB sent this",resJSON)
             //if there is a valid response, add a timestamp and dispatch it
             if (Object.keys(resJSON).length !== 0) {
                 resJSON = {
                     ...resJSON,
+                    turnNum: (resJSON.state ? resJSON.state._hex.slice(10, 18) : 0),
                     latestDBTimestamp: timestamp,
                     iAmP1Red: (getState().LoginDetails.addressSignedIn === resJSON.p1Addr),
                     iAmP2Black: (getState().LoginDetails.addressSignedIn === resJSON.p2Addr)
@@ -93,6 +95,7 @@ export default {
                         ...sig
                     }
                 }
+                console.log("sending to DB ", body)
                 //console.log("posting ", body)
                 await fetch("http://127.0.0.1:3001/Game/Move", {
                     method: "POST",
