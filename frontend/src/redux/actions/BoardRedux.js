@@ -32,7 +32,7 @@ export default {
                 dispatch(BoardRedux.handleMove(dispatch, boardMatrix, validSpot, activeSquare))
                 
                 
-            } else if (piece.red === ((getState().GameData.turnNum % 2) === 0)) {
+            } else if (piece.red === ((parseInt(getState().GameData.turnNum,16) % 2) === 0)) {
                 dispatch(BoardRedux.setActiveAndValid(dispatch, piece, boardMatrix))
             }
         }
@@ -64,7 +64,7 @@ export default {
                 pieceNumJumped: CalcBoardChanges.calcPieceNumJumped(board, validSpot, activeSquare)
             }
             // console.log("prevmove is", prevMove)
-            let turnNum = parseInt(getState().GameData.turnNum) + 1
+            let turnNum = parseInt(getState().GameData.turnNum, 16) + 1
             let newBoardMatrix = CalcBoardChanges.calcNewBoardMatrix(board, validSpot, activeSquare)
             let newBNStr = BoardTranslations.MatrixAndMoveToBNStr(newBoardMatrix, prevMove, turnNum)
             console.log(newBNStr)
