@@ -15,12 +15,9 @@ class Board extends Component {
         }
     }
     activateUpdateGameData = () =>{
-        console.log("update gamedata called")
-        //if its not my turn 
         this.props.updateGameData(this.props.gameID,Date.now())
     }
     componentDidMount = () =>{
-        // this.props.updateApprovals()
         this.setState({
             ...this.state,
             WindowInterval: window.setInterval(this.activateUpdateGameData, 5000)

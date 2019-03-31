@@ -15,7 +15,10 @@ class InitGameSequence extends Component {
     }
     
     componentDidMount = () =>{
-        this.props.updateApprovals()
+        //since this component pre-loads, the update approval might be called without real data
+        if (this.props.ERC20Amount !== 0){
+            this.props.updateApprovals()
+        }
         this.setState({
             ...this.state,
             WindowInterval: window.setInterval(this.props.updateApprovals, 10000)
