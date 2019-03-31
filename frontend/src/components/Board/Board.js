@@ -16,9 +16,9 @@ class Board extends Component {
     }
     activateUpdateGameData = () =>{
         //only update game data on opponent's turn
-        if (this.props.iAmP1Red === ((this.props.turnNum%2)===0)){
+        // if (this.props.iAmP1Red === ((this.props.turnNum%2)===0)){
             this.props.updateGameData(this.props.gameID,Date.now())
-        }
+        // }
     }
     componentDidMount = () =>{
         this.setState({
