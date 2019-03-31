@@ -63,7 +63,7 @@ router.post('/Move', async function(req, res, next) {
         console.log("old stuff is ", oldData)
         let newData = {
             ...oldData,
-            state:req.body.state
+            boardBN:req.body.boardBN
         }
         console.log("turning into ", newData)
         db.put(req.headers.gameid,newData)

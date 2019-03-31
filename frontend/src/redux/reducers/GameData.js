@@ -17,7 +17,7 @@ const initialState = {
     ERC20Addr: "default",
     turnLength: 0,
 
-    state: "",
+    boardBN: "",
 
     gameSig: {},
     moveSig: {},
@@ -69,7 +69,7 @@ export default function (state = initialState, action) {
         // console.log(state.state)
             if (BCTimestampIsHigher(action.payload, state)) {
                 let nonceMoveAndMatrix = BoardTranslations.decodeBN(
-                    action.payload.state, 
+                    action.payload.boardBN, 
                     state.prevMove.rowTo,
                     state.prevMove.colTo
                 )
@@ -107,7 +107,7 @@ export default function (state = initialState, action) {
                     if (sigIsValid(newData)) {
                         // console.log("before",action.payload.state, state.prevMove.rowTo )
                         let nonceMoveAndMatrix = BoardTranslations.decodeBN(
-                            new BigNumber(action.payload.state), 
+                            new BigNumber(action.payload.boardBN), 
                             state.prevMove.rowTo,
                             state.prevMove.colTo
                         )

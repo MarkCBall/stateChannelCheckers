@@ -60,7 +60,7 @@ export default {
             if (Object.keys(resJSON).length !== 0) {
                 resJSON = {
                     ...resJSON,
-                    turnNum: (resJSON.state ? resJSON.state._hex.slice(10, 18) : 0),
+                    turnNum: (resJSON.boardBN ? resJSON.boardBN._hex.slice(10, 18) : 0),
                     latestDBTimestamp: timestamp,
                     iAmP1Red: (getState().LoginDetails.addressSignedIn === resJSON.p1Addr),
                     iAmP2Black: (getState().LoginDetails.addressSignedIn === resJSON.p2Addr)
@@ -90,7 +90,7 @@ export default {
                 let sig = ethers.utils.splitSignature(flatSig);
                 //post the data and sig to the database
                 let body = {
-                    state: boardBN,
+                    boardBN: boardBN,
                     moveSig: {
                         ...sig
                     }

@@ -65,7 +65,7 @@ export default {
                     p1Addr:game.p1.toLowerCase(),
                     p2Addr:game.p2.toLowerCase(),
                     ERC20Amount:game.gamePayout.toString(),
-                    state:game.state,//.toString(16),
+                    boardBN:game.state,//.toString(16),
                     turnNum: game.state.toHexString().substring(2).padStart(64,"0").slice(8,16), 
                     blockNum:game.blockNum.toString(),
                     VCAddr:game.vcAddr,
