@@ -105,14 +105,14 @@ export default function (state = initialState, action) {
             if (DBTimestampIsHigher(newData, state)) {
                 if (nonceIsHigher(newData, state)) {
                     if (sigIsValid(newData)) {
-                        console.log("before",action.payload.state, state.prevMove.rowTo )
+                        // console.log("before",action.payload.state, state.prevMove.rowTo )
                         let nonceMoveAndMatrix = BoardTranslations.decodeBN(
                             new BigNumber(action.payload.state), 
                             state.prevMove.rowTo,
                             state.prevMove.colTo
                         )
 
-                        console.log("after", nonceMoveAndMatrix)
+                        // console.log("after", nonceMoveAndMatrix)
                         // console.log("setting DB state")
                         return {
                             ...state,

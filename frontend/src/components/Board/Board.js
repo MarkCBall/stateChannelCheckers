@@ -1,11 +1,35 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Square from "./Square";
-
+import GameData from "../../redux/actions/GameData";
 
 import './Board.css';
 
 class Board extends Component {
+    constructor(props) {
+        super(props);
+        this.state =
+        {
+            WindowInterval: 0,
+            // allowanceAmnt: 0
+        }
+    }
+    activateUpdateGameData = () =>{
+        console.log("update gamedata called")
+        //if its not my turn 
+        this.props.updateGameData(this.props.gameID,Date.now())
+    }
+    componentDidMount = () =>{
+        // this.props.updateApprovals()
+        this.setState({
+            ...this.state,
+            WindowInterval: window.setInterval(this.activateUpdateGameData, 5000)
+        })
+    }
+    componentWillUnmount = () =>{
+        window.clearInterval(this.state.WindowInterval)
+    }
+
 
     render() {
         return (
@@ -31,7 +55,14 @@ class Board extends Component {
 function mapStateToProps(state) {
     return {
         boardMatrix: state.GameData.boardMatrix,
+        gameID: state.GameData.gameID,
     }
 }
-
-export default connect(mapStateToProps)(Board);
+function mapDispatchToProps(dispatch) {
+    return {
+        updateGameData: (gameID,timestamp ) => {
+            dispatch(GameData.updateGameData(dispatch, gameID,timestamp))
+        },
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

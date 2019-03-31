@@ -44,7 +44,7 @@ export default {
             }
         }
     },
-    // unenforcedBCMove:(dispatch, newBNStr) => {
+    // enforcedBCMove:(dispatch, newBNStr) => {
     //     return async (dispatch,getState) => {
     //     if (window.confirm("call enformedBCMove?")){
 
@@ -75,7 +75,7 @@ export default {
                     iAmP1Red:(getState().LoginDetails.addressSignedIn === game.p1.toLowerCase()),
                     iAmP2Black:(getState().LoginDetails.addressSignedIn === game.p2.toLowerCase())
                 }
-                console.log("BC response", gameData)
+                // console.log("BC response", gameData)
                 dispatch({
                     type: MERGE_BLOCKCHAIN_GETGAME,
                     payload: gameData

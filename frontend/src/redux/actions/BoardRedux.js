@@ -6,6 +6,7 @@ import CalcBoardChanges from "../../Library/CalcBoardChanges"
 import API_Database from "./API_Database"
 import API_StateChGaming from "./API_StateChGaming"
 import BoardRedux from "./BoardRedux"
+import GameData from "./GameData"
 // import { HANDLE_MOVE } from "../constants/ActionTypes";
 // import { NEXT_TURN } from "../constants/ActionTypes";
 import { CLEAR_SELECTION } from "../constants/ActionTypes";
@@ -19,21 +20,28 @@ export default {
 
     handleSquareClick: (dispatch, piece, boardMatrix) => {
         return (dispatch, getState) => {
-            let activeSquare = getState().BoardRedux.activeSquare
-            let validSpot = {row: piece.row, col: piece.col}
-            // console.log("got here")
-            // console.log(piece)
-            // console.log(getState())
-
             let validMovesMatrix = getState().BoardRedux.validMovesMatrix
-            //if you click on a green circle to make a move
-            if (validMovesMatrix.length  && validMovesMatrix[piece.row][piece.col]){
-                // console.log("handling move with",boardMatrix, validSpot, activeSquare)
-                dispatch(BoardRedux.handleMove(dispatch, boardMatrix, validSpot, activeSquare))
+            if (
+                piece.red === (getState().LoginDetails.addressSignedIn === getState().GameData.p1Addr) //clean this line up
+                ||
+                (validMovesMatrix.length  && validMovesMatrix[piece.row][piece.col]) //duplicate line
+             ){
+                let activeSquare = getState().BoardRedux.activeSquare
+                let validSpot = {row: piece.row, col: piece.col}
+                // console.log("got here")
+                // console.log(piece)
+                // console.log(getState())
+
                 
-                
-            } else if (piece.red === ((parseInt(getState().GameData.turnNum,16) % 2) === 0)) {
-                dispatch(BoardRedux.setActiveAndValid(dispatch, piece, boardMatrix))
+                //if you click on a green circle to make a move
+                if (validMovesMatrix.length  && validMovesMatrix[piece.row][piece.col]){
+                    // console.log("handling move with",boardMatrix, validSpot, activeSquare)
+                    dispatch(BoardRedux.handleMove(dispatch, boardMatrix, validSpot, activeSquare))
+                    
+                    
+                } else if (piece.red === ((parseInt(getState().GameData.turnNum,16) % 2) === 0)) {
+                    dispatch(BoardRedux.setActiveAndValid(dispatch, piece, boardMatrix))
+                }
             }
         }
     },
@@ -74,12 +82,14 @@ export default {
                 // let test = getState().GameData.state
                 if (moveType === SET_MOVETYPE_DB){
                     dispatch(API_Database.signAndPostMove(dispatch, newBNStr))
+                //if init_BC_Move
                 // if (moveType === SET_MOVETYPE_BCENFORCED)
                 //         dispatch(API_StateChGaming)
                 if (moveType === SET_MOVETYPE_BCUNENFORCED)
                     dispatch(API_StateChGaming.unenforcedBCMove(dispatch, newBNStr))
                 }
-                
+
+                dispatch(GameData.updateGameData(dispatch, getState().GameData.gameID,Date.now()))
 
 
 
