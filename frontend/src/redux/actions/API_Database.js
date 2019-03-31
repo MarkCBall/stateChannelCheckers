@@ -57,14 +57,19 @@ export default {
             let resJSON = await response.json()
             //if there is a valid response, add a timestamp and dispatch it
             if (Object.keys(resJSON).length !== 0) {
+                //if the response has a board, rebignumberify it to give it back its prototypes
+                if (resJSON.boardBN){
+                    resJSON.boardBN = new BigNumber(resJSON.boardBN._hex)
+                }
+                //add additional calculated data
                 resJSON = {
                     ...resJSON,
-                    boardBN:new BigNumber(resJSON.boardBN._hex),//the database strips the object of prototypes
-                    turnNum: (resJSON.boardBN ? resJSON.boardBN._hex.slice(10, 18) : 0),
+                    turnNum: parseInt((resJSON.boardBN ? resJSON.boardBN._hex.slice(10, 18) : 0),16),
                     latestDBTimestamp: timestamp,
                     iAmP1Red: (getState().LoginDetails.addressSignedIn === resJSON.p1Addr),
                     iAmP2Black: (getState().LoginDetails.addressSignedIn === resJSON.p2Addr)
                 }
+                console.log(resJSON)
                 dispatch({
                     type: MERGE_DATABASE_GETGAME,
                     payload: resJSON
@@ -72,7 +77,6 @@ export default {
             }
         }
     },
-
     signAndPostMove: (dispatch, boardStr) => {
         return async (dispatch, getState) => {
             if (window.confirm("Sign this move?")) {
