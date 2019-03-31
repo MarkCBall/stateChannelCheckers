@@ -55,23 +55,21 @@ export default {
                 }
             })
             let resJSON = await response.json()
-            // console.log("DB sent this",resJSON)
             //if there is a valid response, add a timestamp and dispatch it
             if (Object.keys(resJSON).length !== 0) {
                 resJSON = {
                     ...resJSON,
+                    boardBN:new BigNumber(resJSON.boardBN._hex),//the database strips the object of prototypes
                     turnNum: (resJSON.boardBN ? resJSON.boardBN._hex.slice(10, 18) : 0),
                     latestDBTimestamp: timestamp,
                     iAmP1Red: (getState().LoginDetails.addressSignedIn === resJSON.p1Addr),
                     iAmP2Black: (getState().LoginDetails.addressSignedIn === resJSON.p2Addr)
                 }
-                // console.log("DB reponse:",resJSON)
                 dispatch({
                     type: MERGE_DATABASE_GETGAME,
                     payload: resJSON
                 })
             }
-
         }
     },
 

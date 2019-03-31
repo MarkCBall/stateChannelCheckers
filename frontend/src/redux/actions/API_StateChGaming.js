@@ -61,6 +61,7 @@ export default {
             let gameData
             // if the game is initialized
             if(game.state.toString().length!==1){
+                // console.log("xx with ",game.state)
                 gameData = {
                     p1Addr:game.p1.toLowerCase(),
                     p2Addr:game.p2.toLowerCase(),
