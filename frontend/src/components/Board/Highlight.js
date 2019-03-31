@@ -23,7 +23,11 @@ class Square extends Component {
     }
 
     className = (piece) => {
-        if (this.isPreviousLocation(piece) || this.isMoved(piece))
+        if (
+            // this.isPreviousLocation(piece) 
+            // ||
+            this.isMoved(piece)
+            )
             return "last-moved-highlight"
         if (this.isSelected(piece))
             return "selected"
