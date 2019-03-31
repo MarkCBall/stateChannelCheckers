@@ -5,7 +5,7 @@ import { MERGE_DATABASE_GETGAME } from "../constants/ActionTypes";
 import { RESET_GAME_DATA } from "../constants/ActionTypes";
 
 import BoardTranslations from "../../Library/BoardTranslations"
-import { BigNumber } from "ethers/utils";
+// import { BigNumber } from "ethers/utils";
 
 const initialState = {
     gameID: "",

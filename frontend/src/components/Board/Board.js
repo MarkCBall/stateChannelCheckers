@@ -15,7 +15,10 @@ class Board extends Component {
         }
     }
     activateUpdateGameData = () =>{
-        this.props.updateGameData(this.props.gameID,Date.now())
+        //only update game data on opponent's turn
+        if (this.props.iAmP1Red === ((this.props.turnNum%2)===0)){
+            this.props.updateGameData(this.props.gameID,Date.now())
+        }
     }
     componentDidMount = () =>{
         this.setState({
@@ -53,6 +56,8 @@ function mapStateToProps(state) {
     return {
         boardMatrix: state.GameData.boardMatrix,
         gameID: state.GameData.gameID,
+        turnNum: state.GameData.turnNum,
+        iAmP1Red: state.GameData.iAmP1Red,
     }
 }
 function mapDispatchToProps(dispatch) {
