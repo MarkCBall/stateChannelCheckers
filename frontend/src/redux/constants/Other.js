@@ -18,4 +18,7 @@ const ERC20Json = require('../../SolidityJSON/ERC20.json');
 export const ERC20Abi = ERC20Json.abi;
 
 
+//database constants
+export const serverIpAndPort = "http://127.0.0.1:3001";
+
 

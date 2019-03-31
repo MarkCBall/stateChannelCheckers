@@ -2,7 +2,7 @@
 // import { GET_LATEST_MOVE } from "../constants/ActionTypes";
 import { MERGE_DATABASE_GETGAME } from "../constants/ActionTypes";
 import { ethers } from "ethers";
-
+import { serverIpAndPort } from "../constants/Other"
 //can this be done with ethers ????????
 import { BigNumber } from "ethers/utils";
 
@@ -32,7 +32,7 @@ export default {
                 }
             }
             //console.log("posting ", body)
-            await fetch("http://127.0.0.1:3001/Game/New", {
+            await fetch(serverIpAndPort+"/Game/New", {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -47,7 +47,7 @@ export default {
     getGame: (dispatch, gameID, timestamp) => {
         return async (dispatch, getState) => {
 
-            let response = await fetch("http://127.0.0.1:3001/Game", {
+            let response = await fetch(serverIpAndPort+"/Game", {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -97,7 +97,7 @@ export default {
                 }
                 console.log("sending to DB ", body)
                 //console.log("posting ", body)
-                await fetch("http://127.0.0.1:3001/Game/Move", {
+                await fetch(serverIpAndPort+"/Game/Move", {
                     method: "POST",
                     mode: "cors",
                     headers: {
