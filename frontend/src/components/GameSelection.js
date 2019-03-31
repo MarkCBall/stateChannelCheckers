@@ -57,7 +57,7 @@ function mapStateToProps(state) {
         address: state.LoginDetails.addressSignedIn,
         hasData:((state.GameData.latestDBTimestamp+state.GameData.latestBCTimestamp)>0),
         hasDBData: (state.GameData.latestDBTimestamp>0),
-        hasBCData:(state.GameData.turnLength > 0 ),
+        hasBCData:(state.GameData.boardBN !== ""),
         gameID: state.GameData.gameID,
         addr1:state.GameData.addr1,
         addr2:state.GameData.addr2,

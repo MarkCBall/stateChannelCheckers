@@ -106,14 +106,14 @@ export default function (state = initialState, action) {
                 if (nonceIsHigher(newData, state)) {
                     if (sigIsValid(newData)) {
                         // console.log("before",action.payload.state, state.prevMove.rowTo )
-                        let nonceMoveAndMatrix = BoardTranslations.decodeBN(
-                            new BigNumber(action.payload.boardBN), 
-                            state.prevMove.rowTo,
-                            state.prevMove.colTo
-                        )
-
-                        // console.log("after", nonceMoveAndMatrix)
-                        // console.log("setting DB state")
+                        let nonceMoveAndMatrix = {}
+                        if (action.payload.boardBN !== undefined){
+                            nonceMoveAndMatrix = BoardTranslations.decodeBN(
+                                action.payload.boardBN, 
+                                state.prevMove.rowTo,
+                                state.prevMove.colTo
+                            )
+                        }
                         return {
                             ...state,
                             ...nonceMoveAndMatrix,
@@ -123,7 +123,6 @@ export default function (state = initialState, action) {
                         }
                     }
                 }
-                //return state with timestamp
             }
             return state
 
