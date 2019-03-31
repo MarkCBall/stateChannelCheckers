@@ -17,7 +17,7 @@ class TurnExpiry extends Component {
     render() {
         return (
             <div>
-                Turn#: {parseInt(this.props.turnNum)+1}<br/>
+                Turn#: {this.props.turnNum+1}<br/>
                 {this.renderTurnInfo()}             
             </div>
         )

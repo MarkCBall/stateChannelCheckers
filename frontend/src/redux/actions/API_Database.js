@@ -66,8 +66,8 @@ export default {
                     ...resJSON,
                     turnNum: parseInt((resJSON.boardBN ? resJSON.boardBN._hex.slice(10, 18) : 0),16),
                     latestDBTimestamp: timestamp,
-                    iAmP1Red: (getState().LoginDetails.addressSignedIn === resJSON.p1Addr),
-                    iAmP2Black: (getState().LoginDetails.addressSignedIn === resJSON.p2Addr)
+                    // iAmP1Red: (getState().LoginDetails.addressSignedIn === getState().GameData.p1Addr),
+                    // iAmP2Black: (getState().LoginDetails.addressSignedIn === getState().GameData.p2Addr)
                 }
                 console.log(resJSON)
                 dispatch({

@@ -92,6 +92,8 @@ export default function (state = initialState, action) {
                 VCAddr: action.payload.VCAddr,
                 ERC20Addr: action.payload.ERC20Addr,
                 turnLength: action.payload.turnLength,
+                iAmP1Red:action.payload.iAmP1Red,
+                iAmP2Black:action.payload.iAmP2Black
             }
 
         case MERGE_DATABASE_GETGAME:
