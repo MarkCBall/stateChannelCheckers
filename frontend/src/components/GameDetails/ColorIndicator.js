@@ -7,14 +7,16 @@ class ColorIndicator extends Component {
     renderPlayerColor =  () => {
         if ((this.props.turnNum % 2) === 0){
             return <div className="Red"></div>
+                        
         }
         return <div className="Black"></div>
 
     }
     render() {
         return (
-            <div>
+            <div className="row">
                 {this.renderPlayerColor()}                 
+                's Turn
             </div>
         )
     }            
