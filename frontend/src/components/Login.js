@@ -1,66 +1,41 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import LoginRedux from "../redux/actions/LoginRedux";
-// import InteractDatabase from "../redux/actions/InteractDatabase";
-// import InteractBlockchain from "../redux/actions/InteractBlockchain";
+// import API_Database from "../redux/actions/API_Database";
+// import API_StateChGaming from "../redux/actions/API_StateChGaming";
 import {isValidAddress} from "ethereumjs-util";
+import LabelAndInput from "./LabelAndInput";
 
-
-//mport { Button } from 'react-bootstrap';
 
 class Login extends Component {
-  
-    // componentDidMount(){
-    //     this.props.updateChButtons(this.props.address);
-    // }
-
     render() {
         return (
             <div>
-                Public ethereum address to interact on:
-               
-                    {isValidAddress(this.props.address) ?
-                        <input 
-                            className="form-control is-valid"
-                            type="text" 
-                            onChange={this.props.handleAddressChange}
-                            value={this.props.address}
-                        />
-                    :
-                        <input 
-                            className="form-control is-invalid"
-                            type="text" 
-                            onChange={this.props.handleAddressChange}
-                            value={this.props.address}
-                        />
-                    }
-                    
-                
-                Private key:
 
-                {this.props.pubPrivKeypairValid ? 
-                    <input 
-                        className="form-control is-valid"
-                        type="text" 
-                        onChange={this.props.handlePrivKeyChange}
-                        value={this.props.privKey}
+                <div className="form-group row">
+                    <LabelAndInput
+                        label="Public ethereum address to interact on:"
+                        value={this.props.address}
+                        onChange={this.props.handleAddressChange}
+                        labelWidthClass={"col-md-5"}
+                        textWidthClass={"col-md-7"}
+                        isGreen={isValidAddress(this.props.address)}
                     />
-                : 
-                    <input 
-                        className="form-control is-invalid"
-                        type="text" 
-                        onChange={this.props.handlePrivKeyChange}
+                </div>
+
+                <div className="form-group row">
+                    <LabelAndInput
+                        label="Private key:"
                         value={this.props.privKey}
+                        onChange={this.props.handlePrivKeyChange}
+                        labelWidthClass={"col-sm-2"}
+                        textWidthClass={"col-md-10"}
+                        isGreen={this.props.pubPrivKeypairValid}
                     />
-                } &nbsp;
-                
-                
+                    p1: 0x5ee6962f33f137e7847c8a2852ed18e5a67159f23b0931baf16a95a009ad3901<br/>
+                    p2: 0x5ea9296aaa2bd9fa6089aa96f3b98b29b631180000f829f5979b9c472e286020
+                </div>
             
-
-                {/* <br/><br/><br/>
-                <button className="btn btn-info btn-sm">Toggle Display</button>
-                <button className="btn btn-danger btn-sm">Interact with blockchain</button>
-                <button className="btn btn-success btn-sm">Interact with statechannel</button> */}
                 <hr/>
             </div>
         );
@@ -70,11 +45,11 @@ class Login extends Component {
 
 function mapStateToProps(state) {
     return {
-        privKey : state.LoginRedux.privKey,
-        pubPrivKeypairValid : state.LoginRedux.pubPrivKeypairValid,
-        address: state.LoginRedux.addressSignedIn,
-        addressIsValid: state.LoginRedux.addressIsValid,
-        //pendingChannels: state.InteractDatabase.PendingChannels
+        privKey : state.LoginDetails.privKey,
+        pubPrivKeypairValid : state.LoginDetails.pubPrivKeypairValid,
+        address: state.LoginDetails.addressSignedIn,
+        addressIsValid: state.LoginDetails.addressIsValid,
+        //pendingChannels: state.API_Database.PendingChannels
     }
 }
 

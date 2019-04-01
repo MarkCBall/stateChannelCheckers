@@ -2,7 +2,10 @@ import React, { Component } from "react";
 // import GameData from "../redux/actions/GameData";
 import { connect } from "react-redux";
 import LabelAndInput from "./LabelAndInput";
-import InteractDatabase from "../redux/actions/InteractDatabase";
+
+import API_Database from "../redux/actions/API_Database";
+
+
 
 class GameCreate extends Component {
     constructor(props) {
@@ -13,6 +16,7 @@ class GameCreate extends Component {
             ERC20Amount: 10000,
             VCAddr: "0xe82a2dc855352bc1ef93e3a0be4dbcd36cde22ff",
             //OLD with bad p1Won address VCAddr: "0x6d3346c4832fa3c6c4e52d1fcd4f91c5ff773fb8",
+
             turnLength: 100,
         }
     }
@@ -178,7 +182,7 @@ function mapDispatchToProps(dispatch) {
         //    signAndSubmitGame: (dispatch, ERC20Amount, ERC20Addr,gameID,p1Addr,p2Addr,VCAddr,turnLength) => {
         // make new sign and submit in API_StateChGaming
         signAndSubmitGame: (ERC20Amount,ERC20Addr,gameID,addressSignedIn,p2Addr,VCAddr,turnLength) => {
-            dispatch(InteractDatabase.signAndSubmitGame(dispatch,ERC20Amount,ERC20Addr,gameID,addressSignedIn,p2Addr,VCAddr,turnLength))
+            dispatch(API_Database.signAndSubmitGame(dispatch,ERC20Amount,ERC20Addr,gameID,addressSignedIn,p2Addr,VCAddr,turnLength))
         },
     }
 }

@@ -5,10 +5,7 @@ import store from "./redux/index";
 import React, { Component } from "react";
 
 import Login from "./components/Login";
-import Game from "./components/Game";
-import Board from "./components/Board";
-import GameStats from "./components/GameStats";
-
+import GameSelection from "./components/GameSelection";
 
 
 import './App.css';
@@ -21,13 +18,7 @@ class App extends Component {
             <Provider store={store}>
                 <div className="App">
                     <Login />
-                    <Game />
-                    <div className="container">
-                        <div className="row">
-                            <Board />
-                            <GameStats />
-                        </div>
-                    </div>
+                    <GameSelection />
                 </div>
             </Provider>
         );
