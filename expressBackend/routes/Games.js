@@ -46,8 +46,8 @@ router.post('/Move', async function(req, res, next) {
     //EXAMPLE 
     // header = {gameID:3}
     // req.body={ 
-    //     state: "0x0c0000000000000180828486898b8d8f9092949fa9abadafb0b2b4b6b9bbbdbf",
-    //     movesig{v:, r:, s:}
+    //     boardBN: "0x0c0000000000000180828486898b8d8f9092949fa9abadafb0b2b4b6b9bbbdbf",
+    //     moveSig{v:, r:, s:}
     // }   
     //require sig is good
     //require db.get nonce <
@@ -63,7 +63,8 @@ router.post('/Move', async function(req, res, next) {
         console.log("old stuff is ", oldData)
         let newData = {
             ...oldData,
-            boardBN:req.body.boardBN
+            boardBN:req.body.boardBN,
+            moveSig:req.body.moveSig
         }
         console.log("turning into ", newData)
         db.put(req.headers.gameid,newData)
