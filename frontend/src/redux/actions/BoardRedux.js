@@ -21,20 +21,19 @@ export default {
     handleSquareClick: (dispatch, piece, boardMatrix) => {
         return (dispatch, getState) => {
             let validMovesMatrix = getState().BoardRedux.validMovesMatrix
+            let isGreenDotClick = (validMovesMatrix.length  && validMovesMatrix[piece.row][piece.col])
+
+            //if you click a color you own or a green dot
             if (
-                piece.red === (getState().LoginDetails.addressSignedIn === getState().GameData.p1Addr) //clean this line up
-                ||
-                (validMovesMatrix.length  && validMovesMatrix[piece.row][piece.col]) //duplicate line
+                (piece.red && (getState().GameData.iAmP1Red)) ||
+                (!piece.red && (getState().GameData.iAmP2Black)) ||
+                isGreenDotClick
              ){
                 let activeSquare = getState().BoardRedux.activeSquare
                 let validSpot = {row: piece.row, col: piece.col}
-                // console.log("got here")
-                // console.log(piece)
-                // console.log(getState())
-
                 
                 //if you click on a green circle to make a move
-                if (validMovesMatrix.length  && validMovesMatrix[piece.row][piece.col]){
+                if (isGreenDotClick){
                     // console.log("handling move with",boardMatrix, validSpot, activeSquare)
                     dispatch(BoardRedux.handleMove(dispatch, boardMatrix, validSpot, activeSquare))
                     
