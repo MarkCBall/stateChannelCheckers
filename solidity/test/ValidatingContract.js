@@ -58,9 +58,9 @@ contract('ValidatingContract', async (accounts) => {
             )
         })
     })
-    describe("Function - gameTied", async ()=>{
-        it('is not implimented')
-    })
+    // describe("Function - gameTied", async ()=>{
+    //     it('is not implimented')
+    // })
     describe("Function - validStateUpdate", async ()=>{
         describe("Game#1", async ()=>{
             let gameStates = validGames.g1

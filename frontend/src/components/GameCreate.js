@@ -2,7 +2,10 @@ import React, { Component } from "react";
 // import GameData from "../redux/actions/GameData";
 import { connect } from "react-redux";
 import LabelAndInput from "./LabelAndInput";
+
 import API_Database from "../redux/actions/API_Database";
+
+
 
 class GameCreate extends Component {
     constructor(props) {
@@ -11,7 +14,9 @@ class GameCreate extends Component {
             p2Addr: "0x074349cbaa42a33749589695b0c2ed6d933d2323",
             ERC20Addr: "0x9e64aa3c10d0e6f14c384b0e5d72fa1a77ca3f79",
             ERC20Amount: 10000,
-            VCAddr: "0x6d3346c4832fa3c6c4e52d1fcd4f91c5ff773fb8",
+            VCAddr: "0xe82a2dc855352bc1ef93e3a0be4dbcd36cde22ff",
+            //OLD with bad p1Won address VCAddr: "0x6d3346c4832fa3c6c4e52d1fcd4f91c5ff773fb8",
+
             turnLength: 100,
         }
     }

@@ -112,13 +112,14 @@ contract StateChGaming {
         }
     }
        
-    function payoutTimeout(uint _gameID) public {
-        game memory gm = allGames[_gameID];
-        require (block.number > (gm.blockNum + gm.blocksPerTurn), "can't currently pay out due to timeout");
-        if (gm.vcAddr.p1MovedLast(gm.state)){
-            gm.tokenAddr.transfer(gm.p1, gm.gamePayout);
-        }else{
-            gm.tokenAddr.transfer(gm.p2, gm.gamePayout);
-        }
-    }
+    //    NOT IMPLIMENTED
+    // function payoutTimeout(uint _gameID) public {
+    //     game memory gm = allGames[_gameID];
+    //     require (block.number > (gm.blockNum + gm.blocksPerTurn), "can't currently pay out due to timeout");
+    //     if (gm.vcAddr.p1MovedLast(gm.state)){
+    //         gm.tokenAddr.transfer(gm.p1, gm.gamePayout);
+    //     }else{
+    //         gm.tokenAddr.transfer(gm.p2, gm.gamePayout);
+    //     }
+    // }
 }
