@@ -4,8 +4,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { SET_MOVETYPE_DB } from "../redux/constants/ActionTypes";
+import { SET_MOVETYPE_BCINIT } from "../redux/constants/ActionTypes";
 import { SET_MOVETYPE_BCENFORCED } from "../redux/constants/ActionTypes";
 import { SET_MOVETYPE_BCUNENFORCED } from "../redux/constants/ActionTypes";
+
 
 class GameStats extends Component {
 
@@ -33,7 +35,6 @@ class GameStats extends Component {
                 )}
                 <br/>
 
-                new button here for init move onto blockchain
                 <br/>
                 {this.renderBtn(
                     "respond on blockchain and continue on blockchain", 
@@ -47,6 +48,15 @@ class GameStats extends Component {
                     (this.props.moveType === SET_MOVETYPE_BCUNENFORCED)
                 )}
                 <br/>
+                <br/>
+                <br/>
+                {this.renderBtn(
+                    "click a move to post this game on chain, so you can then make a real move on chain", 
+                    this.props.setMoveTypeBCInit,
+                    (this.props.moveType === SET_MOVETYPE_BCINIT)
+                )}
+
+                    
                
                 <br/>Toggle enforced/unenforced to be added
                 <br/>
@@ -66,6 +76,9 @@ function mapDispatchToProps(dispatch) {
     return {
         setMoveTypeDB: () =>{
             dispatch({type: SET_MOVETYPE_DB})
+        },
+        setMoveTypeBCInit: () =>{
+            dispatch({type: SET_MOVETYPE_BCINIT})
         },
         setMoveTypeBCEnforced: () =>{
             dispatch({type: SET_MOVETYPE_BCENFORCED})

@@ -3,6 +3,7 @@
 // import { WITHDRAW_FROM_CHANNEL } from "../constants/ActionTypes";
 import { UPDATE_APPROVALS } from "../constants/ActionTypes";
 import { SET_MOVETYPE_DB } from "../constants/ActionTypes";
+import { SET_MOVETYPE_BCINIT } from "../constants/ActionTypes";
 import { SET_MOVETYPE_BCENFORCED } from "../constants/ActionTypes";
 import { SET_MOVETYPE_BCUNENFORCED } from "../constants/ActionTypes";
 
@@ -23,6 +24,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 moveType: SET_MOVETYPE_DB,
+            }
+        case SET_MOVETYPE_BCINIT:
+            return {
+                ...state,
+                moveType: SET_MOVETYPE_BCINIT,
             }
         case SET_MOVETYPE_BCENFORCED:
             return {

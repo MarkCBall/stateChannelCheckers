@@ -69,7 +69,7 @@ export default {
                     // iAmP1Red: (getState().LoginDetails.addressSignedIn === getState().GameData.p1Addr),
                     // iAmP2Black: (getState().LoginDetails.addressSignedIn === getState().GameData.p2Addr)
                 }
-                console.log(resJSON)
+                // console.log(resJSON)
                 dispatch({
                     type: MERGE_DATABASE_GETGAME,
                     payload: resJSON
@@ -85,10 +85,10 @@ export default {
                 //calculate the signature
                 let sigTypes = ['uint', 'uint']
                 let sigValues = [gameID, boardBN]
-                let gameHash = ethers.utils.solidityKeccak256(sigTypes, sigValues);
-                let arrayifiedGameHash = ethers.utils.arrayify(gameHash)
+                let moveHash = ethers.utils.solidityKeccak256(sigTypes, sigValues);
+                let arrayifiedMoveHash = ethers.utils.arrayify(moveHash)
                 let wallet = new ethers.Wallet(getState().LoginDetails.privKey)
-                let flatSig = await wallet.signMessage(arrayifiedGameHash)
+                let flatSig = await wallet.signMessage(arrayifiedMoveHash)
                 let sig = ethers.utils.splitSignature(flatSig);
                 //post the data and sig to the database
                 let body = {

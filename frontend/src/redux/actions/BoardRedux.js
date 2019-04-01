@@ -12,6 +12,7 @@ import GameData from "./GameData"
 import { CLEAR_SELECTION } from "../constants/ActionTypes";
 // import { PREV_MOVE_STATS } from "../constants/ActionTypes";
 import { SET_MOVETYPE_DB } from "../constants/ActionTypes";
+import { SET_MOVETYPE_BCINIT } from "../constants/ActionTypes";
 import { SET_MOVETYPE_BCENFORCED } from "../constants/ActionTypes";
 import { SET_MOVETYPE_BCUNENFORCED } from "../constants/ActionTypes";
 
@@ -79,14 +80,15 @@ export default {
 
             let moveType = getState().TempUserInputs.moveType
                 // let test = getState().GameData.state
-                if (moveType === SET_MOVETYPE_DB){
+                if (moveType === SET_MOVETYPE_DB)
                     dispatch(API_Database.signAndPostMove(dispatch, newBNStr))
-                //if init_BC_Move
-                // if (moveType === SET_MOVETYPE_BCENFORCED)
-                //         dispatch(API_StateChGaming)
-                if (moveType === SET_MOVETYPE_BCUNENFORCED)
+                else if (moveType === SET_MOVETYPE_BCINIT) 
+                    dispatch(API_StateChGaming.initBCMove(dispatch, newBNStr))
+                else if (moveType === SET_MOVETYPE_BCENFORCED)
+                    dispatch(API_StateChGaming.enforcedBCMove(dispatch, newBNStr))
+                else if (moveType === SET_MOVETYPE_BCUNENFORCED)
                     dispatch(API_StateChGaming.unenforcedBCMove(dispatch, newBNStr))
-                }
+                
 
                 dispatch(GameData.updateGameData(dispatch, getState().GameData.gameID,Date.now()))
 
