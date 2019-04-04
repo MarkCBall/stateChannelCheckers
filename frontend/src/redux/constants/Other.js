@@ -19,6 +19,6 @@ export const ERC20Abi = ERC20Json.abi;
 
 
 //database constants
-export const serverIpAndPort = "http://127.0.0.1:3001";
+export const serverIpAndPort = "http://52.60.66.253:3001" //"http://127.0.0.1:3001";
 
 
