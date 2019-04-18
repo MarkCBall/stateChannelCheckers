@@ -62,12 +62,13 @@ export default {
                     resJSON.boardBN = new BigNumber(resJSON.boardBN._hex)
                 }
                 //add additional calculated data
+                console.log(resJSON)
                 resJSON = {
                     ...resJSON,
                     turnNum: parseInt((resJSON.boardBN ? resJSON.boardBN._hex.slice(10, 18) : 0),16),
                     latestDBTimestamp: timestamp,
-                    // iAmP1Red: (getState().LoginDetails.addressSignedIn === getState().GameData.p1Addr),
-                    // iAmP2Black: (getState().LoginDetails.addressSignedIn === getState().GameData.p2Addr)
+                    iAmP1Red: resJSON.p1Addr ? (getState().LoginDetails.addressSignedIn === resJSON.p1Addr) : false,
+                    iAmP2Black: resJSON.p2Addr ? (getState().LoginDetails.addressSignedIn === resJSON.p2Addr) : false
                 }
                 // console.log(resJSON)
                 dispatch({
