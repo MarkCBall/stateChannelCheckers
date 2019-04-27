@@ -1,3 +1,5 @@
+The trello board can be found at https://trello.com/b/ytosYQnd/dapps2statechannelcheckers
+
 # stateChannelCheckers
 
 ## The board is state is represented by a singles bytes32 or uint. The first 8 bytes represent information about the previous move and the remaining bytes represent the boardgame pieces.
