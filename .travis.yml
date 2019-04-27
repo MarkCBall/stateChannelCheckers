@@ -1,0 +1,9 @@
+language: node_js
+
+node_js:
+- node
+- 'lts/*'
+
+# jobs:
+#   include:
+#     - script: npm run lint
