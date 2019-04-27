@@ -7,7 +7,6 @@
     "test": "test"
   },
   "scripts": {
-      "preinstall": "cd $(pwd)"
-    // "test": "npm test ./solidity"
+    "test": "cd solidity && npm run-script build"
   }
 }
