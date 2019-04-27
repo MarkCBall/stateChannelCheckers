@@ -7,6 +7,6 @@
     "test": "test"
   },
   "scripts": {
-    "test": "cd solidity && truffle compile"
+    "test": "cd frontend && npm test"
   }
 }
